@@ -1,0 +1,16 @@
+{
+    "python.formatting.provider": "black",
+    "cSpell.words": [
+        "cloumn",
+        "columno",
+        "loginemail",
+        "openpyxl",
+        "rownum",
+        "sujith",
+        "usefixtures",
+        "Useremail",
+        "Utilis"
+    ],
+    "python.linting.enabled": false,
+    "python.analysis.typeCheckingMode": "off"
+}

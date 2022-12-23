@@ -1,0 +1,5 @@
+1670501831648	geckodriver	INFO	Listening on 127.0.0.1:60875
+error: system does not fully support snapd: cannot mount squashfs image using "squashfs": exec: "mount": executable file not found in $PATH
+1670501832198	mozrunner::runner	INFO	Running command: "/snap/bin/firefox" "--marionette" "--remote-debugging-port" "45381" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileaXNGSu"
+error: system does not fully support snapd: cannot mount squashfs image using "squashfs": exec: "mount": executable file not found in $PATH
+ERROR: not connected to the gnome-3-38-2004 content interface.
