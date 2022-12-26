@@ -1,3 +1,4 @@
+import datetime
 import time
 
 from selenium.webdriver.common.keys import Keys
@@ -6,8 +7,10 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from datetime import date
+import softest
 
-class Client:
+class Client():
     menuitem_client_Xpath = "//a[@href='/clients']"
     # Page Contents
     text_Xpath = '//h3[@class="nk-block-title page-title"]'
@@ -68,15 +71,15 @@ class Client:
     plantCreation_close_window_Xpath = "//em[@class='icon ni ni-cross']"
 
     #Plant Owned Functionality
-    plantOwned_input_plantName_Xpath = "(//div[contains(@class,'form-group')])[11]"
-    plantOwned_input_size_Xpath = "(//div[contains(@class,'form-group')])[12]"
-    plantOwned_input_acronym_id = "client-acronym-input"
-    plantOwned_input_onBoardingDate_id = "client-onboardat"
-    plantOwned_input_status_id = "client-status-select"
-    plantOwned_status_id = "client-status-select"
-    plantOwned_status_active_id = "react-select-7-option-0"
-    plantOwned_status_inactive_id = "react-select-7-option-1"
-    plantOwned_status_suspended_id = "react-select-14-option-2"
+    plantOwned_input_plantName_Id = "client-plant-name-input"
+    plantOwned_input_size_Id = "client-size-input"
+    plantOwned_input_acronym_Id = "client-acronym-input"
+    plantOwned_input_onBoardingDate_Id = "client-onboardat"
+    plantOwned_input_status_Id = "client-status-select"
+    plantOwned_status_Id = "client-status-select"
+    plantOwned_status_active_Id = "react-select-7-option-0"
+    plantOwned_status_inactive_Id = "react-select-7-option-1"
+    plantOwned_status_suspended_Id = "react-select-14-option-2"
     plantOwned_btn_addPlant_Xpath ='//button[text()="Add Plant"]'
     
     
@@ -128,24 +131,19 @@ class Client:
         self.driver.find_element(By.XPATH,self.addClient_input_name_Xpath).send_keys("TestUser_001")
     def phone_number(self):
         element = self.driver.find_element(By.ID,self.addClient_dd_select_phone_countryCode_Id)
-        element2 = self.driver.find_element(By.ID,self.addClient_dd_select_phone_countryCode_Id)
         actions = ActionChains(self.driver)
         actions.click(element)
         actions.send_keys("+91")
-        actions.send_keys(Keys.ENTER)
-        actions.move_to_element(element2).perform()
+        actions.send_keys(Keys.ENTER).perform()
         self.driver.find_element(By.ID,self.addClient_input_phoneNumber_Id).send_keys("8234747484")
     def email(self):
         self.driver.find_element(By.ID,self.addClient_input_address_Id).send_keys("Mumbai")
     def mobile_number(self):
-        # self.driver.find_element(By.ID,self.addClient_dd_select_mobile_countryCode_Id).send_keys("+91")
         element = self.driver.find_element(By.ID,self.addClient_dd_select_mobile_countryCode_Id)
-        element2 = self.driver.find_element(By.ID,self.addClient_dd_select_mobile_countryCode_Id)
         actions = ActionChains(self.driver)
         actions.click(element)
         actions.send_keys("+91")
         actions.send_keys(Keys.ENTER)
-        actions.move_to_element(element2).perform()
         self.driver.find_element(By.ID,self.addClient_input_mobileNumber_Id).send_keys("992735371")  
     def email_address(self):
         self.driver.find_element(By.XPATH,self.addClient_input_email_Xpath).send_keys("bgeclient099@yopmail.com")
@@ -155,3 +153,45 @@ class Client:
         self.driver.find_element(By.XPATH,self.addClient_input_postalcode_Xpath).send_keys("098933")
     def website(self):
         self.driver.find_element(By.XPATH,self.addClient_input_website_Xpath).send_keys("www.google.com")
+    def task_visibility(self,status):
+        # print('status--->' , status)
+        for x in status:
+            self.driver.find_element(By.ID,self.addClient_dd_TaskVisibility_Id).click()
+            self.driver.find_element(By.XPATH, '//div[text()="'+x+'"]').click()
+    def plant(self,plant_name):
+        for y in plant_name:
+            self.driver.find_element(By.ID,self.addClient_dd_Plant_Id).click()
+            self.driver.find_element(By.XPATH, '//div[text()="'+y+'"]').click()
+    
+    # ADD_PLANT
+    def client_add_plant(self):
+        self.driver.find_element(By.ID,self.btn_addPlant_Id).click()
+        #print("title of the window",self.driver.title)
+        #assert "Plant.Creation" == self.driver.find_element(By.XPATH,"//h5[normalize-space()='Plant Creation']")
+    def plant_name(self):
+        self.driver.find_element(By.ID,self.plantOwned_input_plantName_Id).send_keys("Plant_01")
+    def size(self):
+        self.driver.find_element(By.ID,self.plantOwned_input_size_Id).send_keys("11")
+    def acronym(self):
+        self.driver.find_element(By.ID,self.plantOwned_input_acronym_Id).send_keys("ABX1234")
+    def on_boardingDate(self):
+        now = datetime.datetime.now()
+        # tday = now.strftime("%d-%m-%Y")
+        self.driver.find_element(By.ID,self.plantOwned_input_onBoardingDate_Id).send_keys(now.strftime("%d-%m-%Y")) 
+    def status(self):
+        element = self.driver.find_element(By.ID,self.plantOwned_input_status_Id)
+        actions = ActionChains(self.driver)
+        actions.click(element)
+        actions.send_keys("Active")
+        actions.send_keys(Keys.ENTER).perform()
+    def add_plant(self):
+        self.driver.find_element(By.XPATH,self.plantOwned_btn_addPlant_Xpath).click()
+    def plantCreation_mandatory_fields(self):
+        self.driver.find_element(By.XPATH,self.plantOwned_btn_addPlant_Xpath).click()
+        time.sleep(3)
+        assert  "name is a required field" == self.driver.find_element(By.XPATH,'//span[text()="name is a required field"]').text
+        assert "identifier is a required field" == self.driver.find_element(By.XPATH,"//span[normalize-space()='identifier is a required field']").text
+        assert "Status is Required" == self.driver.find_element(By.XPATH,"//span[normalize-space()='Status is Required']").text
+    
+    
+

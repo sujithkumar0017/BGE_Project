@@ -189,9 +189,9 @@ function showOutput(id, name) {
 
 <div class='heading'>
 <h1>Test Report</h1>
-<p class='attribute'><strong>Start Time:</strong> 2022-12-20 19:07:52</p>
-<p class='attribute'><strong>Duration:</strong> 0:00:00.000354</p>
-<p class='attribute'><strong>Status:</strong> Error 1</p>
+<p class='attribute'><strong>Start Time:</strong> 2022-12-26 19:00:54</p>
+<p class='attribute'><strong>Duration:</strong> 0:00:00.001923</p>
+<p class='attribute'><strong>Status:</strong> Error 2</p>
 
 <p class='description'></p>
 </div>
@@ -223,15 +223,15 @@ function showOutput(id, name) {
 
 <tr class='errorClass'>
     <td>TestCases.Package_Client_02.TC_Client.Test_client</td>
-    <td>1</td>
+    <td>2</td>
     <td>0</td>
     <td>0</td>
-    <td>1</td>
-    <td><a href="javascript:showClassDetail('c1',1)">Detail</a></td>
+    <td>2</td>
+    <td><a href="javascript:showClassDetail('c1',2)">Detail</a></td>
 </tr>
 
 <tr id='ft1.1' class='none'>
-    <td class='errorCase'><div class='testcase'>test_client</div></td>
+    <td class='errorCase'><div class='testcase'>test_client_01</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
@@ -246,8 +246,36 @@ function showOutput(id, name) {
         <pre>
         
 ft1.1: Traceback (most recent call last):
-  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 16, in test_client
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 17, in test_client_01
     self.lp = login_Module(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.2' class='none'>
+    <td class='errorCase'><div class='testcase'>test_zdd_client_02</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.2')" >
+        error</a>
+
+    <div id='div_ft1.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft1.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+ft1.2: Traceback (most recent call last):
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 24, in test_zdd_client_02
+    self.client = Client(self.driver)
 AttributeError: 'Test_client' object has no attribute 'driver'
 
 
@@ -260,10 +288,10 @@ AttributeError: 'Test_client' object has no attribute 'driver'
 
 <tr id='total_row'>
     <td>Total</td>
-    <td>1</td>
+    <td>2</td>
     <td>0</td>
     <td>0</td>
-    <td>1</td>
+    <td>2</td>
     <td>&nbsp;</td>
 </tr>
 </table>
