@@ -8,7 +8,6 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from datetime import date
-import softest
 
 class Client():
     menuitem_client_Xpath = "//a[@href='/clients']"
@@ -127,8 +126,8 @@ class Client():
         assert "https://bge.tkea.in/client/add" in self.driver.current_url
     def add_Client_Page_Contents(self):
          pass
-    def name(self):
-        self.driver.find_element(By.XPATH,self.addClient_input_name_Xpath).send_keys("TestUser_001")
+    def name(self,name):
+        self.driver.find_element(By.XPATH,self.addClient_input_name_Xpath).send_keys(name)
     def phone_number(self):
         element = self.driver.find_element(By.ID,self.addClient_dd_select_phone_countryCode_Id)
         actions = ActionChains(self.driver)
@@ -167,25 +166,31 @@ class Client():
     def client_add_plant(self):
         self.driver.find_element(By.ID,self.btn_addPlant_Id).click()
         #print("title of the window",self.driver.title)
-        #assert "Plant.Creation" == self.driver.find_element(By.XPATH,"//h5[normalize-space()='Plant Creation']")
-    def plant_name(self):
-        self.driver.find_element(By.ID,self.plantOwned_input_plantName_Id).send_keys("Plant_01")
-    def size(self):
-        self.driver.find_element(By.ID,self.plantOwned_input_size_Id).send_keys("11")
-    def acronym(self):
-        self.driver.find_element(By.ID,self.plantOwned_input_acronym_Id).send_keys("ABX1234")
+        #assert "Plant Creation" == self.driver.find_element(By.XPATH,"//h5[normalize-space()='Plant Creation']").text
+    def plant_name(self,name):
+        self.driver.find_element(By.ID,self.plantOwned_input_plantName_Id).send_keys(name)
+    def size(self,size):
+        self.driver.find_element(By.ID,self.plantOwned_input_size_Id).send_keys(size)
+    def acronym(self,acronym):
+        self.driver.find_element(By.ID,self.plantOwned_input_acronym_Id).send_keys(acronym)
     def on_boardingDate(self):
         now = datetime.datetime.now()
         # tday = now.strftime("%d-%m-%Y")
-        self.driver.find_element(By.ID,self.plantOwned_input_onBoardingDate_Id).send_keys(now.strftime("%d-%m-%Y")) 
-    def status(self):
+        self.driver.find_element(By.ID,self.plantOwned_input_onBoardingDate_Id).send_keys(now.strftime("%Y-%m-%d")) 
+    def status(self,status):
         element = self.driver.find_element(By.ID,self.plantOwned_input_status_Id)
         actions = ActionChains(self.driver)
         actions.click(element)
-        actions.send_keys("Active")
+        actions.send_keys(status)
         actions.send_keys(Keys.ENTER).perform()
-    def add_plant(self):
+    def add_plant(self,value):
         self.driver.find_element(By.XPATH,self.plantOwned_btn_addPlant_Xpath).click()
+        time.sleep(3)
+        self.table = self.driver.find_elements(By.XPATH,'(//div[@class="nk-block border border-light"])[1]')
+        element = self.driver.find_elements(By.XPATH,'(//div[@class="nk-block border border-light"])[1]//div[contains(@class,"nk-tb-item" )][position()>1]//div[@class="nk-tb-col"][1]')
+        for x in element:
+           if x.text == value:
+            assert True
     def plantCreation_mandatory_fields(self):
         self.driver.find_element(By.XPATH,self.plantOwned_btn_addPlant_Xpath).click()
         time.sleep(3)
@@ -193,5 +198,67 @@ class Client():
         assert "identifier is a required field" == self.driver.find_element(By.XPATH,"//span[normalize-space()='identifier is a required field']").text
         assert "Status is Required" == self.driver.find_element(By.XPATH,"//span[normalize-space()='Status is Required']").text
     
-    
 
+    #Add User
+    def client_addUser(self):
+        self.driver.find_element(By.XPATH,self.btn_addUser_Xpath).click()
+    def user_firstName(self,name):
+        self.driver.find_element(By.XPATH,self.userCreation_input_addUser_firstName_Xpath).send_keys(name)
+    def user_lastName(self,name):
+        self.driver.find_element(By.XPATH,self.userCreation_input_addUser_lastName_Xpath).send_keys(name)
+    def user_email(self,email):
+        self.driver.find_element(By.XPATH,self.userCreation_input_addUser_Email_Xpath).send_keys(email)
+    def user_password(self,password):
+        self.driver.find_element(By.XPATH,self.userCreation_input_addUser_Password_Xpath).send_keys(password)
+        if len(password)<8:
+            assert  "Password must be 8 characters long" == self.driver.find_element(By.XPATH,'//span[text()="Password must be 8 characters long"]').text
+
+    def addUser(self,value):
+        self.driver.find_element(By.XPATH,self.userCreation_btn_addUser_AddUser_Xpath).click()
+        time.sleep(3)
+        self.table = self.driver.find_elements(By.XPATH,'(//div[@class="nk-block border border-light"])[1]')
+        element = self.driver.find_elements(By.XPATH,'(//div[@class="nk-block border border-light"])[2]//div[contains(@class,"nk-tb-item" )][position()>1]//div[@class="nk-tb-col"][1]')
+        for x in element:
+           if x.text == value:
+            assert True
+    def userCreation_mandatory_fields(self):
+        self.driver.find_element(By.XPATH,self.userCreation_btn_addUser_AddUser_Xpath).click()
+        time.sleep(3)
+        assert  "firstName is a required field" == self.driver.find_element(By.XPATH,'//span[text()="firstName is a required field"]').text
+        assert "lastName is a required field" == self.driver.find_element(By.XPATH,"//span[normalize-space()='lastName is a required field']").text
+        assert "email is a required field" == self.driver.find_element(By.XPATH,"//span[normalize-space()='email is a required field']").text
+        assert "password is a required field" == self.driver.find_element(By.XPATH,"//span[normalize-space()='password is a required field']").text
+    
+    def createClient(self,client_name):
+        self.driver.find_element(By.XPATH,self.btn_createClient_Xpath).click()
+        time.sleep(3)
+        self.msg=self.driver.find_element(By.XPATH,"(//div[contains(@class,'toastr-text')])[1]").text
+        print(self.msg)
+        if "Client created successfully" in self.msg:
+            assert True == True
+        else:
+            print("fail")
+            assert True == False  
+        table = self.driver.find_element(By.XPATH,'//div[@class="nk-tb-list nk-tb-ulist is-compact"]//div[@class="user-card"]')
+        for x in table:
+            if x.text == client_name:
+             assert True
+            else:
+                assert False
+          
+"""
+   Xpath:
+
+    Column:
+    (//div[@class="nk-block border border-light"])[1]//div[@class="nk-tb-col"]
+
+    rows:
+    (//div[@class="nk-block border border-light"])[1]//div[@class="nk-tb-item"]
+
+    rows:
+    (//div[@class="nk-block border border-light"])[1]//div[contains(@class,"nk-tb-item" )][position()>1]
+
+    Row - first column
+    (//div[@class="nk-block border border-light"])[1]//div[contains(@class,"nk-tb-item" )][position()>1]//div[@class="nk-tb-col"][1]
+    
+"""
