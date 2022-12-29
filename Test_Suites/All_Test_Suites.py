@@ -17,4 +17,4 @@ outfile = open("Report.html", "w")
 runner = HTMLTestRunner(stream=outfile, title='Test Report')
 runner.run(masterTestSuit)
 
-#(python3 -m pytest ./Test_Suites/All_Test_Suites.py)
+#(python3 -m pytest -v -s  ./Test_Suites/All_Test_Suites.py --browser chrome --html=Reports/report.html)

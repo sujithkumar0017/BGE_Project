@@ -57,7 +57,7 @@ class Client():
     addClient_dd_Plant_Id = 'client-plant-input'
 
     #Plant Owned 
-    btn_addPlant_Id = 'client-add-plant'
+    btn_addPlant_Xpath = '//button[@class="btn btn-primary btn-md" and @id="client-add-plant"]'
 
     # Plant Owned Page Contents
     plantOwned_title_Xpath = '//h5[text()="Plant Creation"]'
@@ -106,6 +106,25 @@ class Client():
 
     #Add Client 
     btn_createClient_Xpath = "//button[normalize-space()='Create Client']"
+    #-------------------------------------------------------------------------------------------------------------------------#
+    
+
+    #View Client
+
+    btn_back_id = "client-back-btn"   
+    verify_client_name= '//span[normalize-space()="Client Name"]/following-sibling::span[@class="profile-ud-value"]'
+    verify_phone_number = '//span[normalize-space()="Phone Number"]/following-sibling::span[@class="profile-ud-value"]'
+    verify_mobile_number = '//span[normalize-space()="Address"]/following-sibling::span[@class="profile-ud-value"]'
+    verify_email = '//span[normalize-space()=" Email"]/following-sibling::span[@class="profile-ud-value"]'
+    verify_address = '//span[normalize-space()="City"]/following-sibling::span[@class="profile-ud-value"]'
+    verify_address = '//span[normalize-space()="Postal Code"]/following-sibling::span[@class="profile-ud-value"]'
+    verify_address = '//span[normalize-space()="Address"]/following-sibling::span[@class="profile-ud-value"]'
+    verify_address = '//span[normalize-space()="Address"]/following-sibling::span[@class="profile-ud-value"]'
+    verify_address = '//span[normalize-space()="Address"]/following-sibling::span[@class="profile-ud-value"]'
+    verify_address = '//span[normalize-space()="Address"]/following-sibling::span[@class="profile-ud-value"]'
+    
+
+    
     
     def __init__(self,driver):
         self.driver=driver
@@ -128,32 +147,35 @@ class Client():
          pass
     def name(self,name):
         self.driver.find_element(By.XPATH,self.addClient_input_name_Xpath).send_keys(name)
-    def phone_number(self):
+    def phone_number(self,country_code,phone_number):
         element = self.driver.find_element(By.ID,self.addClient_dd_select_phone_countryCode_Id)
         actions = ActionChains(self.driver)
         actions.click(element)
-        actions.send_keys("+91")
+        print("phone:",country_code)
+        actions.send_keys(country_code)
         actions.send_keys(Keys.ENTER).perform()
-        self.driver.find_element(By.ID,self.addClient_input_phoneNumber_Id).send_keys("8234747484")
-    def email(self):
-        self.driver.find_element(By.ID,self.addClient_input_address_Id).send_keys("Mumbai")
-    def mobile_number(self):
+        print("phone:",phone_number)
+        self.driver.find_element(By.ID,self.addClient_input_phoneNumber_Id).send_keys(phone_number)
+    def address(self,address):
+        self.driver.find_element(By.ID,self.addClient_input_address_Id).send_keys(address)
+    def mobile_number(self,country_code,mobile_number):
         element = self.driver.find_element(By.ID,self.addClient_dd_select_mobile_countryCode_Id)
         actions = ActionChains(self.driver)
         actions.click(element)
-        actions.send_keys("+91")
-        actions.send_keys(Keys.ENTER)
-        self.driver.find_element(By.ID,self.addClient_input_mobileNumber_Id).send_keys("992735371")  
-    def email_address(self):
-        self.driver.find_element(By.XPATH,self.addClient_input_email_Xpath).send_keys("bgeclient099@yopmail.com")
-    def city(self):
-        self.driver.find_element(By.XPATH,self.addClient_input_city_Xpath).send_keys("Chennai")
-    def postal_code(self):
-        self.driver.find_element(By.XPATH,self.addClient_input_postalcode_Xpath).send_keys("098933")
-    def website(self):
-        self.driver.find_element(By.XPATH,self.addClient_input_website_Xpath).send_keys("www.google.com")
+        print("mobile:",country_code)
+        actions.send_keys(country_code)
+        actions.send_keys(Keys.ENTER).perform()
+        print("mobile:",mobile_number)
+        self.driver.find_element(By.ID,self.addClient_input_mobileNumber_Id).send_keys(mobile_number)  
+    def email_address(self,email):
+        self.driver.find_element(By.XPATH,self.addClient_input_email_Xpath).send_keys(email)
+    def city(self,city):
+        self.driver.find_element(By.XPATH,self.addClient_input_city_Xpath).send_keys(city)
+    def postal_code(self,postal_code):
+        self.driver.find_element(By.XPATH,self.addClient_input_postalcode_Xpath).send_keys(postal_code)
+    def website(self,website):
+        self.driver.find_element(By.XPATH,self.addClient_input_website_Xpath).send_keys(website)
     def task_visibility(self,status):
-        # print('status--->' , status)
         for x in status:
             self.driver.find_element(By.ID,self.addClient_dd_TaskVisibility_Id).click()
             self.driver.find_element(By.XPATH, '//div[text()="'+x+'"]').click()
@@ -164,7 +186,8 @@ class Client():
     
     # ADD_PLANT
     def client_add_plant(self):
-        self.driver.find_element(By.ID,self.btn_addPlant_Id).click()
+        button = self.driver.find_element(By.XPATH,self.btn_addPlant_Xpath)
+        self.driver.execute_script("arguments[0].click();",button)
         #print("title of the window",self.driver.title)
         #assert "Plant Creation" == self.driver.find_element(By.XPATH,"//h5[normalize-space()='Plant Creation']").text
     def plant_name(self,name):
@@ -191,6 +214,8 @@ class Client():
         for x in element:
            if x.text == value:
             assert True
+           else:
+            assert False
     def plantCreation_mandatory_fields(self):
         self.driver.find_element(By.XPATH,self.plantOwned_btn_addPlant_Xpath).click()
         time.sleep(3)
@@ -221,6 +246,8 @@ class Client():
         for x in element:
            if x.text == value:
             assert True
+           else:
+            assert False
     def userCreation_mandatory_fields(self):
         self.driver.find_element(By.XPATH,self.userCreation_btn_addUser_AddUser_Xpath).click()
         time.sleep(3)
@@ -233,19 +260,19 @@ class Client():
         self.driver.find_element(By.XPATH,self.btn_createClient_Xpath).click()
         time.sleep(3)
         self.msg=self.driver.find_element(By.XPATH,"(//div[contains(@class,'toastr-text')])[1]").text
-        print(self.msg)
         if "Client created successfully" in self.msg:
             assert True == True
         else:
-            print("fail")
+            self.driver.save_screenshot("client.png")
             assert True == False  
-        table = self.driver.find_element(By.XPATH,'//div[@class="nk-tb-list nk-tb-ulist is-compact"]//div[@class="user-card"]')
-        for x in table:
-            if x.text == client_name:
-             assert True
-            else:
-                assert False
-          
+        time.sleep(3)
+        # self.table = self.driver.find_elements(By.XPATH,'//div[@class="nk-tb-list nk-tb-ulist is-compact"]//div[@class="user-card"]')
+        # for y in self.table:
+        #     if y.text == client_name:
+        #      assert True
+        #     else:
+        #      assert False
+
 """
    Xpath:
 
