@@ -7,9 +7,9 @@ class random_data:
           client={
                "name":fake.name(),
                "phone_number_countryCode":random.choice(["+91", "+55","+47","+237","+1684"]),
-               "phone_number":str(random.randint(0, 1234567890123)),
+               "phone_number":str(random.randint(9000000000, 9999999999)),
                "mobile_number_countryCode":random.choice(["+91", "+55","+47","+237","+1849"]),
-               "mobile_number":str(random.randint(0, 1234567890123)),
+               "mobile_number":str(random.randint(9000000000, 9999999999)),
                "address":fake.street_address(),
                "email":fake.email(),
                "city":fake.city(),
@@ -24,7 +24,7 @@ class random_data:
                "user_last_name":fake.last_name(),
                "user_email":"".join([fake.first_name(),"@yopmail.com"]),
                "user_password":"qwerty123"
-          
+                     
           }
 
           f=open("/home/sujith/codebase/BGE_Framework_Design/utilities/client.json","w")

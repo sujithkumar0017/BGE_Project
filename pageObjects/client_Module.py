@@ -5,7 +5,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver import ActionChains
-from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from datetime import date
 
@@ -96,8 +96,8 @@ class Client():
     userCraetion_close_window_xpath = "//em[@class='icon ni ni-cross']"
 
     #User Creation Functionality
-    userCreation_input_addUser_firstName_Xpath= "//input[@name='firstName']"
-    userCreation_input_addUser_lastName_Xpath = "//input[@name='lastName']"
+    userCreation_input_addUser_firstName_Xpath= '//input[@id="firstName"]'
+    userCreation_input_addUser_lastName_Xpath = '//input[@id="lastName"]'
     userCreation_input_addUser_Email_Xpath = "//input[@type='email']"
     userCreation_input_addUser_Password_Xpath = "//input[@name='password']"
     userCreation_btn_addUser_AddUser_Xpath = "//button[contains(text(),'Add User')]"
@@ -111,17 +111,19 @@ class Client():
 
     #View Client
 
-    btn_back_id = "client-back-btn"   
+    btn_back_id = "client-back-btn"  
+    btn_delete_id = "client-del-btn"
+    btn_edit_id = "client-edit-btn" 
     verify_client_name= '//span[normalize-space()="Client Name"]/following-sibling::span[@class="profile-ud-value"]'
     verify_phone_number = '//span[normalize-space()="Phone Number"]/following-sibling::span[@class="profile-ud-value"]'
-    verify_mobile_number = '//span[normalize-space()="Address"]/following-sibling::span[@class="profile-ud-value"]'
+    verify_address = '//span[normalize-space()="Address"]/following-sibling::span[@class="profile-ud-value"]'
     verify_email = '//span[normalize-space()=" Email"]/following-sibling::span[@class="profile-ud-value"]'
-    verify_address = '//span[normalize-space()="City"]/following-sibling::span[@class="profile-ud-value"]'
-    verify_address = '//span[normalize-space()="Postal Code"]/following-sibling::span[@class="profile-ud-value"]'
-    verify_address = '//span[normalize-space()="Address"]/following-sibling::span[@class="profile-ud-value"]'
-    verify_address = '//span[normalize-space()="Address"]/following-sibling::span[@class="profile-ud-value"]'
-    verify_address = '//span[normalize-space()="Address"]/following-sibling::span[@class="profile-ud-value"]'
-    verify_address = '//span[normalize-space()="Address"]/following-sibling::span[@class="profile-ud-value"]'
+    verify_mobile_number = '//span[normalize-space()="Mobile Number"]/following-sibling::span[@class="profile-ud-value"]'
+    verify_city = '//span[normalize-space()="City"]/following-sibling::span[@class="profile-ud-value"]'
+    verify_postal_code = '//span[normalize-space()="Postal Code"]/following-sibling::span[@class="profile-ud-value"]'
+    verify_website = '//span[normalize-space()="Website"]/following-sibling::span[@class="profile-ud-value"]'
+    verify_createdAt = '//span[normalize-space()="Created At"]/following-sibling::span[@class="profile-ud-value"]'
+    verify_updatedAt = '//span[normalize-space()="Updated At"]/following-sibling::span[@class="profile-ud-value"]'
     
 
     
@@ -272,9 +274,27 @@ class Client():
         #      assert True
         #     else:
         #      assert False
+    def list_view(self,name):
+        element = WebDriverWait(self.driver, 10).until(EC.presence_of_all_elements_located((By.XPATH,'//div[@class="user-card"]//span[@class="tb-lead"]')))
+        for x in element:
+            # print(x)
+            if x.text in name:
+                x.click()
+                time.sleep(5)
+                WebDriverWait(self.driver, 30).until(EC.presence_of_all_elements_located((By.XPATH,'//div[@class="user-card"]//span[@class="tb-lead"]')))
+                time.sleep(3)
+            else: 
+               assert False
+    def edit_client_dropdown(self,client_name):
+        self.driver.find_element(By.XPATH,'//div[normalize-space()="'+client_name+'"]/following::a[@id="client-menu-btn"]').click()
+        element= WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH,'//div[@class="dropdown show"]//ul[@class="link-list-opt no-bdr"]//a[@id="client-edit-button"]')))
+        element.click()
+        time.sleep(5)
+
+
 
 """
-   Xpath:
+   
 
     Column:
     (//div[@class="nk-block border border-light"])[1]//div[@class="nk-tb-col"]
