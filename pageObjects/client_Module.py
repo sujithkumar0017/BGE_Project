@@ -8,7 +8,7 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from datetime import date
-
+from selenium.common import exceptions  
 class Client():
     menuitem_client_Xpath = "//a[@href='/clients']"
     # Page Contents
@@ -147,6 +147,9 @@ class Client():
         assert "https://bge.tkea.in/client/add" in self.driver.current_url
     def add_Client_Page_Contents(self):
          pass
+    def client_mandatory_field(self):
+        self.driver.find_element(By.XPATH,self.btn_createClient_Xpath).click()
+        assert self.driver.find_element(By.XPATH,'//span[normalize-space()="Name is required"]').is_displayed()
     def name(self,name):
         self.driver.find_element(By.XPATH,self.addClient_input_name_Xpath).send_keys(name)
     def phone_number(self,country_code,phone_number):
@@ -156,7 +159,6 @@ class Client():
         print("phone:",country_code)
         actions.send_keys(country_code)
         actions.send_keys(Keys.ENTER).perform()
-        print("phone:",phone_number)
         self.driver.find_element(By.ID,self.addClient_input_phoneNumber_Id).send_keys(phone_number)
     def address(self,address):
         self.driver.find_element(By.ID,self.addClient_input_address_Id).send_keys(address)
@@ -258,7 +260,7 @@ class Client():
         assert "email is a required field" == self.driver.find_element(By.XPATH,"//span[normalize-space()='email is a required field']").text
         assert "password is a required field" == self.driver.find_element(By.XPATH,"//span[normalize-space()='password is a required field']").text
     
-    def createClient(self,client_name):
+    def createClient(self):
         self.driver.find_element(By.XPATH,self.btn_createClient_Xpath).click()
         time.sleep(3)
         self.msg=self.driver.find_element(By.XPATH,"(//div[contains(@class,'toastr-text')])[1]").text
@@ -274,25 +276,71 @@ class Client():
         #      assert True
         #     else:
         #      assert False
-    def list_view(self,name):
-        element = WebDriverWait(self.driver, 10).until(EC.presence_of_all_elements_located((By.XPATH,'//div[@class="user-card"]//span[@class="tb-lead"]')))
-        for x in element:
-            # print(x)
-            if x.text in name:
-                x.click()
-                time.sleep(5)
-                WebDriverWait(self.driver, 30).until(EC.presence_of_all_elements_located((By.XPATH,'//div[@class="user-card"]//span[@class="tb-lead"]')))
-                time.sleep(3)
-            else: 
-               assert False
+    # def list_view(self,name):
+    #     element = WebDriverWait(self.driver, 10).until(EC.presence_of_all_elements_located((By.XPATH,'//div[@class="user-card"]//span[@class="tb-lead"]')))
+    #     for x in element:
+    #         # print(x)
+    #         if x.text in name:
+    #             # x.click()
+    #             time.sleep(5)
+    #             WebDriverWait(self.driver, 30).until(EC.presence_of_all_elements_located((By.XPATH,'//div[@class="user-card"]//span[@class="tb-lead"]')))
+    #             time.sleep(3)
+    #         else: 
+    #            assert False
+
+
+    def search_client(self,name):
+        self.driver.find_element(By.ID,'client-search')
+        keyword = self.driver.find_element(By.ID,'client-search-input')
+        keyword.send_keys(name)
+        keyword.send_keys(Keys.ENTER)
+        
+
     def edit_client_dropdown(self,client_name):
         self.driver.find_element(By.XPATH,'//div[normalize-space()="'+client_name+'"]/following::a[@id="client-menu-btn"]').click()
         element= WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH,'//div[@class="dropdown show"]//ul[@class="link-list-opt no-bdr"]//a[@id="client-edit-button"]')))
         element.click()
         time.sleep(5)
 
+    def client_view(self,name):
+        print(f"invoked with: {name}")
+        element = WebDriverWait(self.driver, 10).until(EC.presence_of_all_elements_located((By.XPATH,'//div[@class="user-card"]//span[@class="tb-lead"]')))
+        
+        
+        for x in element:
+            if x.text in name:
+                # print("element",self.driver.execute_script('return document.getElementsByClassName("title")[0].innerText'))
+                try:
+                    x.click()
+                    self.driver.implicitly_wait(10)
+                    self.driver.set_page_load_timeout(30)
+                    time.sleep(5)
+                    self.driver.refresh()
+                    time.sleep(3)
+                    element2 = self.driver.execute_script('return document.getElementsByClassName("title")[0].innerText')
+                    print(element2)
+                    print("name",name)
+                    if name in element2:
+                       assert True
+                    else:
+                        assert False
+                    break
+                except exceptions.StaleElementReferenceException as e:  # ignore this error
+                    print("exception", e)    
+                    
+                                                   
+                # self.driver.refresh()
+                # print(self.driver.execute_script('return document.getElementsByClassName("title")[0].innerText'))
+                # element=WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.XPATH,'//div[@class="nk-content-inner"]//div/following::h5["Brandon Marquez"]')))
+                # element = self.driver.find_element(By.XPATH,'//div[@class="nk-content-inner"]//div/following::h5["Brandon Marquez"]')
+                # print(element.text)
+            #     assert True
 
-
+        
+    def validation(self):
+        element = self.driver.find_elements(By.XPATH,'//div//span[@class="profile-ud-label"]').text
+        for x in element:
+            print(x)
 """
    
 
@@ -309,3 +357,4 @@ class Client():
     (//div[@class="nk-block border border-light"])[1]//div[contains(@class,"nk-tb-item" )][position()>1]//div[@class="nk-tb-col"][1]
     
 """
+# //span[normalize-space()="Client Name"]/following::span[normalize-space()="Dr. Christopher Shaw"]
