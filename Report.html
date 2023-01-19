@@ -189,8 +189,8 @@ function showOutput(id, name) {
 
 <div class='heading'>
 <h1>Test Report</h1>
-<p class='attribute'><strong>Start Time:</strong> 2023-01-13 19:46:37</p>
-<p class='attribute'><strong>Duration:</strong> 0:00:00.001883</p>
+<p class='attribute'><strong>Start Time:</strong> 2023-01-18 12:11:27</p>
+<p class='attribute'><strong>Duration:</strong> 0:00:00.002367</p>
 <p class='attribute'><strong>Status:</strong> Error 2</p>
 
 <p class='description'></p>
@@ -222,7 +222,7 @@ function showOutput(id, name) {
 </tr>
 
 <tr class='errorClass'>
-    <td>TestCases.Package_Client_02.TC_Client.Test_client</td>
+    <td>TestCases.Package_corrective_maintenance.TC_corrective_maintenance.Test_Corrective</td>
     <td>2</td>
     <td>0</td>
     <td>0</td>
@@ -231,7 +231,7 @@ function showOutput(id, name) {
 </tr>
 
 <tr id='ft1.1' class='none'>
-    <td class='errorCase'><div class='testcase'>test_add_client_02</div></td>
+    <td class='errorCase'><div class='testcase'>test_login</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
@@ -246,9 +246,9 @@ function showOutput(id, name) {
         <pre>
         
 ft1.1: Traceback (most recent call last):
-  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 32, in test_add_client_02
-    self.client = Client(self.driver)
-AttributeError: 'Test_client' object has no attribute 'driver'
+  File "C:\Users\Sujith\OneDrive\Desktop\BGE_Project\TestCases\Package_corrective_maintenance\TC_corrective_maintenance.py", line 16, in test_login
+    self.driver.get("https://bge.tkea.in/")
+AttributeError: 'Test_Corrective' object has no attribute 'driver'
 
 
         </pre>
@@ -259,7 +259,7 @@ AttributeError: 'Test_client' object has no attribute 'driver'
 </tr>
 
 <tr id='ft1.2' class='none'>
-    <td class='errorCase'><div class='testcase'>test_client_01</div></td>
+    <td class='errorCase'><div class='testcase'>test_zdd_corrective_maintenance</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
@@ -274,9 +274,9 @@ AttributeError: 'Test_client' object has no attribute 'driver'
         <pre>
         
 ft1.2: Traceback (most recent call last):
-  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 25, in test_client_01
-    self.driver.get(self.url)
-AttributeError: 'Test_client' object has no attribute 'driver'
+  File "C:\Users\Sujith\OneDrive\Desktop\BGE_Project\TestCases\Package_corrective_maintenance\TC_corrective_maintenance.py", line 22, in test_zdd_corrective_maintenance
+    self.corrective = corrective_maintenance(self.driver)
+AttributeError: 'Test_Corrective' object has no attribute 'driver'
 
 
         </pre>
