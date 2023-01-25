@@ -124,7 +124,10 @@ class corrective_maintenance:
         self.driver.find_element(By.XPATH,'//div[@tag="a"]').click()
     def apply_button(self):
         self.driver.find_element(By.CSS_SELECTOR,".btn.btn-secondary").click()  
-    def status(self):
+    def reset_filter_button(self):
+        self.driver.find_element(By.XPATH,'//button[text()="Reset Filter"]').click()
+    def filter_status(self):
+        self.filter_option()
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'(//div[@class="react-select__input"]//input[@type="text"])[1]')))
         actions = ActionChains(self.driver)
         actions.click(element)
@@ -135,19 +138,26 @@ class corrective_maintenance:
         # sleep = WebDriverWait(self.driver, 10).until(EC.presence_of_all_elements_located((By.ID,"client-next-btn")))
         isNextDisabled = False
         while not isNextDisabled:
-             element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(
-             (By.XPATH, '//div[@class="user-name"]/following::span[@class="text-capitalize badge badge-danger badge-pill"]')))
-             table = element.find_element(By.XPATH, '//div[@class="user-name"]/following::span[@class="text-capitalize badge badge-danger badge-pill"]')
-             validate_status = table.find_elements(By.XPATH,'//div[@class="user-name"]/following::span[@class="text-capitalize badge badge-danger badge-pill"]')
-             for x in validate_status:
-                print(x.text)
-             nxt_btn = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,"//div[@class='card-inner']//li[5]")))
-             next_class = nxt_btn.get_attribute('class')  
-             if "page-item disabled" in next_class:
-                    isNextDisabled = True
-             else:
-                self.driver.find_element(By.XPATH,"//div[@class='card-inner']//li[5]").click()
-    def assigned_engineer(self):
+            # element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(
+            #   (By.XPATH, '//div[@class="user-name"]/following::span[@class="text-capitalize badge badge-danger badge-pill"]')))
+            # table = element.find_element(By.XPATH, '//div[@class="user-name"]/following::span[@class="text-capitalize badge badge-danger badge-pill"]')
+            validate_status = self.driver.find_elements(By.XPATH,'//div[@class="user-name"]/following::span[@class="text-capitalize badge badge-danger badge-pill"]')
+            for x in validate_status:
+                # print(x.text)
+                if x.text != "Open":
+                    self.driver.save_screenshot("corrective_open_status.png")
+                    break
+            nxt_btn = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,"//div[@class='card-inner']//li[last()-2]")))
+            next_class = nxt_btn.get_attribute('class')  
+            # print(next_class)
+            if "page-item disabled" in next_class:
+                isNextDisabled = True
+            else:
+                self.driver.find_element(By.XPATH,"//div[@class='card-inner']//li[last()-2]").click()
+        self.driver.find_element(By.XPATH,"(//div[@class='card-inner']//li)[2]").click()
+    def filter_assigned_engineer(self):
+        self.filter_option()
+        self.reset_filter_button()
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'(//div[@class="react-select__input"]//input[@type="text"])[2]')))
         actions = ActionChains(self.driver)
         actions.click(element)
@@ -156,34 +166,80 @@ class corrective_maintenance:
         self.apply_button()
         isNextDisabled = False
         while not isNextDisabled:
-             element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(
-             (By.XPATH, '//div[@class="user-name"]/following::span[@class="text-capitalize badge badge-danger badge-pill"]')))
-             table = element.find_element(By.XPATH, '//div[@class="user-name"]/following::span[@class="text-capitalize badge badge-danger badge-pill"]')
-             validate_status = table.find_elements(By.XPATH,'//div[@class="user-name"]/following::span[@class="text-capitalize badge badge-danger badge-pill"]')
-             for x in validate_status:
-                print(x.text)
-             nxt_btn = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,"//div[@class='card-inner']//li[5]")))
-             next_class = nxt_btn.get_attribute('class')  
-             if "page-item disabled" in next_class:
-                    isNextDisabled = True
-             else:
-                self.driver.find_element(By.XPATH,"//div[@class='card-inner']//li[5]").click()
-    def plant_name(self):
+            element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(
+                          (By.XPATH, '//div[@class="user-name"]/following::div[@id="corrective-assignedto"]')))
+            validate_status = self.driver.find_elements(By.XPATH,'//div[@class="user-name"]/following::div[@id="corrective-assignedto"]')
+            for x in validate_status:
+                # print(x.text)
+                if x.text != "Admin Test":
+                    self.driver.save_screenshot("corrective_filter_assigned_to.png")
+                    assert False
+                # print(x.text)
+            nxt_btn = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,"//div[@class='card-inner']//li[last()-2]")))
+            next_class = nxt_btn.get_attribute('class')
+            # print(next_class)  
+            if "page-item disabled" in next_class:
+                isNextDisabled = True
+                break
+            else:
+                self.driver.find_element(By.XPATH,"//div[@class='card-inner']//li[last()-2]").click()
+        self.driver.find_element(By.XPATH,"(//div[@class='card-inner']//li)[2]").click()
+    def filter_plant_name(self):
+        self.filter_option()
+        self.reset_filter_button()
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'(//div[@class="react-select__input"]//input[@type="text"])[3]')))
         actions = ActionChains(self.driver)
         actions.click(element)
-        actions.send_keys("coffee plant")
+        actions.send_keys("Plant_003")
         actions.send_keys(Keys.ENTER).perform()
         self.apply_button()
+        isNextDisabled = False
+        while not isNextDisabled:
+            validate_status = self.driver.find_elements(By.XPATH,'//div[@class="user-name"]/following::div[@id="corrective-plant-name"]')
+            for x in validate_status:
+                if x.text != "Plant_003":
+                    self.driver.save_screenshot("corrective_filter_plant_name.png")
+                    assert False
+                # print(x.text)
+            nxt_btn = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,"//div[@class='card-inner']//li[last()-2]")))
+            next_class = nxt_btn.get_attribute('class')
+            # print(next_class)  
+            if "page-item disabled" in next_class:
+                isNextDisabled = True
+                break
+            else:
+                self.driver.find_element(By.XPATH,"//div[@class='card-inner']//li[last()-2]").click()
+        self.driver.find_element(By.XPATH,"(//div[@class='card-inner']//li)[2]").click()
 
-    def start_date(self):
-        element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'(//div[@class="react-datepicker-wrapper"])[1]')))
+    def filter_start_date(self):
+        self.filter_option()
+        self.reset_filter_button()
+        element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//label[normalize-space()="Start Date"]/following-sibling::div[@class="react-datepicker-wrapper"]')))
         actions = ActionChains(self.driver)
         actions.click(element)
-        actions.send_keys("09/01/2023")
+        actions.send_keys("23/01/2023")
         actions.send_keys(Keys.ENTER).perform()
         self.apply_button()
-    def resolved_date(self):
+        isNextDisabled = False
+        while not isNextDisabled:
+            validate_status = self.driver.find_elements(By.XPATH,'//div[@class="user-name"]/following::div[@id="corrective-startat"]')
+            for x in validate_status:
+                if x.text != "23/01/2023":
+                    self.driver.save_screenshot("corrective_filter_plant_name.png")
+                    assert False
+                # print(x.text)
+            nxt_btn = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,"//div[@class='card-inner']//li[last()-2]")))
+            next_class = nxt_btn.get_attribute('class')
+            # print(next_class)  
+            if "page-item disabled" in next_class:
+                isNextDisabled = True
+                break
+            else:
+                self.driver.find_element(By.XPATH,"//div[@class='card-inner']//li[last()-2]").click()
+        self.driver.find_element(By.XPATH,"(//div[@class='card-inner']//li)[2]").click()
+
+
+    def filter_resolved_date(self):
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'(//div[@class="react-datepicker-wrapper"])[2]')))
         actions = ActionChains(self.driver)
         actions.click(element)

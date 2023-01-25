@@ -1,4 +1,5 @@
 import datetime
+import os
 import time
 
 from selenium.webdriver.common.keys import Keys
@@ -96,7 +97,7 @@ class Client():
     userCraetion_close_window_xpath = "//em[@class='icon ni ni-cross']"
 
     #User Creation Functionality
-    userCreation_input_addUser_firstName_Xpath= '//input[@id="firstName"]'
+    userCreation_input_addUser_firstName_Xpath= '//div//input[@id="firstName"]'
     userCreation_input_addUser_lastName_Xpath = '//input[@id="lastName"]'
     userCreation_input_addUser_Email_Xpath = "//input[@type='email']"
     userCreation_input_addUser_Password_Xpath = "//input[@name='password']"
@@ -156,7 +157,7 @@ class Client():
         element = self.driver.find_element(By.ID,self.addClient_dd_select_phone_countryCode_Id)
         actions = ActionChains(self.driver)
         actions.click(element)
-        print("phone:",country_code)
+        # print("phone:",country_code)
         actions.send_keys(country_code)
         actions.send_keys(Keys.ENTER).perform()
         self.driver.find_element(By.ID,self.addClient_input_phoneNumber_Id).send_keys(phone_number)
@@ -166,10 +167,10 @@ class Client():
         element = self.driver.find_element(By.ID,self.addClient_dd_select_mobile_countryCode_Id)
         actions = ActionChains(self.driver)
         actions.click(element)
-        print("mobile:",country_code)
+        # print("mobile:",country_code)
         actions.send_keys(country_code)
         actions.send_keys(Keys.ENTER).perform()
-        print("mobile:",mobile_number)
+        #  print("mobile:",mobile_number)
         self.driver.find_element(By.ID,self.addClient_input_mobileNumber_Id).send_keys(mobile_number)  
     def email_address(self,email):
         self.driver.find_element(By.XPATH,self.addClient_input_email_Xpath).send_keys(email)
@@ -187,11 +188,7 @@ class Client():
         for y in plant_name:
             self.driver.find_element(By.ID,self.addClient_dd_Plant_Id).click()
             self.driver.find_element(By.XPATH, '//div[text()="'+y+'"]').click()
-    
-    # ADD_PLANT
-    def client_add_plant(self):
-        button = self.driver.find_element(By.XPATH,self.btn_addPlant_Xpath)
-        self.driver.execute_script("arguments[0].click();",button)
+
         #print("title of the window",self.driver.title)
         #assert "Plant Creation" == self.driver.find_element(By.XPATH,"//h5[normalize-space()='Plant Creation']").text
     def plant_name(self,name):
@@ -258,24 +255,24 @@ class Client():
         assert  "firstName is a required field" == self.driver.find_element(By.XPATH,'//span[text()="firstName is a required field"]').text
         assert "lastName is a required field" == self.driver.find_element(By.XPATH,"//span[normalize-space()='lastName is a required field']").text
         assert "email is a required field" == self.driver.find_element(By.XPATH,"//span[normalize-space()='email is a required field']").text
-        assert "password is a required field" == self.driver.find_element(By.XPATH,"//span[normalize-space()='password is a required field']").text
+        assert "password is a requirevisibility_of_element_locatedd field" == self.driver.find_element(By.XPATH,"//span[normalize-space()='password is a required field']").text
     
     def createClient(self):
         self.driver.find_element(By.XPATH,self.btn_createClient_Xpath).click()
         time.sleep(3)
         self.msg=self.driver.find_element(By.XPATH,"(//div[contains(@class,'toastr-text')])[1]").text
         if "Client created successfully" in self.msg:
-            assert True == True
+            assert True
         else:
             self.driver.save_screenshot("client.png")
-            assert True == False  
-        time.sleep(3)
+            assert  False  
+        # time.sleep(3)
         # self.table = self.driver.find_elements(By.XPATH,'//div[@class="nk-tb-list nk-tb-ulist is-compact"]//div[@class="user-card"]')
         # for y in self.table:
         #     if y.text == client_name:
         #      assert True
         #     else:
-        #      assert False
+        #      assert Falsevisibility_of_element_located
     # def list_view(self,name):
     #     element = WebDriverWait(self.driver, 10).until(EC.presence_of_all_elements_located((By.XPATH,'//div[@class="user-card"]//span[@class="tb-lead"]')))
     #     for x in element:
@@ -285,7 +282,7 @@ class Client():
     #             time.sleep(5)
     #             WebDriverWait(self.driver, 30).until(EC.presence_of_all_elements_located((By.XPATH,'//div[@class="user-card"]//span[@class="tb-lead"]')))
     #             time.sleep(3)
-    #         else: 
+    #         else: edit_client
     #            assert False
 
 
@@ -296,17 +293,8 @@ class Client():
         keyword.send_keys(Keys.ENTER)
         
 
-    def edit_client_dropdown(self,client_name):
-        self.driver.find_element(By.XPATH,'//div[normalize-space()="'+client_name+'"]/following::a[@id="client-menu-btn"]').click()
-        element= WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH,'//div[@class="dropdown show"]//ul[@class="link-list-opt no-bdr"]//a[@id="client-edit-button"]')))
-        element.click()
-        time.sleep(5)
-
     def client_view(self,name):
-        print(f"invoked with: {name}")
         element = WebDriverWait(self.driver, 10).until(EC.presence_of_all_elements_located((By.XPATH,'//div[@class="user-card"]//span[@class="tb-lead"]')))
-        
-        
         for x in element:
             if x.text in name:
                 # print("element",self.driver.execute_script('return document.getElementsByClassName("title")[0].innerText'))
@@ -314,34 +302,74 @@ class Client():
                     x.click()
                     self.driver.implicitly_wait(10)
                     self.driver.set_page_load_timeout(30)
-                    time.sleep(5)
-                    self.driver.refresh()
+                    # time.sleep(5)
+                    # self.driver.refresh()
                     time.sleep(3)
                     element2 = self.driver.execute_script('return document.getElementsByClassName("title")[0].innerText')
                     print(element2)
-                    print("name",name)
+                    # print("name",name)
                     if name in element2:
                        assert True
                     else:
                         assert False
                     break
                 except exceptions.StaleElementReferenceException as e:  # ignore this error
-                    print("exception", e)    
-                    
-                                                   
-                # self.driver.refresh()
-                # print(self.driver.execute_script('return document.getElementsByClassName("title")[0].innerText'))
-                # element=WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.XPATH,'//div[@class="nk-content-inner"]//div/following::h5["Brandon Marquez"]')))
-                # element = self.driver.find_element(By.XPATH,'//div[@class="nk-content-inner"]//div/following::h5["Brandon Marquez"]')
-                # print(element.text)
-            #     assert True
-
-        
+                    print("exception", e)          
     def validation(self):
         element = self.driver.find_elements(By.XPATH,'//div//span[@class="profile-ud-label"]').text
         for x in element:
             print(x)
-"""
+   
+
+
+
+
+#    --------------------------------------------Edit Client---------------------------------------------------------
+    def view_edit_client_page(self):
+        self.driver.find_element(By.XPATH,'//em[@class="icon ni ni-edit"]').click()
+        time.sleep(3)
+        if self.driver.title == "Brighter App | Client | Edit":
+            assert True
+        else:
+            self.driver.save_screenshot("edit_client.png")   
+            assert False
+    # def cancel_button(self):
+    #     self.driver.find_element(By.XPATH,'//button[normalize-space()="Cancel"]').click()
+    #     if self.driver.title == "Brighter App | Client | view":
+    #         assert True
+    #     else:
+    #         self.driver.save_screenshot("editClient_cancel_button.png")
+    #         assert False
+
+    def mandatory_field(self):
+        self.driver.find_element(By.XPATH,self.addClient_input_name_Xpath).clear()
+        self.driver.find_element(By.XPATH,'//button[normalize-space()="Save Information"]').click()
+        assert self.driver.find_element(By.XPATH,'//span[normalize-space()="Name is required"]').is_displayed()
+    def edit_client(self,name):
+        self.name(name)
+        self.driver.find_element(By.XPATH,self.addClient_input_postalcode_Xpath).clear()
+        self.driver.find_element(By.XPATH,self.addClient_input_city_Xpath).clear()
+        file_to_upload_path = os.getcwd() + "/Files/file.png"
+        self.driver.find_element(By.XPATH,'//input[@type="file"]').send_keys(file_to_upload_path)
+        self.driver.find_element(By.XPATH,'//button[normalize-space()="Save Information"]').click()
+        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p')))
+        time.sleep(3)
+        if "Client details updated successfully" in self.msg.text:
+            assert True
+        else:
+            self.driver.save_screenshot("update_client.png")
+            assert  False
+    
+    # ---------------------------------------------- List_View_three_dotted_icon-----------------------------------------------
+
+    def edit_client_dropdown(self,client_name):
+        self.driver.find_element(By.XPATH,'//div[normalize-space()="'+client_name+'"]/following::a[@id="client-menu-btn"]').click()
+        element= WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH,'//div[@class="dropdown show"]//ul[@class="link-list-opt no-bdr"]//a[@id="client-edit-button"]')))
+        element.click()
+        self.view_edit_client_page()
+        self.mandatory_field()
+        self.edit_client()        
+"""      
    
 
     Column:

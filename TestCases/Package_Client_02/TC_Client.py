@@ -31,40 +31,41 @@ class Test_client(unittest.TestCase):
     def test_add_client_02(self):
         self.client = Client(self.driver)
         self.client.navigate_to_client_page()
-        self.client.add_Client()
-        self.client.client_mandatory_field()
-        time.sleep(3)
+    #     self.client.add_Client()
+    #     self.client.client_mandatory_field()
+    #     time.sleep(3)
     #     self.client.name(self.data["name"])
-    #     # self.client.phone_number(data["phone_number_countryCode"],data["phone_number"])
-    #     # self.client.address(data["address"])
-    #     # self.client.mobile_number(data["mobile_number_countryCode"],data["mobile_number"])
-    #     # self.client.email_address(data["email"])
-    #     # self.client.city(data["city"])        # self.client.email_address(data["email"])
-    #     # self.client.city(data["city"])
-    #     # self.client.postal_code(data["postalCode"])   
+    #     self.client.phone_number(self.data["phone_number_countryCode"],self.data["phone_number"])
+    #     self.client.address(self.data["address"])
+    #     self.client.mobile_number(self.data["mobile_number_countryCode"],self.data["mobile_number"])
+    #     self.client.email_address(self.data["email"])
+    #     self.client.city(self.data["city"])        # self.client.email_address(data["email"])
+    #     self.client.city(self.data["city"])
+    #     self.client.postal_code(self.data["postalCode"])   
     #     self.client.website("www.google.com")
-    #     # self.client.task_visibility(['Open' , 'Completed'])
-    #     # self.client.plant(['Watch Plant','plant_test'])
+    #     self.client.task_visibility(['Open' , 'Completed'])
+    #     self.client.plant(['airpods plant','Coffee plant'])
        
     #     # #AddPlant
-    #     # self.client.client_add_plant()
-    #     # self.client.plantCreation_mandatory_fields()
-    #     # #self.plant_name = "Plant_01"
-    #     # self.client.plant_name(data["plant_name"])
-    #     # self.client.size(data["size"])
-    #     # self.client.acronym(data["acronym"])
-    #     # self.client.on_boardingDate()
+    #     self.client.client_add_plant()
+    #     self.client.plantCreation_mandatory_fields()
+    #     #self.plant_name = "Plant_01"
+    #     self.client.plant_name(self.data["plant_name"])
+    #     self.client.size(self.data["size"])
+    #     self.client.acronym(self.data["acronym"])
+    #     self.client.on_boardingDate()
         
-    #     # self.client.status("Active")
-    #     # self.client.add_plant(data["plant_name"])
+    #     self.client.status("Active")
+    #     self.client.add_plant(self.data["plant_name"])
       
-    #     # self.client.client_addUser()
-    #     # #self.client.userCreation_mandatory_fields()
-    #     # self.client.user_firstName(data["user_first_name"])
-    #     # self.client.user_lastName(data["user_last_name"])
-    #     # self.client.user_email(data["user_email"])
-    #     # self.client.user_password(data["user_password"])
-    #     # self.client.addUser(data["user_first_name"])
+    #     self.client.client_addUser()
+    #     # self.client.userCreation_mandatory_fields()
+    #     # print(self.data["user_first_name"])
+    #     self.client.user_firstName(self.data["user_first_name"])
+    #     self.client.user_lastName(self.data["user_last_name"])
+    #     self.client.user_email(self.data["user_email"])
+    #     self.client.user_password(self.data["user_password"])
+    #     self.client.addUser(self.data["user_first_name"])
     #     self.client.createClient()
     # @pytest.mark.order(3) 
     # def test_username_in_listview(self):
@@ -74,7 +75,6 @@ class Test_client(unittest.TestCase):
     #                 break
     #             else:
     #                 assert False
-        # self.client.list_view("Lindsey Robinson")
     # @pytest.mark.order(4)
     # def test_search_option(self):
     #     self.client = Client(self.driver)
@@ -87,17 +87,24 @@ class Test_client(unittest.TestCase):
     #         else:
     #             assert False
     # @pytest.mark.order(5)
-    # def test_client_view(self):
-    #     self.client = Client(self.driver)
-    #     self.client.client_view(self.data["name"])
+    def test_client_view(self):
+        self.client = Client(self.driver)
+        # self.client.client_view(self.data["name"])
+        # time.sleep(2)
+        self.client.client_view("TESARK")
+    def test_edit_client(self):
+        self.client = Client(self.driver)
+        self.client.view_edit_client_page()
+        self.client.mandatory_field()
+        self.client.edit_client("TESARK")
 
-    # time.sleep(4)
+    
 
     # @pytest.mark.order(5)
     # def test_menuOption_in_listView(self):
     #     self.client = Client(self.driver)
     #     self.client.edit_client_dropdown(self.data["name"])
                
-
+   
 if __name__ =="__main__":
     unittest.main()
