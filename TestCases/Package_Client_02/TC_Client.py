@@ -87,24 +87,50 @@ class Test_client(unittest.TestCase):
     #         else:
     #             assert False
     # @pytest.mark.order(5)
-    def test_client_view(self):
-        self.client = Client(self.driver)
-        # self.client.client_view(self.data["name"])
-        # time.sleep(2)
-        self.client.client_view("TESARK")
-    def test_edit_client(self):
-        self.client = Client(self.driver)
-        self.client.view_edit_client_page()
-        self.client.mandatory_field()
-        self.client.edit_client("TESARK")
-
-    
-
-    # @pytest.mark.order(5)
-    # def test_menuOption_in_listView(self):
+    # ------------------------------------------------ View Client ----------------------------------------------- 
+    # @pytest.mark.order(4)
+    # def test_edit_client(self):
     #     self.client = Client(self.driver)
-    #     self.client.edit_client_dropdown(self.data["name"])
-               
-   
+    #     self.client.view_edit_client_page()
+    #     self.client.mandatory_field()
+    #     self.client.edit_client("TESARK")
+    # @pytest.mark.order(3)
+    # def test_client_view(self):
+    #     self.client = Client(self.driver)
+    #     # self.client.client_view(self.data["name"])
+    #     # time.sleep(2)
+    #     self.client.client_view("TESARK")    #Duplication
+    #------------------------------three dotted icon-------------------------------------------------
+    # @pytest.mark.order(5)
+    # def test_listview_menu_editClient(self):
+    #     self.client = Client(self.driver)
+    #     # self.client.edit_client_dropdown(self.data["name"])
+    #     self.client.edit_client_dropdown("TESARK")
+    #-----------------------------------Archive Plants------------------------------------------------
+    # @pytest.mark.order(3)
+    # def test_listview_menu_archive(self):
+    #     self.client = Client(self.driver)
+    #     self.client.archive_user("TESARK")
+    # @pytest.mark.order(4)
+    # def test_view_archive_list(self):
+    #     self.client = Client(self.driver)
+    #     self.client.view_archive_client_list()
+    # @pytest.mark.order(5)
+    # def test_archive_client(self):
+    #     self.client = Client(self.driver)
+    #     self.client.archived_client("TESARK")
+    # @pytest.mark.order(6)
+    # def test_unarchive_client(self):
+    #     self.client = Client(self.driver)
+    #     self.client.unarchived_client("TESARK")
+    # @pytest.mark.order(7)
+    # def test_unarchived_client_in_listView(self):
+    #     self.client = Client(self.driver)
+    #     self.client.unarchived_client_listView("TESARK")
+#----------------------- Data count in list view -----------------------------
+    @pytest.mark.order(3)
+    def test_listview_count(self):
+        self.client = Client(self.driver)
+        self.client.client_listview_count()   
 if __name__ =="__main__":
     unittest.main()

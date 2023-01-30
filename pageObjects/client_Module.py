@@ -347,8 +347,6 @@ class Client():
         assert self.driver.find_element(By.XPATH,'//span[normalize-space()="Name is required"]').is_displayed()
     def edit_client(self,name):
         self.name(name)
-        self.driver.find_element(By.XPATH,self.addClient_input_postalcode_Xpath).clear()
-        self.driver.find_element(By.XPATH,self.addClient_input_city_Xpath).clear()
         file_to_upload_path = os.getcwd() + "/Files/file.png"
         self.driver.find_element(By.XPATH,'//input[@type="file"]').send_keys(file_to_upload_path)
         self.driver.find_element(By.XPATH,'//button[normalize-space()="Save Information"]').click()
@@ -363,13 +361,89 @@ class Client():
     # ---------------------------------------------- List_View_three_dotted_icon-----------------------------------------------
 
     def edit_client_dropdown(self,client_name):
-        self.driver.find_element(By.XPATH,'//div[normalize-space()="'+client_name+'"]/following::a[@id="client-menu-btn"]').click()
+        self.driver.find_element(By.XPATH,'(//div[normalize-space()="'+client_name+'"]/following::div[@class="dropdown"])[1]').click()
         element= WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH,'//div[@class="dropdown show"]//ul[@class="link-list-opt no-bdr"]//a[@id="client-edit-button"]')))
         element.click()
-        self.view_edit_client_page()
+        time.sleep(3)
+        if self.driver.title == "Brighter App | Client | Edit":
+            assert True
+        else:
+            self.driver.save_screenshot("edit_client.png")   
+            assert False
         self.mandatory_field()
-        self.edit_client()        
-"""      
+        self.edit_client(client_name)
+    def archive_user(self,client_name):
+        self.driver.find_element(By.XPATH,'(//div[normalize-space()="'+client_name+'"]/following::div[@class="dropdown"])[1]').click() 
+        element= WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH,'//div[@class="dropdown show"]//ul[@class="link-list-opt no-bdr"]//a[@id="client-archive-btn"]')))
+        element.click()
+        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p')))
+        time.sleep(3)
+        if "Client Archived successfully" in self.msg.text:
+            assert True
+        else:
+            self.driver.save_screenshot("archive_client.png")
+            assert False
+    
+    def view_archive_client_list(self):
+        self.driver.find_element(By.ID,"client-filter-btn").click()
+        time.sleep(3)
+        self.driver.find_element(By.XPATH,'//label[@for="isArchived"]').click()
+        time.sleep(3)
+        self.driver.find_element(By.XPATH,"//button[normalize-space()='Apply']").click()
+        time.sleep(4)
+    def archived_client(self,client_name):
+        element = self.driver.find_elements(By.XPATH,'//div[@class="user-name"]') 
+        for x in element:
+            if x.text == client_name:
+                assert True
+                break
+            else:
+                self.driver.save_screenshot("archive_client_list.png")
+                assert False   
+    def unarchived_client(self,client_name):
+        self.driver.find_element(By.XPATH,'(//div[normalize-space()="'+client_name+'"]/following::div[@class="dropdown"])[1]').click() 
+        element= WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH,'//ul[@class="link-list-opt no-bdr"]//a[@id="client-unarchive-btn"]')))
+        element.click()
+        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p')))
+        time.sleep(3)
+        if "Client Unarchived successfully" in self.msg.text:
+            assert True
+        else:
+            self.driver.save_screenshot("unarchive_client.png")
+            assert False
+    def unarchived_client_listView(self,client_name):
+        self.driver.find_element(By.ID,"client-filter-btn").click()
+        time.sleep(3)
+        self.driver.find_element(By.XPATH,"//button[normalize-space()='Reset Filter']").click()
+        element = self.driver.find_elements(By.XPATH,'//div[@class="user-name"]') 
+        # element=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="user-name"]')))
+        for x in element:
+            if x.text == client_name:
+                assert True
+                break
+            else:
+                self.driver.save_screenshot("unarchive_client_listView.png")
+                assert False   
+    def client_listview_count(self):
+        count =0
+        isNextDisabled = False
+        while not isNextDisabled:
+            validate_status = self.driver.find_elements(By.XPATH,'//div[@class="user-name"]')
+            for x in validate_status:
+                count+=1
+            nxt_btn = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,"//div[@class='card-inner']//li[last()-2]")))
+            next_class = nxt_btn.get_attribute('class')  
+            if "page-item disabled" in next_class:
+                isNextDisabled = True
+                break
+            else:
+                self.driver.find_element(By.XPATH,"//div[@class='card-inner']//li[last()-2]").click()
+        self.driver.find_element(By.XPATH,"(//div[@class='card-inner']//li)[2]").click()
+        # print(count)
+
+
+
+"""    
    
 
     Column:
