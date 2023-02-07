@@ -189,9 +189,9 @@ function showOutput(id, name) {
 
 <div class='heading'>
 <h1>Test Report</h1>
-<p class='attribute'><strong>Start Time:</strong> 2023-01-30 15:21:31</p>
-<p class='attribute'><strong>Duration:</strong> 0:00:00.001990</p>
-<p class='attribute'><strong>Status:</strong> Error 2</p>
+<p class='attribute'><strong>Start Time:</strong> 2023-02-07 19:13:25</p>
+<p class='attribute'><strong>Duration:</strong> 0:00:00.008775</p>
+<p class='attribute'><strong>Status:</strong> Error 10</p>
 
 <p class='description'></p>
 </div>
@@ -223,15 +223,15 @@ function showOutput(id, name) {
 
 <tr class='errorClass'>
     <td>TestCases.Package_corrective_maintenance.TC_corrective_maintenance.Test_Corrective</td>
-    <td>2</td>
+    <td>10</td>
     <td>0</td>
     <td>0</td>
-    <td>2</td>
-    <td><a href="javascript:showClassDetail('c1',2)">Detail</a></td>
+    <td>10</td>
+    <td><a href="javascript:showClassDetail('c1',10)">Detail</a></td>
 </tr>
 
 <tr id='ft1.1' class='none'>
-    <td class='errorCase'><div class='testcase'>test_login</div></td>
+    <td class='errorCase'><div class='testcase'>test_add_followUp_task</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
@@ -246,8 +246,8 @@ function showOutput(id, name) {
         <pre>
         
 ft1.1: Traceback (most recent call last):
-  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_corrective_maintenance/TC_corrective_maintenance.py", line 16, in test_login
-    self.driver.get(self.url)
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_corrective_maintenance/TC_corrective_maintenance.py", line 68, in test_add_followUp_task
+    self.corrective = corrective_maintenance(self.driver)
 AttributeError: 'Test_Corrective' object has no attribute 'driver'
 
 
@@ -259,7 +259,7 @@ AttributeError: 'Test_Corrective' object has no attribute 'driver'
 </tr>
 
 <tr id='ft1.2' class='none'>
-    <td class='errorCase'><div class='testcase'>test_zdd_corrective_maintenance</div></td>
+    <td class='errorCase'><div class='testcase'>test_corrective_ticket_in_list_view</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
@@ -274,7 +274,231 @@ AttributeError: 'Test_Corrective' object has no attribute 'driver'
         <pre>
         
 ft1.2: Traceback (most recent call last):
-  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_corrective_maintenance/TC_corrective_maintenance.py", line 22, in test_zdd_corrective_maintenance
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_corrective_maintenance/TC_corrective_maintenance.py", line 47, in test_corrective_ticket_in_list_view
+    self.corrective = corrective_maintenance(self.driver)
+AttributeError: 'Test_Corrective' object has no attribute 'driver'
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.3' class='none'>
+    <td class='errorCase'><div class='testcase'>test_edit_corrective_ticket</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.3')" >
+        error</a>
+
+    <div id='div_ft1.3' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft1.3').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+ft1.3: Traceback (most recent call last):
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_corrective_maintenance/TC_corrective_maintenance.py", line 58, in test_edit_corrective_ticket
+    self.corrective = corrective_maintenance(self.driver)
+AttributeError: 'Test_Corrective' object has no attribute 'driver'
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.4' class='none'>
+    <td class='errorCase'><div class='testcase'>test_edit_fields</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.4')" >
+        error</a>
+
+    <div id='div_ft1.4' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft1.4').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+ft1.4: Traceback (most recent call last):
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_corrective_maintenance/TC_corrective_maintenance.py", line 62, in test_edit_fields
+    self.corrective = corrective_maintenance(self.driver)
+AttributeError: 'Test_Corrective' object has no attribute 'driver'
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.5' class='none'>
+    <td class='errorCase'><div class='testcase'>test_edit_save_information</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.5')" >
+        error</a>
+
+    <div id='div_ft1.5' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft1.5').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+ft1.5: Traceback (most recent call last):
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_corrective_maintenance/TC_corrective_maintenance.py", line 91, in test_edit_save_information
+    self.corrective = corrective_maintenance(self.driver)
+AttributeError: 'Test_Corrective' object has no attribute 'driver'
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.6' class='none'>
+    <td class='errorCase'><div class='testcase'>test_followup_task_ticket_in_corrective_list_view</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.6')" >
+        error</a>
+
+    <div id='div_ft1.6' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft1.6').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+ft1.6: Traceback (most recent call last):
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_corrective_maintenance/TC_corrective_maintenance.py", line 95, in test_followup_task_ticket_in_corrective_list_view
+    self.corrective = corrective_maintenance(self.driver)
+AttributeError: 'Test_Corrective' object has no attribute 'driver'
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.7' class='none'>
+    <td class='errorCase'><div class='testcase'>test_followup_task_ticket_in_list_view</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.7')" >
+        error</a>
+
+    <div id='div_ft1.7' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft1.7').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+ft1.7: Traceback (most recent call last):
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_corrective_maintenance/TC_corrective_maintenance.py", line 87, in test_followup_task_ticket_in_list_view
+    self.corrective = corrective_maintenance(self.driver)
+AttributeError: 'Test_Corrective' object has no attribute 'driver'
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.8' class='none'>
+    <td class='errorCase'><div class='testcase'>test_login</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.8')" >
+        error</a>
+
+    <div id='div_ft1.8' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft1.8').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+ft1.8: Traceback (most recent call last):
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_corrective_maintenance/TC_corrective_maintenance.py", line 17, in test_login
+    self.driver.get(self.url)
+AttributeError: 'Test_Corrective' object has no attribute 'driver'
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.9' class='none'>
+    <td class='errorCase'><div class='testcase'>test_navigate_corrective_maintenance</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.9')" >
+        error</a>
+
+    <div id='div_ft1.9' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft1.9').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+ft1.9: Traceback (most recent call last):
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_corrective_maintenance/TC_corrective_maintenance.py", line 24, in test_navigate_corrective_maintenance
+    self.corrective = corrective_maintenance(self.driver)
+AttributeError: 'Test_Corrective' object has no attribute 'driver'
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.10' class='none'>
+    <td class='errorCase'><div class='testcase'>test_view_corrective_ticket</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.10')" >
+        error</a>
+
+    <div id='div_ft1.10' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft1.10').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+ft1.10: Traceback (most recent call last):
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_corrective_maintenance/TC_corrective_maintenance.py", line 54, in test_view_corrective_ticket
     self.corrective = corrective_maintenance(self.driver)
 AttributeError: 'Test_Corrective' object has no attribute 'driver'
 
@@ -288,10 +512,10 @@ AttributeError: 'Test_Corrective' object has no attribute 'driver'
 
 <tr id='total_row'>
     <td>Total</td>
-    <td>2</td>
+    <td>10</td>
     <td>0</td>
     <td>0</td>
-    <td>2</td>
+    <td>10</td>
     <td>&nbsp;</td>
 </tr>
 </table>

@@ -5,6 +5,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+from selenium.common import exceptions  
 
 
 class corrective_maintenance:
@@ -29,6 +30,19 @@ class corrective_maintenance:
     attachments = ""
     add_button_xpath = '//div[@class="d-flex justify-content-end col-xl-12"]/button'
     
+    #add_follow-up_task
+    followup_task_name_xpath = "//div[@id='subtask-task-name-input']//input[@name='title']"
+    followup_priority_xpath = "//div[@id='subtask-priority-select']//div[@class='form-control-select']"
+    followup_Sla_xpath = "//div[@id='subtask-sla-select']//div[@class='form-control-select']"
+    followup_status_xpath = "//div[@id='subtask-status-select']//div[@class='form-control-select']"
+    followup_field_engineer_xpath = "//div[@id='subtask-field-engineer-select']//div//div[contains(@class,'form-control-select')]"
+    followup_assigned_to_xpath = "//div[@id='subtask-assignto-select']//div[contains(@class,'form-control-select')]"
+    followup_resolved_date_xpath = "//div[@id='subtask-resolve-select']//div[contains(@class,'form-control-wrap')]"
+    followup_asset_category_xpath = "//div[@id='subtask-assetcategory-select']//div[contains(@class,'form-control-select')]"
+    followup_labour_hours_xpath = "//div[@id='subtask-labour-input']//input[contains(@name,'labourHours')]"
+    followup_description_xpath = "//div[@id='subtask-labour-input']//input[contains(@name,'labourHours')]"
+    followup_comment_xpath = "//div[@id='subtask-comment-input']//textarea[contains(@name,'comment')]"
+    followup_parent_task_xpath = "//div[@id='subtask-parenttask-select']//div[contains(@class,'form-control-select')]"
 
 
 
@@ -42,9 +56,15 @@ class corrective_maintenance:
     def add_corrective_maintenance(self):
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.add_corrective_maintenance_xpath)))
         element.click()
-    def task_name(self):
+        self.driver.implicitly_wait(10)
+        if self.driver.title == "Brighter App | corrective | Create":
+            assert True
+        else:
+            self.driver.save_screenshot("add_corrective_window.png")   
+            assert False
+    def task_name(self,name):
          element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.task_name_xpath)))
-         element.send_keys("corrective")
+         element.send_keys(name)
     def priority(self,priority):
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.priority_xpath)))
         actions = ActionChains(self.driver)
@@ -108,6 +128,13 @@ class corrective_maintenance:
     def add_corrective(self):
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.add_button_xpath)))    
         element.click()
+        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p')))
+        time.sleep(3)
+        if "Successfully Created" in self.msg.text:
+            assert True
+        else:
+            self.driver.save_screenshot("add_corrective.png")
+            assert False
     def corrective_mandatory_fields(self):
         self.driver.find_element(By.XPATH,self.add_button_xpath).click()
         time.sleep(2)
@@ -115,11 +142,175 @@ class corrective_maintenance:
         assert "Plant name is required"== self.driver.find_element(By.XPATH,'//span[normalize-space()="Plant name is required"]').text
         assert "Field Engineer is required"== self.driver.find_element(By.XPATH,'//span[normalize-space()="Field Engineer is required"]').text
         assert "Assigned To is required"== self.driver.find_element(By.XPATH,'//span[normalize-space()="Assigned To is required"]').text
+    
 
-
-
-
-    #Filter Functionality
+    #-----------------------List View---------------------------------------------#
+    def corrective_ticket_listView(self,name):
+        element = WebDriverWait(self.driver, 10).until(EC.presence_of_all_elements_located((By.XPATH,'//div[@class="user-name"]//span[@class="tb-lead"]')))
+        for x in element:
+            if x.text == name:
+                assert True
+            break
+        else:
+            self.driver.save_screenshot("listView_ticket_view.png")
+            assert False     
+    def search_corrective_ticket(self,search_term):
+        self.driver.find_element(By.XPATH,'//a[@href="#search"]').click()
+        keyword = self.driver.find_element(By.XPATH,'//input[@placeholder="Search by Ticket Name, status and Plant Name.enter to search"]')
+        keyword.send_keys(search_term)
+        keyword.send_keys(Keys.ENTER)
+        self.corrective_ticket_listView(search_term)
+    #------------------------ Ticket View --------------------------------#
+    def view_ticket(self,name):
+        element = WebDriverWait(self.driver, 10).until(EC.presence_of_all_elements_located((By.XPATH,'//div[@class="user-name"]//span[@class="tb-lead"]')))
+        for x in element:
+            if x.text in name:
+                x.click()
+                time.sleep(3)
+                if self.driver.title == "Brighter App | Corrective | View":
+                    assert True
+                else:
+                    self.driver.save_screenshot("view_corrective_ticket.png")   
+                    assert False
+                break
+        else:
+            self.driver.save_screenshot("select_corrective_ticket.png")
+            assert False 
+    #---------------------------View-Edit Ticket-------------------------------#           
+    def ticketView_edit_button(self):
+        self.driver.find_element(By.XPATH,'//span[normalize-space()="Edit"]').click()
+        time.sleep(3)
+        if self.driver.title == "Brighter App | Corrective | Edit":
+            assert True
+        else:
+            self.driver.save_screenshot("Edit_corrective_ticket_page.png")   
+            assert False
+    def edit_ticket(self,sla,labour_hours):
+        self.sla(sla)
+        self.labour_hours(labour_hours)
+    
+#-----------------------------------Add Follow-up Task-----------------------------------------#
+    
+    def add_addFollow_up_task(self):
+        self.driver.execute_script("window.scrollBy(0, -500);")
+        self.driver.find_element(By.XPATH,'//span[normalize-space()="Add Follow-up Task"]').click() 
+        print("Before Switching to Frame")
+        self.driver.switch_to.window(self.driver.window_handles[-1])
+        print("After switching to frame")    
+    def create_addfollowup_task_mandatory_fields(self):
+        self.driver.find_element(By.XPATH,'//button[normalize-space()="Add"]').click()
+        time.sleep(2)
+        assert "Title is required"== self.driver.find_element(By.XPATH,'//span[normalize-space()="Title is required"]').text
+        assert "Field Engineer is required"== self.driver.find_element(By.XPATH,'//span[normalize-space()="Field Engineer is required"]').text
+        assert "Assigned To is required"== self.driver.find_element(By.XPATH,'//span[normalize-space()="Assigned To is required"]').text      
+    
+    def followup_task_name(self,name):
+         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.followup_task_name_xpath)))
+         element.send_keys(name)
+    def followup_priority(self,priority):
+        element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.followup_priority_xpath)))
+        actions = ActionChains(self.driver)
+        actions.click(element)
+        actions.send_keys(priority)
+        actions.send_keys(Keys.ENTER).perform()
+    def followup_sla(self,sla):
+        element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.followup_Sla_xpath)))
+        actions = ActionChains(self.driver)
+        actions.click(element)
+        actions.send_keys(sla)
+        actions.send_keys(Keys.ENTER).perform()
+    def followup_status(self,status):
+        element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.followup_status_xpath)))
+        actions = ActionChains(self.driver)
+        actions.click(element)
+        actions.send_keys(status)
+        actions.send_keys(Keys.ENTER).perform()
+    def followup_plant_name(self,plant_name):
+        pass
+    def followup_field_engineer(self,field_engineer):
+        element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.followup_field_engineer_xpath)))
+        actions = ActionChains(self.driver)
+        actions.click(element)
+        actions.send_keys(field_engineer)
+        actions.send_keys(Keys.ENTER).perform()
+    def followup_start_date(self):
+        pass
+    def followup_assigned_to(self,assigned_to):
+        element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.followup_assigned_to_xpath)))
+        actions = ActionChains(self.driver)
+        actions.click(element)
+        actions.send_keys(assigned_to)
+        actions.send_keys(Keys.ENTER).perform()
+    def followup_resolved_date(self):
+        pass
+    def followup_asset_category(self,asset_category):
+        element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.followup_asset_category_xpath)))
+        actions = ActionChains(self.driver)
+        actions.click(element)
+        actions.send_keys(asset_category)
+        actions.send_keys(Keys.ENTER).perform()
+    def followup_labour_hours(self,labour_hours):
+        element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.followup_labour_hours_xpath)))
+        element.send_keys(labour_hours)
+    def followup_description(self,description):
+        element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.followup_description_xpath)))
+        element.send_keys(description)
+    def followup_comment(self,comment):
+        element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.followup_comment_xpath)))
+        element.send_keys(comment)
+    def followup_parent_task(self):
+        pass
+    def followup_attachments(self):
+        file_to_upload_path = os.getcwd() + "/Files/file.png"
+        self.driver.find_element(By.XPATH,'//input[@type="file"]').send_keys(file_to_upload_path)
+    
+    def create_add_followup_task_button(self):
+        self.driver.find_element(By.XPATH,'//button[normalize-space()="Add"]').click()
+        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p')))
+        time.sleep(3)
+        if "Successfully Created" in self.msg.text:
+            assert True
+        else:
+            self.driver.save_screenshot("add_followup_task.png")
+            assert False
+    
+    def followup_task_listview(self,name):
+        element = WebDriverWait(self.driver, 10).until(EC.presence_of_all_elements_located((By.XPATH,'//div[@class="user-card dropdown-toggle"]')))
+        for x in element:
+            if x.text in name:
+                assert True
+            break
+        else:
+                self.driver.save_screenshot("followup_ticket_view.png")
+                assert False 
+    def followup_ticket_visible_in_corrective_list_view(self,name):
+        # self.driver.find_element(By.XPATH,'//button[@class="close"]').click()
+        element = WebDriverWait(self.driver, 10).until(EC.presence_of_all_elements_located((By.XPATH,'//div[@class="user-name"]//span[@class="tb-lead"]')))
+        for x in element:
+            if x.text == name:
+                assert True
+            break
+        else:
+            self.driver.save_screenshot("listView_ticket_view.png")
+            assert False
+    def save_information_button(self):
+        self.driver.find_element(By.XPATH,'//button[@id="save-correctiveForm"]').click()
+        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p')))
+        time.sleep(3)
+        print(self.msg.text)
+        if "Successfully Updated" in self.msg.text:
+            assert True
+        else:
+            self.driver.save_screenshot("edit_corrective_ticket.png")
+            assert False
+    
+    
+    
+    
+    
+    
+    
+    #-----------------------Filter Functionality-----------------------------------#
     def filter_option(self):
         self.driver.find_element(By.XPATH,'//div[@tag="a"]').click()
     def apply_button(self):
@@ -138,9 +329,6 @@ class corrective_maintenance:
         # sleep = WebDriverWait(self.driver, 10).until(EC.presence_of_all_elements_located((By.ID,"client-next-btn")))
         isNextDisabled = False
         while not isNextDisabled:
-            # element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(
-            #   (By.XPATH, '//div[@class="user-name"]/following::span[@class="text-capitalize badge badge-danger badge-pill"]')))
-            # table = element.find_element(By.XPATH, '//div[@class="user-name"]/following::span[@class="text-capitalize badge badge-danger badge-pill"]')
             validate_status = self.driver.find_elements(By.XPATH,'//div[@class="user-name"]/following::span[@class="text-capitalize badge badge-danger badge-pill"]')
             for x in validate_status:
                 # print(x.text)
@@ -246,6 +434,55 @@ class corrective_maintenance:
         actions.send_keys("09/01/2023")
         actions.send_keys(Keys.ENTER).perform()
         self.apply_button()
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

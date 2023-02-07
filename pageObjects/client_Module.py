@@ -255,7 +255,7 @@ class Client():
         assert  "firstName is a required field" == self.driver.find_element(By.XPATH,'//span[text()="firstName is a required field"]').text
         assert "lastName is a required field" == self.driver.find_element(By.XPATH,"//span[normalize-space()='lastName is a required field']").text
         assert "email is a required field" == self.driver.find_element(By.XPATH,"//span[normalize-space()='email is a required field']").text
-        assert "password is a requirevisibility_of_element_locatedd field" == self.driver.find_element(By.XPATH,"//span[normalize-space()='password is a required field']").text
+        assert "password is a required field" == self.driver.find_element(By.XPATH,"//span[normalize-space()='password is a required field']").text
     
     def createClient(self):
         self.driver.find_element(By.XPATH,self.btn_createClient_Xpath).click()
@@ -272,7 +272,7 @@ class Client():
         #     if y.text == client_name:
         #      assert True
         #     else:
-        #      assert Falsevisibility_of_element_located
+        #      assert False
     # def list_view(self,name):
     #     element = WebDriverWait(self.driver, 10).until(EC.presence_of_all_elements_located((By.XPATH,'//div[@class="user-card"]//span[@class="tb-lead"]')))
     #     for x in element:
@@ -439,7 +439,14 @@ class Client():
             else:
                 self.driver.find_element(By.XPATH,"//div[@class='card-inner']//li[last()-2]").click()
         self.driver.find_element(By.XPATH,"(//div[@class='card-inner']//li)[2]").click()
-        # print(count)
+        element = self.driver.find_element(By.XPATH,"//p").text
+        if element[20:22] == count:
+            assert True
+        else:
+            self.driver.save_screenshot("Number_of_client_count.png")
+            assert False
+
+
 
 
 
