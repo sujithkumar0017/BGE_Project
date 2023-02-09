@@ -53,11 +53,18 @@ class corrective_maintenance:
         self.driver.find_element(By.XPATH,self.maintenance).click()
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.menu_item_corrective_maintenance_xpath)))
         element.click()
+        time.sleep(3)
+        if self.driver.title == "Brighter App | Corrective Maintenance":
+            assert True
+        else:
+            self.driver.save_screenshot("add_corrective_window.png")   
+            assert False
     def add_corrective_maintenance(self):
-        element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.add_corrective_maintenance_xpath)))
+        # element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.add_corrective_maintenance_xpath)))
+        element = self.driver.find_element(By.XPATH,'//em[@class="icon ni ni-plus"]')
         element.click()
-        self.driver.implicitly_wait(10)
-        if self.driver.title == "Brighter App | corrective | Create":
+        time.sleep(3)
+        if self.driver.title == "Brighter App | Corrective | Create":
             assert True
         else:
             self.driver.save_screenshot("add_corrective_window.png")   
@@ -194,9 +201,7 @@ class corrective_maintenance:
     def add_addFollow_up_task(self):
         self.driver.execute_script("window.scrollBy(0, -500);")
         self.driver.find_element(By.XPATH,'//span[normalize-space()="Add Follow-up Task"]').click() 
-        print("Before Switching to Frame")
-        self.driver.switch_to.window(self.driver.window_handles[-1])
-        print("After switching to frame")    
+        self.driver.switch_to.window(self.driver.window_handles[-1]) 
     def create_addfollowup_task_mandatory_fields(self):
         self.driver.find_element(By.XPATH,'//button[normalize-space()="Add"]').click()
         time.sleep(2)
@@ -262,12 +267,21 @@ class corrective_maintenance:
         pass
     def followup_attachments(self):
         file_to_upload_path = os.getcwd() + "/Files/file.png"
+        button=self.driver.find_element(By.XPATH,'//div[@id="subtask-parenttask-select"]/following::div//span[@class="dz-message-text"]')
+        self.driver.execute_script("arguments[0].scrollIntoView();", button)
         self.driver.find_element(By.XPATH,'//input[@type="file"]').send_keys(file_to_upload_path)
-    
+        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[text()="File uploaded successfully"')))
+        if "File uploaded successfully" in self.msg.text:
+            assert True
+        else:   
+            self.driver.save_screenshot("add_followup_task.png")
+            assert False
+        
     def create_add_followup_task_button(self):
-        self.driver.find_element(By.XPATH,'//button[normalize-space()="Add"]').click()
-        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p')))
-        time.sleep(3)
+        button = self.driver.find_element(By.XPATH,'//button[normalize-space()="Add"]')
+        self.driver.execute_script("arguments[0].scrollIntoView();", button)
+        button.click()
+        self.msg=WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[text()="Successfully Created"]')))
         if "Successfully Created" in self.msg.text:
             assert True
         else:
@@ -295,9 +309,8 @@ class corrective_maintenance:
             assert False
     def save_information_button(self):
         self.driver.find_element(By.XPATH,'//button[@id="save-correctiveForm"]').click()
-        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p')))
+        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[text()="Successfully Updated"]')))
         time.sleep(3)
-        print(self.msg.text)
         if "Successfully Updated" in self.msg.text:
             assert True
         else:
@@ -305,7 +318,98 @@ class corrective_maintenance:
             assert False
     
     
-    
+
+    # ----------------------Archive and Unarchive ticket -----------------------------#
+    def archive_ticket(self,corrective_ticket):
+        self.driver.find_element(By.XPATH,'(//div[normalize-space()="'+corrective_ticket+'"]/following::div[@class="dropdown"])[1]').click() 
+        element= WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH,'//div[@class="dropdown show"]//ul[@class="link-list-opt no-bdr"]//span[normalize-space()="Archive Task"]')))
+        element.click()
+        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space()="Corrective Task Archived successfully"]')))
+        time.sleep(3)
+        if "Corrective Task Archived successfully" in self.msg.text:
+            assert True
+        else:
+            self.driver.save_screenshot("archive_corrective_ticket.png")
+            assert False
+    def view_archive_ticket_list(self):
+            self.driver.find_element(By.XPATH,'//em[@class="icon ni ni-filter-alt"]').click()
+            self.driver.find_element(By.XPATH,'//label[@for="isArchived"]').click()
+            self.driver.find_element(By.XPATH,"//button[normalize-space()='Apply']").click()
+    def view_archived_ticket_in_list_view(self,corrective_ticket):
+        element = self.driver.find_elements(By.XPATH,'//div[@class="user-name"]') 
+        for x in element:
+            if x.text == corrective_ticket:
+                assert True
+                break
+            else:
+                self.driver.save_screenshot("archive_corrective_ticket_list.png")
+                assert False   
+    def unarchived_ticket(self,client_name):
+        self.driver.find_element(By.XPATH,'(//div[normalize-space()="'+client_name+'"]/following::div[@class="dropdown"])[1]').click() 
+        element= WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH,'(//ul[@class="link-list-opt no-bdr"]//span[normalize-space()="UnArchive Task"])[1]')))
+        element.click()
+        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[text()="Corrective Task UnArchived successfully"]')))
+        time.sleep(3)
+        if "Corrective Task UnArchived successfully" in self.msg.text:
+            assert True
+        else:
+            self.driver.save_screenshot("unarchive_corrective_ticket.png")
+            assert False
+    def unarchived_ticket_listView(self,corrective_ticket):
+        self.driver.find_element(By.XPATH,'//em[@class="icon ni ni-filter-alt"]').click()
+        self.driver.find_element(By.XPATH,"//button[normalize-space()='Reset Filter']").click()
+        element = self.driver.find_elements(By.XPATH,'//div[@class="user-name"]') 
+        for x in element:
+            if x.text == corrective_ticket:
+                assert True
+                break
+            else:
+                self.driver.save_screenshot("unarchive_corrective_ticket_listView.png")
+                assert False 
+
+    def ticket_listview_count(self):
+        count =0
+        isNextDisabled = False
+        while not isNextDisabled:
+            validate_status = self.driver.find_elements(By.XPATH,'//div[@class="user-name"]')
+            for x in validate_status:
+                count+=1
+            nxt_btn = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,"//div[@class='card-inner']//li[last()-2]")))
+            next_class = nxt_btn.get_attribute('class')  
+            if "page-item disabled" in next_class:
+                isNextDisabled = True
+                break
+            else:
+                self.driver.find_element(By.XPATH,"//div[@class='card-inner']//li[last()-2]").click()
+        self.driver.find_element(By.XPATH,"(//div[@class='card-inner']//li)[2]").click()
+        element = self.driver.find_element(By.XPATH,'//p[contains(text(),"You have a total")]').text
+        if element[20:22] == str(count):
+            assert True
+        else:
+            self.driver.save_screenshot("Number_of_client_count.png")
+            assert False
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
     
     
@@ -318,26 +422,22 @@ class corrective_maintenance:
     def reset_filter_button(self):
         self.driver.find_element(By.XPATH,'//button[text()="Reset Filter"]').click()
     def filter_status(self):
-        self.filter_option()
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'(//div[@class="react-select__input"]//input[@type="text"])[1]')))
         actions = ActionChains(self.driver)
         actions.click(element)
         actions.send_keys("open")
         actions.send_keys(Keys.ENTER).perform()
         self.apply_button()
-        
-        # sleep = WebDriverWait(self.driver, 10).until(EC.presence_of_all_elements_located((By.ID,"client-next-btn")))
         isNextDisabled = False
         while not isNextDisabled:
             validate_status = self.driver.find_elements(By.XPATH,'//div[@class="user-name"]/following::span[@class="text-capitalize badge badge-danger badge-pill"]')
             for x in validate_status:
-                # print(x.text)
+                
                 if x.text != "Open":
                     self.driver.save_screenshot("corrective_open_status.png")
                     break
             nxt_btn = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,"//div[@class='card-inner']//li[last()-2]")))
             next_class = nxt_btn.get_attribute('class')  
-            # print(next_class)
             if "page-item disabled" in next_class:
                 isNextDisabled = True
             else:
@@ -358,14 +458,11 @@ class corrective_maintenance:
                           (By.XPATH, '//div[@class="user-name"]/following::div[@id="corrective-assignedto"]')))
             validate_status = self.driver.find_elements(By.XPATH,'//div[@class="user-name"]/following::div[@id="corrective-assignedto"]')
             for x in validate_status:
-                # print(x.text)
                 if x.text != "Admin Test":
                     self.driver.save_screenshot("corrective_filter_assigned_to.png")
                     assert False
-                # print(x.text)
             nxt_btn = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,"//div[@class='card-inner']//li[last()-2]")))
-            next_class = nxt_btn.get_attribute('class')
-            # print(next_class)  
+            next_class = nxt_btn.get_attribute('class')  
             if "page-item disabled" in next_class:
                 isNextDisabled = True
                 break
@@ -388,10 +485,8 @@ class corrective_maintenance:
                 if x.text != "Plant_003":
                     self.driver.save_screenshot("corrective_filter_plant_name.png")
                     assert False
-                # print(x.text)
             nxt_btn = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,"//div[@class='card-inner']//li[last()-2]")))
-            next_class = nxt_btn.get_attribute('class')
-            # print(next_class)  
+            next_class = nxt_btn.get_attribute('class') 
             if "page-item disabled" in next_class:
                 isNextDisabled = True
                 break
@@ -415,10 +510,9 @@ class corrective_maintenance:
                 if x.text != "23/01/2023":
                     self.driver.save_screenshot("corrective_filter_plant_name.png")
                     assert False
-                # print(x.text)
+            
             nxt_btn = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,"//div[@class='card-inner']//li[last()-2]")))
             next_class = nxt_btn.get_attribute('class')
-            # print(next_class)  
             if "page-item disabled" in next_class:
                 isNextDisabled = True
                 break

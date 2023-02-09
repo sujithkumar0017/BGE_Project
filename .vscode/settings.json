@@ -17,6 +17,7 @@
         "msisdn",
         "openpyxl",
         "optionalhook",
+        "parenttask",
         "phonenumber",
         "postalcode",
         "rownum",
