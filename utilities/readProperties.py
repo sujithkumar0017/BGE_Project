@@ -1,7 +1,7 @@
 import configparser
 file = 'config.ini'
 config = configparser.RawConfigParser()
-config.read("/home/sujith/codebase/BGE_Framework_Design/Configuration/config.ini")
+config.read("Configuration/config.ini")
 
 
 class ReadConfig:
