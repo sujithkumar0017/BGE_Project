@@ -27,6 +27,7 @@
         "usefixtures",
         "Useremail",
         "Utilis",
+        "weblink",
         "yopmail"
     ],
     "python.linting.enabled": false,

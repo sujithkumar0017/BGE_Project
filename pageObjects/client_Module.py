@@ -167,10 +167,8 @@ class Client():
         element = self.driver.find_element(By.ID,self.addClient_dd_select_mobile_countryCode_Id)
         actions = ActionChains(self.driver)
         actions.click(element)
-        # print("mobile:",country_code)
         actions.send_keys(country_code)
         actions.send_keys(Keys.ENTER).perform()
-        #  print("mobile:",mobile_number)
         self.driver.find_element(By.ID,self.addClient_input_mobileNumber_Id).send_keys(mobile_number)  
     def email_address(self,email):
         self.driver.find_element(By.XPATH,self.addClient_input_email_Xpath).send_keys(email)

@@ -8,7 +8,7 @@ from selenium.webdriver.common.by import By
 
 
 class failure_reason:
-    entity_mamangement_xpath = '//span[normalize-space()="Entity Management"]'
+    entity_management_xpath = '//span[normalize-space()="Entity Management"]'
     dno_option = '//a[@href="/entity_management/dnos"]'
     add_dno_xpath = "//button[@class='btn btn-primary btn-icon']"
     
@@ -26,8 +26,8 @@ class failure_reason:
 
     def __init__(self,driver) -> None:
         self.driver=driver
-    def naviagate_DNO(self):
-        self.driver.find_element(By.XPATH,self.entity_mamangement_xpath).click()
+    def navigate_DNO(self):
+        self.driver.find_element(By.XPATH,self.entity_management_xpath).click()
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.dno_option)))
         element.click()
         time.sleep(3)
@@ -48,7 +48,7 @@ class failure_reason:
     def DNO_mandatory_fields(self):
         self.driver.find_element(By.XPATH,self.create_dno_xpath).click()
         time.sleep(2)
-        if "name is a required field"== self.driver.find_element(By.XPATH,'//span[normalize-space()="name is a required field"]').text
+        if "name is a required field"== self.driver.find_element(By.XPATH,'//span[normalize-space()="name is a required field"]').text:
             assert True
         else:
             self.driver.save_screenshot("create_failure_reason_mandatory_fields.png")  
@@ -94,11 +94,6 @@ class failure_reason:
     
     #---------------------------------Edit DNO ------------------------------------------------#
 
-
-
-    edit_dno_button_id = "edit-dno-btn"
-    edit_failure_reason_xpath = "//input[@name='name']"
-    save_information_button_xpath = "//button[normalize-space()='Save Information']"
     def edit_failure_reason_button(self):
         self.driver.find_element(By.ID,self.edit_dno_button_id).click()
         if self.driver.title == "Brighter App | DNO | Edit":
@@ -110,7 +105,7 @@ class failure_reason:
         self.driver.find_element(By.ID,self. edit_failure_reason_xpath).clear()
         self.driver.find_element(By.XPATH,self.save_information_button_xpath).click()
         time.sleep(2)
-        if "name is a required field"== self.driver.find_element(By.XPATH,'//span[normalize-space()="name is a required field"]').text
+        if "name is a required field"== self.driver.find_element(By.XPATH,'//span[normalize-space()="name is a required field"]').text:
             assert True
         else:
             self.driver.save_screenshot("DNO_edit_mandatory_fields.png")  
@@ -128,18 +123,16 @@ class failure_reason:
             self.driver.save_screenshot("edit_DNO_toast.png")
             assert False
     
-    def list_view_edit_option(self,DNO):
-        self.driver.find_element(By.XPATH,'(//div[normalize-space()="'+DNO+'"]/following::em[@class="icon ni ni-edit"])[1]').click()
+    def list_view_edit_option(self,Model):
+        self.driver.find_element(By.XPATH,'(//span[normalize-space()="'+Model+'"]/following::em[@class="icon ni ni-edit"])[1]').click()
         if self.driver.title == "Brighter App | DNO | Edit":
                 assert True
         else:
-                self.driver.save_screenshot("Edit_DNO_page.png")   
+                self.driver.save_screenshot("Edit_Modal_page.png")   
                 assert False
-        self.edit_failure_reason_mandatory_field()
-        self.edit_name(DNO)
         self.save_information_button()
-    def list_view_delete_option(self,DNO):
-        self.driver.find_element(By.XPATH,'(//div[normalize-space()="'+DNO+'"]/following::em[@class="icon ni ni-trash"])[1]').click()
+    def list_view_delete_option(self,Model):
+        self.driver.find_element(By.XPATH,'(//span[normalize-space()="'+Model+'"]/following::em[@class="icon ni ni-trash"])[1]').click()
         pass
     def search_functionality(self,search_term):
         self.driver.find_element(By.XPATH,'//a[@href="#search"]').click()
