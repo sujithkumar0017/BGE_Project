@@ -1,8 +1,10 @@
 
 import unittest
+from TestCases.Package_entity_management.TC_SLA import Test_SLA
 # from TestCases.Package_Client_02.TC_Client import Test_client
 # from TestCases.Package_corrective_maintenance.TC_corrective_maintenance import Test_Corrective
-from TestCases.Package_entity_management.TC_asset_category import Test_Asset_Category
+# from TestCases.Package_entity_management.TC_asset_category import Test_Asset_Category
+# from TestCases.Package_entity_management.TC_failure_reason import Test_Failure_Reason
 #from TestCases.Package_Login_01.TC_Login_DDT import Test_002_DDT_login
 from html_test_runner import HTMLTestRunner
 
@@ -12,7 +14,7 @@ from html_test_runner import HTMLTestRunner
 # tc2 = unittest.TestLoader().loadTestsFromTestCase(Test_client)
 # tc3 = unittest.TestLoader().loadTestsFromTestCase(Test_Corrective)
 # masterTestSuit = unittest.TestSuite([tc3])
-tc4 = unittest.TestLoader().loadTestsFromTestCase(Test_Asset_Category)
+tc4 = unittest.TestLoader().loadTestsFromTestCase(Test_SLA)
 masterTestSuit = unittest.TestSuite([tc4])
     #unittest.TextTestRunner(verbosity=2).run(masterTestSuit)
     # runner = HTMLTestRunner(verbosity=2, title='Test report', report_name='report',

@@ -8,7 +8,7 @@ from selenium.webdriver.common.by import By
 
 
 class failure_reason:
-    entity_mamangement_xpath = '//span[normalize-space()="Entity Management"]'
+    entity_management_xpath = '//span[normalize-space()="Entity Management"]'
     failure_reason_option = '//a[@href="/entity_management/failure-reasons"]'
     add_failure_reason_category_id = "add-faliure"
     
@@ -20,14 +20,14 @@ class failure_reason:
     created_failure_reason_in_listView_xpath = '//div[@class="user-name"]//span[@class="tb-lead"]'
 
     #edit category
-    edit_failure_reason_button_id = "edit-faliure"
+    edit_failure_reason_button_xpath = '(//em[@class="icon ni ni-edit"])[last()]'
     edit_failure_reason_id = "name-input"
     save_information_button_id = "save-faliure"
 
     def __init__(self,driver) -> None:
         self.driver=driver
-    def naviagate_failure_reason(self):
-        self.driver.find_element(By.XPATH,self.entity_mamangement_xpath).click()
+    def navigate_failure_reason(self):
+        self.driver.find_element(By.XPATH,self.entity_management_xpath).click()
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.failure_reason_option)))
         element.click()
         time.sleep(3)
@@ -48,7 +48,7 @@ class failure_reason:
     def failure_reason_mandatory_fields(self):
         self.driver.find_element(By.XPATH,self.add_failure_reason_xpath).click()
         time.sleep(2)
-        if "name is a required field"== self.driver.find_element(By.XPATH,'//span[normalize-space()="name is a required field"]').text
+        if "name is a required field"== self.driver.find_element(By.XPATH,'//span[normalize-space()="name is a required field"]').text:
             assert True
         else:
             self.driver.save_screenshot("create_failure_reason_mandatory_fields.png")  
@@ -94,17 +94,19 @@ class failure_reason:
     
     #---------------------------------Edit Failure reason ------------------------------------------------#
     def edit_failure_reason_button(self):
-        self.driver.find_element(By.ID,self.edit_failure_reason_button_id).click()
+        self.driver.find_element(By.XPATH,self.edit_failure_reason_button_xpath).click()
         if self.driver.title == "Brighter App | Failure Reason | Edit":
                 assert True
         else:
                 self.driver.save_screenshot("Edit_Failure_reason_page.png")   
                 assert False
     def edit_failure_reason_mandatory_field(self):
-        self.driver.find_element(By.ID,self.edit_failure_reason_id).clear()
-        self.driver.find_element(By.XPATH,self.save_information_button_id).click()
+        element = self.driver.find_element(By.XPATH,'//input[@id="name-input"]')
         time.sleep(2)
-        if "name is a required field"== self.driver.find_element(By.XPATH,'//span[normalize-space()="name is a required field"]').text
+        element.clear()
+        self.driver.find_element(By.ID,self.save_information_button_id).click()
+        time.sleep(2)
+        if "name is a required field"== self.driver.find_element(By.XPATH,'//span[normalize-space()="name is a required field"]').text:
             assert True
         else:
             self.driver.save_screenshot("edit_mandatory_fields.png")  
@@ -130,8 +132,6 @@ class failure_reason:
                 self.driver.save_screenshot("Edit_Failure_reason_page.png")   
                 assert False
         self.edit_failure_reason_mandatory_field()
-        self.edit_name(category)
-        self.save_information_button()
     def list_view_delete_option(self,category):
         self.driver.find_element(By.XPATH,'(//div[normalize-space()="'+category+'"]/following::button[@id="delete-category"])[1]').click()
         pass
@@ -140,4 +140,4 @@ class failure_reason:
         keyword = self.driver.find_element(By.XPATH,'//input[@placeholder="Search by category"]')
         keyword.send_keys(search_term)
         keyword.send_keys(Keys.ENTER)
-        self.category_in_listView(search_term)
+        self.failure_reason_in_listView(search_term)  

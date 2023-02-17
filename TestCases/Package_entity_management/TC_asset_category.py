@@ -74,6 +74,7 @@ class Test_Asset_Category(unittest.TestCase):
     def test_edit_option_in_listView(self):
         self.asset_category = asset_category(self.driver)
         self.asset_category.list_view_edit_option("Asset Category 51")
+        self.asset_category.edit_category_mandatory_field() 
         self.asset_category.edit_category("Asset Category 512")  
         self.asset_category.save_information_button()
     
@@ -81,4 +82,4 @@ class Test_Asset_Category(unittest.TestCase):
     def test_search_option_listView(self):
         self.asset_category = asset_category(self.driver)
         self.asset_category.search_functionality("Asset Category 512")
-    
+        

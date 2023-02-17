@@ -14,7 +14,7 @@ class sla:
 
     #Add SLA Popup
     input_level_xpath = '//input[@name="name"]'
-    input_description_xpath = '//input[@name="description"]'
+    input_description_xpath = '//textarea[@name="description"]'
     create_sla_xpath = '//button[normalize-space()="Add"]'
 
     #List View
@@ -29,7 +29,7 @@ class sla:
 
     def __init__(self,driver) -> None:
         self.driver = driver
-    def navigate_asset(self):
+    def navigate_sla(self):
         self.driver.find_element(By.XPATH,self.entity_management_xpath).click()
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.sla_option)))
         element.click()
@@ -49,7 +49,7 @@ class sla:
             assert False
     def sla_mandatory_field(self):
         self.driver.find_element(By.XPATH,self.create_sla_xpath).click()
-        if "name is a required field"== self.driver.find_element(By.XPATH,'//span[normalize-space()="name is a required field"]').text and "description is a required field"== self.driver.find_element(By.XPATH,'//span[normalize-space()="description is a required field"]').text:
+        if (self.driver.find_element(By.XPATH,'//span[normalize-space()="name is a required field"]').is_displayed()) and (self.driver.find_element(By.XPATH,'//p[normalize-space()="description is a required field"]').is_displayed()):
             assert True
         else:
             self.driver.save_screenshot("create_sla_mandatory_fields.png")  
@@ -96,26 +96,43 @@ class sla:
     
     #-------------------------------------------Edit asset----------------------------------------------------#
     def edit_sla_button(self):
-        self.driver.find_element(By.ID,self.btn_edit_xpath).click()
+        self.driver.find_element(By.XPATH,self.btn_edit_xpath).click()
+        time.sleep(2)
         if self.driver.title == "Brighter App | SLA | Edit":
                 assert True
         else:
                 self.driver.save_screenshot("Edit_Sla_webpage_title.png")   
                 assert False
     def edit_sla_mandatory_field(self):
-        self.driver.find_element(By.ID,self.input_level_xpath).clear()
-        self.driver.find_element(By.ID,self.input_description_xpath).clear()
+        element = self.driver.find_element(By.XPATH,self.input_level_xpath)
+        time.sleep(2)
+        element.clear() 
+        time.sleep(2)
+        element2 = self.driver.find_element(By.XPATH,self.input_description_xpath)
+        # element2.clear()
+        actions = ActionChains(self.driver)
+
+        # Click the text box to select it
+        actions.click(element2)
+
+        # Send the Control+A keys to select all text, followed by the Delete key to clear the text box
+        actions.key_down(Keys.CONTROL).send_keys('a').key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
+
+
+        # Perform the actions to clear the text box
+        actions.perform()
+        time.sleep(2)
         self.driver.find_element(By.XPATH,self.btn_save_information_xpath).click()
         time.sleep(2)
-        if "name is a required field"== self.driver.find_element(By.XPATH,'//span[normalize-space()="name is a required field"]').text and "description is a required field"== self.driver.find_element(By.XPATH,'//span[normalize-space()="description is a required field"]').text:
+        if self.driver.find_element(By.XPATH,'//span[normalize-space()="name is a required field"]').is_displayed() and self.driver.find_element(By.XPATH,'//p[normalize-space()="description is a required field"]').is_displayed():
             assert True
         else:
             self.driver.save_screenshot("create_sla_mandatory_fields.png")  
             assert False 
     def edit_level(self,level):
-        self.driver.find_element(By.ID,self.input_level_xpath).send_keys(level)
+        self.driver.find_element(By.XPATH,self.input_level_xpath).send_keys(level)
     def edit_description(self,description):
-        self.driver.find_element(By.ID,self.input_description_xpath).send_keys(description)
+        self.driver.find_element(By.XPATH,self.input_description_xpath).send_keys(description)
     def save_information(self):
         self.driver.find_element(By.XPATH,self.btn_save_information_xpath).click()
         self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p')))
@@ -127,6 +144,7 @@ class sla:
             assert False
     def list_view_edit_option(self,level):
         self.driver.find_element(By.XPATH,'(//span[normalize-space()="'+level+'"]/following::em[@class="icon ni ni-edit"])[1]').click()
+        time.sleep(2)
         if self.driver.title == "Brighter App | SLA | Edit":
                 assert True
         else:
@@ -141,4 +159,4 @@ class sla:
         keyword = self.driver.find_element(By.XPATH,'//input[@placeholder="Search by level"]')
         keyword.send_keys(search_term)
         keyword.send_keys(Keys.ENTER)
-        self.category_in_listView(search_term)
+        self.level_in_listView(search_term)

@@ -60,7 +60,6 @@ class corrective_maintenance:
             self.driver.save_screenshot("add_corrective_window.png")   
             assert False
     def add_corrective_maintenance(self):
-        # element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.add_corrective_maintenance_xpath)))
         element = self.driver.find_element(By.XPATH,'//em[@class="icon ni ni-plus"]')
         element.click()
         time.sleep(3)
