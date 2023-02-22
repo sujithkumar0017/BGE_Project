@@ -144,7 +144,6 @@ class sla:
             assert False
     def list_view_edit_option(self,level):
         self.driver.find_element(By.XPATH,'(//span[normalize-space()="'+level+'"]/following::em[@class="icon ni ni-edit"])[1]').click()
-        time.sleep(2)
         if self.driver.title == "Brighter App | SLA | Edit":
                 assert True
         else:

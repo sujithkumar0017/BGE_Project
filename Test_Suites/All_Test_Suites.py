@@ -1,6 +1,7 @@
 
 import unittest
 from TestCases.Package_entity_management.TC_SLA import Test_SLA
+# from TestCases.Package_entity_management.TC_manufacturer import Test_Manufacturer
 # from TestCases.Package_Client_02.TC_Client import Test_client
 # from TestCases.Package_corrective_maintenance.TC_corrective_maintenance import Test_Corrective
 # from TestCases.Package_entity_management.TC_asset_category import Test_Asset_Category

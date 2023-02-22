@@ -17,7 +17,7 @@ class Test_SLA(unittest.TestCase):
 
 
     @pytest.mark.order(1)
-    def test_login(self):
+    def test_login(self):   
         self.driver.get(self.url)
         self.lp = login_Module(self.driver)
         self.lp.email(self.useremail)
@@ -30,7 +30,7 @@ class Test_SLA(unittest.TestCase):
         self.sla.navigate_sla() 
     
     @pytest.mark.order(3)
-    def test_function_of_add(self):
+    def test_add_sla(self):
         self.sla = sla(self.driver)
         self.sla.add_sla()
 
