@@ -21,15 +21,15 @@ class asset:
     dd_category_id = 'category-select-assetForm'
     dd_manufacturer_id ='manufacture-select-assetForm'
     input_weblink_xpath = '//input[@name="weblink"]'
-    input_description_id = 'description-input-assetForm'
-    create_asset_id = 'add-assetForm'
+    input_description_xpath = "//textarea[@id='description-input-assetForm']"
+    create_asset_xpath = "//button[@id='add-assetForm']"
 
     #List View
     created_asset_in_listView_xpath = '//div[@class="user-name"]//span[@class="tb-lead"]'
     
     #Edit_Asset
     btn_edit_xpath = '(//em[@class="icon ni ni-edit"])[last()]'
-    btn_save_information_id ='save-assetForm'
+    btn_save_information_xpath ="//button[@id='save-assetForm']"
 
     def __init__(self,driver) -> None:
         self.driver = driver    
@@ -37,7 +37,7 @@ class asset:
         self.driver.find_element(By.XPATH,self.entity_management_xpath).click()
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.asset_option)))
         element.click()
-        time.sleep(3)
+
         if self.driver.title == "Brighter App | Asset":
             assert True
         else:
@@ -45,22 +45,25 @@ class asset:
             assert False
     def add_asset(self):
         self.driver.find_element(By.ID,self.add_asset_id).click()
-        time.sleep(3)
         if self.driver.title == "Brighter App | Asset | Create":
             assert True
         else:
             self.driver.save_screenshot("create_Asset_webpage_title.png")   
             assert False
     def asset_mandatory_fields(self):
-        self.driver.find_element(By.XPATH,self.create_asset_id).click()
-        time.sleep(2)
-        if "model is a required field"== self.driver.find_element(By.XPATH,'//span[normalize-space()="model is a required field"]').text and "assetCategory is required"== self.driver.find_element(By.XPATH,'//span[normalize-space()="assetCategory is required"]').text and  "manufacturer is required"== self.driver.find_element(By.XPATH,'//span[normalize-space()="manufacturer is required"]').text:
-            assert True
-        else:
-            self.driver.save_screenshot("create_asset_mandatory_fields.png")  
-            assert False 
+        element = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH,self.create_asset_xpath)))
+        element.click()
+        # self.driver.find_element(By.XPATH,self.create_asset_xpath).click()
+        validation_message = ["model is a required field","assetCategory is required","manufacturer is required"]
+        for x in validation_message:
+            element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//span[normalize-space()="'+x+'"]')))
+            if element.is_displayed():
+                assert True
+            else:
+                self.driver.save_screenshot("create_asset_mandatory_fields.png")  
+                assert False
     def modal(self,modal):
-        self.driver.find_element(By.ID,self.input_modal_xpath).send_keys(modal)
+        self.driver.find_element(By.XPATH,self.input_modal_xpath).send_keys(modal)
     def rating(self,rating):
         self.driver.find_element(By.ID,self.input_rating_id).send_keys(rating)
     def factory_barcode(self,barcode):
@@ -78,9 +81,8 @@ class asset:
         actions.send_keys(manufacturer)
         actions.send_keys(Keys.ENTER).perform()
     def create_asset(self):
-        self.driver.find_element(By.ID,self.create_asset_id).click()
-        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p')))
-        time.sleep(3)
+        self.driver.find_element(By.XPATH,self.create_asset_xpath).click()
+        self.msg=WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space()="Successfully Created"]')))
         if "Successfully Created" in self.msg.text:
             assert True
         else:
@@ -114,25 +116,75 @@ class asset:
 
     #---------------------------------- Edit asset -----------------------------------------------------------#
     def edit_asset_button(self):
-        self.driver.find_element(By.ID,self.btn_edit_xpath).click()
+        self.driver.find_element(By.XPATH,self.btn_edit_xpath).click()
         if self.driver.title == "Brighter App | Asset | Edit":
                 assert True
         else:
                 self.driver.save_screenshot("Edit_asset_webpage_title.png")   
                 assert False
+    def edit_asset_mandatory_field(self):
+           modal = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located((By.XPATH,self.input_modal_xpath)))
+        #    modal = self.driver.find_element(By.XPATH,self.input_modal_xpath)
+           actions = ActionChains(self.driver)
+           actions.click(modal).key_down(Keys.CONTROL).send_keys('a').key_up(Keys.CONTROL).send_keys(Keys.DELETE)
+           actions.perform()
+           save_information_btn = WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH,self.btn_save_information_xpath)))
+           save_information_btn.click()
+        #    self.driver.find_element(By.XPATH,self.btn_save_information_xpath).click()
+           element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//span[normalize-space()="model is a required field"]')))
+           if element.is_displayed():
+            assert True
+           else:
+            self.driver.save_screenshot("edit_asset_mandatory_fields.png")  
+            assert False
     def weblink(self,weblink):
-        self.driver.find_element(By.XPATH,self.input_weblink_xpath).send_keys(weblink)
+        element = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located((By.XPATH,self.input_weblink_xpath)))
+        # element = self.driver.find_element(By.XPATH,self.input_weblink_xpath)
+        actions = ActionChains(self.driver)
+        actions.click(element)
+        actions.send_keys(weblink)
+        actions.perform()
     def description(self,description):
-        self.driver.find_element(By.ID,self.input_description_id).send_keys(description)
+        element = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located((By.XPATH,self.input_description_xpath)))
+        actions = ActionChains(self.driver)
+        actions.click(element)
+        actions.send_keys(description)
+        actions.perform()
+        # self.driver.find_element(By.XPATH,self.input_description_xpath).send_keys(description)
     def attachments(self):
         file_to_upload_path = os.getcwd() + "/Files/file.png"
         self.driver.find_element(By.XPATH,'//input[@type="file"]').send_keys(file_to_upload_path)
+        self.msg=WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space()="File uploaded successfully"')))
+        if "File uploaded successfully" in self.msg.text:
+            assert True
+        else:   
+            self.driver.save_screenshot("add_followup_task.png")
+            assert False
     def save_information(self):
-        self.driver.find_element(By.XPATH,self.btn_save_information_id).click()
-        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p')))
-        time.sleep(3)
+        self.driver.find_element(By.XPATH,self.btn_save_information_xpath).click()
+        self.msg=WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space()="Successfully Updated"]')))
         if "Successfully Updated" in self.msg.text:
             assert True
         else:
             self.driver.save_screenshot("edit_asset_toast.png")
             assert False
+        self.driver.find_element(By.XPATH,'//button[@aria-label="close"]').click()
+#---------------------------------------List View Edit and delete option----------------------------------------------#
+    def list_view_edit_option(self,modal):
+        self.driver.find_element(By.XPATH,'(//span[normalize-space()="'+modal+'"]/following::em[@class="icon ni ni-edit"])[1]').click()
+        if self.driver.title == "Brighter App | Asset | Edit":
+                assert True
+        else:
+                self.driver.save_screenshot("Edit_Asset_page.png")   
+                assert False
+    def list_view_delete_option(self,model):
+        self.driver.find_element(By.XPATH,'(//span[normalize-space()="'+model+'"]/following::em[@class="icon ni ni-edit"])[1]').click()
+        pass
+    def search_functionality(self,search_term):
+        self.driver.implicitly_wait(10)
+        element = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH,'(//a[@id="search-asset"])[1]')))
+        element.click()
+        keyword = self.driver.find_element(By.XPATH,'//input[@placeholder="Search by model"]')
+        keyword.send_keys(search_term)
+        keyword.send_keys(Keys.ENTER)
+        self.asset_in_listView(search_term)    
