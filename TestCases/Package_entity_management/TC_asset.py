@@ -29,7 +29,7 @@ class Test_Asset(unittest.TestCase):
         self.asset = asset(self.driver)
         self.asset.navigate_asset()
     @pytest.mark.order(3)
-    def test_add_manufacturer(self):
+    def test_add_asset(self):
         self.asset = asset(self.driver)
         self.asset.add_asset()
     @pytest.mark.order(4)

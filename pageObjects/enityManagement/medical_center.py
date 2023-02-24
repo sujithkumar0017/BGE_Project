@@ -15,7 +15,7 @@ from selenium.webdriver.common.by import By
 
 class medical_centre:
     entity_management_xpath = '//span[normalize-space()="Entity Management"]'
-    medical_reason_option_xpath = 'href="/entity_management/medical-centres"'
+    medical_reason_option_xpath = '//a[@href="/entity_management/medical-centres"]'
     add_medical_centre_xpath = '//button[@id="plus-health-btn"]'
 
 
@@ -54,7 +54,8 @@ class medical_centre:
             assert False
     def add_medical_centre(self):
         self.driver.find_element(By.XPATH, self.add_medical_centre_xpath).click()
-        if self.driver.title == "Brighter App | MedicalCentre | Create":
+        time.sleep(3)
+        if self.driver.title == "Brighter App | Medical Centre | Create":
             assert True
         else:
             self.driver.save_screenshot("medical_reason_webtitle.png")
@@ -82,7 +83,7 @@ class medical_centre:
         actions.send_keys(country_code)
         actions.send_keys(Keys.ENTER).perform()
         self.driver.find_element(By.XPATH,self.input_phone_number_xpath).send_keys(phone_number) 
-    def addresss(self, address):
+    def address(self, address):
         self.driver.find_element(By.XPATH, self.input_address_xpath).send_keys(address)
     def create_medical_centre(self):
         self.driver.find_element(By.XPATH,self.btn_add_medical_centre_xpath).click()
@@ -122,10 +123,11 @@ class medical_centre:
     #----------------------------Edit Medical Reason---------------------------------------------#
     def edit_medical_center_button(self):  
         self.driver.find_element(By.XPATH,self.edit_medical_centre_button_xpath).click()
+        time.sleep(3)
         if self.driver.title == "Brighter App | Medical Centre | Edit":
                 assert True
         else:
-                self.driver.save_screenshot("Edit_Manufacturer_page.png")   
+                self.driver.save_screenshot("Edit_medical_centre_page.png")   
                 assert False 
     def edit_medical_centre_mandatory_field(self):
            phone_number = self.driver.find_element(By.XPATH,self.input_phone_number_xpath)
@@ -138,7 +140,7 @@ class medical_centre:
            actions.click(address).key_down(Keys.CONTROL).send_keys('a').key_up(Keys.CONTROL).send_keys(Keys.DELETE)
            actions.perform()
            self.driver.find_element(By.XPATH,self.btn_save_information_xpath).click()
-           validation_message = ["name is a required field","Please enter a valid number","email is a required field"]
+           validation_message = ["name is a required field","address is a required field","Please enter a valid number"]
            for x in validation_message:
                 element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//span[normalize-space()="'+x+'"]')))
                 if element.is_displayed():
@@ -146,7 +148,7 @@ class medical_centre:
                 else:
                     self.driver.save_screenshot("edit_medical_centre_mandatory_fields.png")  
                     assert False
-    def edit_medical_reason(self):
+    def save_information(self):
         self.driver.find_element(By.XPATH,self.btn_save_information_xpath).click()
         self.msg=WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space()="Successfully Updated"]')))
         if "Successfully Updated" in self.msg.text:
@@ -154,6 +156,7 @@ class medical_centre:
         else:
             self.driver.save_screenshot("edit_medical_centre_toast.png")
             assert False
+        self.driver.find_element(By.XPATH,'//button[@aria-label="close"]').click()
 
     #---------------------------------------List View Edit and delete option----------------------------------------------#
     def list_view_edit_option(self,hospital):
@@ -163,12 +166,25 @@ class medical_centre:
         else:
                 self.driver.save_screenshot("Edit_medical_centre_page.png")   
                 assert False
+    def list_view_edit_mandatory_field(self):
+           address = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.input_address_xpath)))
+        #    address = self.driver.find_element(By.XPATH, self.input_address_xpath)
+           actions = ActionChains(self.driver)
+           actions.click(address).key_down(Keys.CONTROL).send_keys('a').key_up(Keys.CONTROL).send_keys(Keys.DELETE)
+           actions.perform()
+           self.driver.find_element(By.XPATH,self.btn_save_information_xpath).click()
+           element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//span[normalize-space()="address is a required field"]')))
+           if element.is_displayed():
+                    assert True
+           else:
+                    self.driver.save_screenshot("edit_listView_medical_centre_mandatory_fields.png")  
+                    assert False
     def list_view_delete_option(self,manufacturer):
         self.driver.find_element(By.XPATH,'(//span[normalize-space()="'+manufacturer+'"]/following::em[@class="icon ni ni-edit"])[1]').click()
         pass
     def search_functionality(self,search_term):
-        self.driver.find_element(By.XPATH,'//a[@href="#search"]').click()
+        self.driver.find_element(By.XPATH,'//a[@id="search-health-btn"]').click()
         keyword = self.driver.find_element(By.XPATH,'//input[@placeholder="Search by hospital"]')
         keyword.send_keys(search_term)
         keyword.send_keys(Keys.ENTER)
-        self.manufacturer_in_listView(search_term)
+        self.medical_centre_in_listView(search_term)
