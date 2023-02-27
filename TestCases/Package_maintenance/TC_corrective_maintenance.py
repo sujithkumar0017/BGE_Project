@@ -132,13 +132,14 @@ class Test_Corrective(unittest.TestCase):
         self.corrective = corrective_maintenance(self.driver)
         self.corrective.search_corrective_ticket("task_corrective_ticket")
 
-    def filter(self):
-        self.corrective = corrective_maintenance(self.driver)
-        self.corrective.status()
-        time.sleep(3)
-        self.corrective.assigned_engineer()
-        time.sleep(3)
-        self.corrective.plant_name()
-        time.sleep(3)
-        self.corrective.start_date()
-        time.sleep(3)
+
+    # def filter(self):
+    #     self.corrective = corrective_maintenance(self.driver)
+    #     self.corrective.status()
+    #     time.sleep(3)
+    #     self.corrective.assigned_engineer()
+    #     time.sleep(3)
+    #     self.corrective.plant_name()
+    #     time.sleep(3)
+    #     self.corrective.start_date()
+    #     time.sleep(3)
