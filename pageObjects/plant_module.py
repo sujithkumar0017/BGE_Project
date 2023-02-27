@@ -1,3 +1,4 @@
+import datetime
 import os
 import time
 from selenium.webdriver import ActionChains
@@ -23,8 +24,8 @@ class Plant:
    plant_name_xpath = '//input[@name="name"]'
    size_xpath = '//input[@name="size"]'
    acronym_xpath = '//input[@name="identifier"]'
-   on_boarding_date = '//input[@class="form-control date-picker"]'
-   client_name_xpath = '//input[@name="clientId"]'
+   on_boarding_date_xpath = '//input[@class="form-control date-picker"]'
+   client_name_xpath = '//input[@id="react-select-138-input"]'
    plant_manager_xpath = '//input[@name="plantManagerId"]'
    team_leader_xpath = '//input[@name="teamLeaderId"]'
    field_engineer_xpath = '//input[@id="react-select-9-input"]'
@@ -38,7 +39,8 @@ class Plant:
    btn_cancel_xpath = '//button[normalize-space()="Cancel"]'
    btn_create_plant_xpath = '//button[normalize-space()="Create Plant"]'
   
-
+  #list view
+   created_plant_in_listView_xpath = '//div[@class="user-name"]//span[@class="tb-lead"]'
 
    def __init__(self, driver) -> None:
        self.driver = driver
@@ -56,15 +58,18 @@ class Plant:
            assert False
    def add_plant(self):
        self.driver.find_element(By.XPATH,self.add_plant_xpath).click()
-       time.sleep(2)
-       if self.driver.title == "Brighter App | PV-Plant | Create":
-           assert True
+       title = WebDriverWait(self.driver, 20).until(
+            EC.presence_of_element_located((By.TAG_NAME, "title"))
+        )
+       if title.get_attribute("innerHTML") == "Brighter App | Pv-Plant | Create":
+            assert True
        else:
-           self.driver.save_screenshot("Pv_plant_Page.png")
-           assert False
+            self.driver.save_screenshot("add_plant_popup.png")
+            assert False
+           
    def create_plant_mandatory_field(self):
        self.driver.find_element(By.XPATH,self.btn_create_plant_xpath).click()
-       validation_message = ["name is a required field","Identifier is required","Client is required","status is a required field"]
+       validation_message = ["Name is required","Identifier is required","Client is required","status is a required field"]
        for x in validation_message:
            element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//span[normalize-space()="'+x+'"]')))
            if element.is_displayed():
@@ -78,10 +83,20 @@ class Plant:
        self.driver.find_element(By.XPATH,self.size_xpath).send_keys(size)
    def acronym(self,acronym):
        self.driver.find_element(By.XPATH,self.acronym_xpath).send_keys(acronym)
-   def on_boarding_date(self,date):
-       pass
+   def on_boarding_date(self):
+        now = datetime.datetime.now()
+        element = self.driver.find_element(
+            By.XPATH, self.on_boarding_date_xpath
+        )
+        actions = ActionChains(self.driver)
+        actions.click(element)
+        actions.send_keys(now.strftime("%Y-%m-%d"))
+        actions.send_keys(Keys.ENTER).perform()
    def client_name(self,client):
-       self.driver.find_element(By.XPATH,self.client_name_xpath).send_keys(client)
+       element = self.driver.find_element(By.XPATH,self.client_name_xpath)
+       actions = ActionChains(self.driver)
+       actions.click(element)
+       actions.send_keys(client)
    def plant_manager(self,manager):
        self.driver.find_element(By.XPATH,self.plant_manager_xpath).send_keys(manager)
    def team_leader(self,leader):
@@ -135,7 +150,7 @@ class Plant:
    def view_plant(self,plant):
        element = WebDriverWait(self.driver, 10).until(EC.presence_of_all_elements_located((By.XPATH,self.created_plant_in_listView_xpath)))
        for x in element:
-           if x.text in plant:
+           if x.text == plant:
                x.click()
                time.sleep(3)
                if self.driver.title == "Brighter App | Pv-Plant | View":
@@ -144,6 +159,9 @@ class Plant:
                    self.driver.save_screenshot("view_plant.png") 
                    assert False
                break
-           else:
-               self.driver.save_screenshot("listView_plant_notFound.png")
-               assert False
+       else:
+            self.driver.save_screenshot("listView_plant_notFound.png")
+            assert False
+   def corrective_maintenance_tab_in_view_plant(self):
+       element = WebDriverWait(self.driver,20).until(EC.visibility_of_element_located((By.XPATH,'//a[@id="corrective-Plants-btn"]')))
+       element.click()

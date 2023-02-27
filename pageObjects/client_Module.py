@@ -238,7 +238,7 @@ class Client:
 
     # Add Plant
     def add_plant_in_client_page(self):
-        self.driver.find_element(By.XPATH, '//button[@id="client-add-plant"]').click()
+        self.driver.find_element(By.XPATH,'//button[@id="client-add-plant"]').click()
         title = WebDriverWait(self.driver, 20).until(
             EC.presence_of_element_located((By.TAG_NAME, "title"))
         )
@@ -367,8 +367,7 @@ class Client:
                 assert False
 
     def userCreation_mandatory_fields(
-        self,
-    ):  # need to add password as a required field.
+self):  # need to add password as a required field.
         self.driver.find_element(
             By.XPATH, self.userCreation_btn_addUser_AddUser_Xpath
         ).click()

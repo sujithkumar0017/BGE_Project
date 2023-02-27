@@ -8,9 +8,13 @@ import pytest
 
 @pytest.mark.usefixtures("setup_class")
 class Test_Corrective(unittest.TestCase):
+    def __init__(self, driver):
+        self.driver = driver
     url = ReadConfig.getApplicationUrl()
     useremail = ReadConfig.getUseremail()
     password = ReadConfig.getPassword()
+    
+    
 
     @pytest.mark.order(1)
     def test_login(self):
