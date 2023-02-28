@@ -21,10 +21,10 @@ class Plant:
 
 
    #Create Plant
-   plant_name_xpath = '//input[@name="name"]'
-   size_xpath = '//input[@name="size"]'
-   acronym_xpath = '//input[@name="identifier"]'
-   on_boarding_date_xpath = '//input[@class="form-control date-picker"]'
+   plant_name_xpath = '//div[@id="plant-size-input"]//div[@class="form-control-wrap"]'
+   size_xpath = '//div[@id="plant-size-input"]//div[@class="form-control-wrap"]'
+   acronym_xpath = '//div[@id="plant-identifier-input"]//div[@class="form-control-wrap"]'
+   on_boarding_date_xpath = '//div[@id="plant-onBoardDate-input"]//div[@class="form-control-wrap"]'
    client_name_xpath = '//input[@id="react-select-138-input"]'
    plant_manager_xpath = '//input[@name="plantManagerId"]'
    team_leader_xpath = '//input[@name="teamLeaderId"]'
@@ -162,6 +162,50 @@ class Plant:
        else:
             self.driver.save_screenshot("listView_plant_notFound.png")
             assert False
+   
+            
+            
+            
+            
+            
+            
+            
+            
+   #--------------------------------------------------------Corrective Ticket--------------------------------------------------------#         
    def corrective_maintenance_tab_in_view_plant(self):
        element = WebDriverWait(self.driver,20).until(EC.visibility_of_element_located((By.XPATH,'//a[@id="corrective-Plants-btn"]')))
        element.click()
+   def validate_plant_name_in_corrective_tab(self,plant_name):
+       element= self.driver.find_element(By.XPATH,"(//div[contains(@class,'react-select__control react-select__control--is-disabled css-1fhf3k1-control')])[4]")
+    #    value = element.get_attribute("value")
+       
+       actions = ActionChains(self.driver)
+       actions.double_click(element)
+       actions.key_down(Keys.CONTROL).send_keys("a").key_up(
+                Keys.CONTROL
+            ).perform()
+       if element.text == plant_name:
+           assert True
+       else:
+           self.driver.save_screenshot("Plant_name_in_create_remedial.png")
+           assert False
+    #--------------------------------------------------------Remedial Ticket--------------------------------------------------------#
+   def remedial_maintenance_tab_in_view_plant(self):
+        element = WebDriverWait(self.driver,20).until(EC.visibility_of_element_located((By.XPATH,'//a[@id="remedial-Plants-btn"]')))
+        element.click()
+   def validation_message(self):
+       pass
+   def validate_plant_name_in_remedial_tab(self,plant_name):
+       element= self.driver.find_element(By.XPATH,"(//div[contains(@class,'react-select__control react-select__control--is-disabled css-1fhf3k1-control')])[4]")
+       actions = ActionChains(self.driver)
+       actions.double_click(element)
+       actions.key_down(Keys.CONTROL).send_keys("a").key_up(
+                Keys.CONTROL
+            ).perform()
+       if element.text == plant_name:
+           assert True
+       else:
+           self.driver.save_screenshot("Plant_name_in_create_remedial.png")
+           assert False
+
+       

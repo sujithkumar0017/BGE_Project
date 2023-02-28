@@ -13,7 +13,7 @@ class corrective_maintenance:
     menu_item_corrective_maintenance_xpath = '//span[normalize-space()="Corrective Maintenance"]'
     add_corrective_maintenance_xpath = '//button[@class="btn btn-primary btn-icon"]'
     
-    #add Client Window
+    #add Corrective Window
     task_name_xpath = '//div[@class="form-control-wrap"]//input[@name="title"]'
     priority_xpath='(//label[@class="form-label"]/following::div[@class="form-control-select"])[1]'
     sla_xpath = '(//label[@class="form-label"]/following::div[@class="form-control-select"])[2]'
@@ -75,7 +75,7 @@ class corrective_maintenance:
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.priority_xpath)))
         actions = ActionChains(self.driver)
         actions.click(element)
-        actions.send_keys(priority)
+        actions.send_keys(priority) 
         actions.send_keys(Keys.ENTER).perform()
     def sla(self,sla):
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.sla_xpath)))
@@ -142,13 +142,24 @@ class corrective_maintenance:
             self.driver.save_screenshot("add_corrective.png")
             assert False
     def corrective_mandatory_fields(self):
-        self.driver.find_element(By.XPATH,self.add_button_xpath).click()
-        time.sleep(2)
-        assert "Title is required"== self.driver.find_element(By.XPATH,'//span[normalize-space()="Title is required"]').text
-        assert "Plant name is required"== self.driver.find_element(By.XPATH,'//span[normalize-space()="Plant name is required"]').text
-        assert "Field Engineer is required"== self.driver.find_element(By.XPATH,'//span[normalize-space()="Field Engineer is required"]').text
-        assert "Assigned To is required"== self.driver.find_element(By.XPATH,'//span[normalize-space()="Assigned To is required"]').text
-    
+        self.driver.find_element(By.XPATH, self.add_button_xpath).click()
+        validation_message = [
+            "Title is required",
+            "Plant name is required",
+            "Field Engineer is required",
+            "Assigned To is required",
+        ]
+        for x in validation_message:
+            element = WebDriverWait(self.driver, 10).until(
+                EC.visibility_of_element_located(
+                    (By.XPATH, '//span[normalize-space()="' + x + '"]')
+                )
+            )
+            if element.is_displayed():
+                assert True
+            else:
+                self.driver.save_screenshot("create_corrective_mandatory_fields.png")
+                assert False
 
     #-----------------------List View---------------------------------------------#
     def corrective_ticket_listView(self,name):
@@ -202,12 +213,23 @@ class corrective_maintenance:
         self.driver.find_element(By.XPATH,'//span[normalize-space()="Add Follow-up Task"]').click() 
         self.driver.switch_to.window(self.driver.window_handles[-1]) 
     def create_addfollowup_task_mandatory_fields(self):
-        self.driver.find_element(By.XPATH,'//button[normalize-space()="Add"]').click()
-        time.sleep(2)
-        assert "Title is required"== self.driver.find_element(By.XPATH,'//span[normalize-space()="Title is required"]').text
-        assert "Field Engineer is required"== self.driver.find_element(By.XPATH,'//span[normalize-space()="Field Engineer is required"]').text
-        assert "Assigned To is required"== self.driver.find_element(By.XPATH,'//span[normalize-space()="Assigned To is required"]').text      
-    
+        self.driver.find_element(By.XPATH,'//button[normalize-space()="Add"]').click()     
+        validation_message = [
+            "Title is required",
+            "Field Engineer is required",
+            "Assigned To is required",
+        ]
+        for x in validation_message:
+            element = WebDriverWait(self.driver, 10).until(
+                EC.visibility_of_element_located(
+                    (By.XPATH, '//span[normalize-space()="' + x + '"]')
+                )
+            )
+            if element.is_displayed():
+                assert True
+            else:
+                self.driver.save_screenshot("create_followup_task_fields.png")
+                assert False
     def followup_task_name(self,name):
          element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.followup_task_name_xpath)))
          element.send_keys(name)
@@ -230,7 +252,17 @@ class corrective_maintenance:
         actions.send_keys(status)
         actions.send_keys(Keys.ENTER).perform()
     def followup_plant_name(self,plant_name):
-        pass
+       element= self.driver.find_element(By.XPATH,"(//div[contains(@class,'react-select__control react-select__control--is-disabled css-1fhf3k1-control')])[1]")
+       actions = ActionChains(self.driver)
+       actions.double_click(element)
+       actions.key_down(Keys.CONTROL).send_keys("a").key_up(
+                Keys.CONTROL
+            ).perform()
+       if element.text == plant_name:
+           assert True
+       else:
+           self.driver.save_screenshot("Plant_name_in_create_remedial.png")
+           assert False
     def followup_field_engineer(self,field_engineer):
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.followup_field_engineer_xpath)))
         actions = ActionChains(self.driver)
@@ -262,8 +294,18 @@ class corrective_maintenance:
     def followup_comment(self,comment):
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.followup_comment_xpath)))
         element.send_keys(comment)
-    def followup_parent_task(self):
-        pass
+    def followup_parent_task(self,plant_name):
+        element= self.driver.find_element(By.XPATH,"(//div[contains(@class,'react-select__control react-select__control--is-disabled css-1fhf3k1-control')])[2]")
+        actions = ActionChains(self.driver)
+        actions.double_click(element)
+        actions.key_down(Keys.CONTROL).send_keys("a").key_up(
+                Keys.CONTROL
+            ).perform()
+        if element.text in plant_name:
+           assert True
+        else:
+           self.driver.save_screenshot("Plant_name_in_create_remedial.png")
+           assert False
     def followup_attachments(self):
         file_to_upload_path = os.getcwd() + "/Files/file.png"
         button=self.driver.find_element(By.XPATH,'//div[@id="subtask-parenttask-select"]/following::div//span[@class="dz-message-text"]')
@@ -323,16 +365,19 @@ class corrective_maintenance:
         self.driver.find_element(By.XPATH,'(//div[normalize-space()="'+corrective_ticket+'"]/following::div[@class="dropdown"])[1]').click() 
         element= WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH,'//div[@class="dropdown show"]//ul[@class="link-list-opt no-bdr"]//span[normalize-space()="Archive Task"]')))
         element.click()
-        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space()="Corrective Task Archived successfully"]')))
-        time.sleep(3)
+        self.msg=WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space()="Corrective Task Archived successfully"]')))
         if "Corrective Task Archived successfully" in self.msg.text:
             assert True
         else:
             self.driver.save_screenshot("archive_corrective_ticket.png")
             assert False
+        self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
     def view_archive_ticket_list(self):
             self.driver.find_element(By.XPATH,'//em[@class="icon ni ni-filter-alt"]').click()
-            self.driver.find_element(By.XPATH,'//label[@for="isArchived"]').click()
+            element = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, '//label[@for="isArchived"]'))
+        )
+            element.click()
             self.driver.find_element(By.XPATH,"//button[normalize-space()='Apply']").click()
     def view_archived_ticket_in_list_view(self,corrective_ticket):
         element = self.driver.find_elements(By.XPATH,'//div[@class="user-name"]') 
@@ -347,16 +392,21 @@ class corrective_maintenance:
         self.driver.find_element(By.XPATH,'(//div[normalize-space()="'+client_name+'"]/following::div[@class="dropdown"])[1]').click() 
         element= WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH,'(//ul[@class="link-list-opt no-bdr"]//span[normalize-space()="UnArchive Task"])[1]')))
         element.click()
-        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[text()="Corrective Task UnArchived successfully"]')))
-        time.sleep(3)
+        self.msg=WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[text()="Corrective Task UnArchived successfully"]')))
         if "Corrective Task UnArchived successfully" in self.msg.text:
             assert True
         else:
             self.driver.save_screenshot("unarchive_corrective_ticket.png")
             assert False
+        self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
     def unarchived_ticket_listView(self,corrective_ticket):
         self.driver.find_element(By.XPATH,'//em[@class="icon ni ni-filter-alt"]').click()
-        self.driver.find_element(By.XPATH,"//button[normalize-space()='Reset Filter']").click()
+        reset_btn = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, "//button[normalize-space()='Reset Filter']")
+            )
+        )
+        reset_btn.click()
         element = self.driver.find_elements(By.XPATH,'//div[@class="user-name"]') 
         for x in element:
             if x.text == corrective_ticket:

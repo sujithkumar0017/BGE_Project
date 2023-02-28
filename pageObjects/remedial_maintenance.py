@@ -12,7 +12,7 @@ class remedial_maintenance:
     menu_item_remedial_maintenance_xpath = (
         '//span[normalize-space()="Remedial Maintenance"]'
     )
-    add_remedial_maintenance_xpath = '//button[@class="btn btn-primary btn-icon"]'
+    add_remedial_maintenance_xpath = '//button[@id="add-remedial"]'
 
     # add Client Window
     task_name_xpath = '//input[@id="title-input-remedial"]'
@@ -58,7 +58,6 @@ class remedial_maintenance:
             assert False
 
     def add_remedial_maintenance(self):
-        time.sleep(2)
         element = self.driver.find_element(
             By.XPATH, self.add_remedial_maintenance_xpath
         )
@@ -373,7 +372,6 @@ class remedial_maintenance:
             EC.element_to_be_clickable((By.XPATH, '//label[@for="isArchived"]'))
         )
         element.click()
-        # self.driver.find_element(By.XPATH,'//label[@for="isArchived"]').click()
         self.driver.find_element(
             By.XPATH, "//button[normalize-space()='Apply']"
         ).click()
@@ -417,6 +415,7 @@ class remedial_maintenance:
         else:
             self.driver.save_screenshot("unarchive_ticket.png")
             assert False
+        self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
 
     def unarchived_ticket_listView(self, ticket):
         self.driver.find_element(By.ID, "filter-remedial").click()
@@ -426,8 +425,6 @@ class remedial_maintenance:
             )
         )
         reset_btn.click()
-        # self.driver.find_element(By.XPATH,"//button[normalize-space()='Reset Filter']").click()
-        # element = self.driver.find_elements(By.XPATH, '//div[@class="user-name"]')
         element = WebDriverWait(self.driver, 10).until(
             EC.presence_of_all_elements_located((By.XPATH, '//div[@class="user-name"]'))
         )

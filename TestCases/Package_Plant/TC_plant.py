@@ -1,7 +1,7 @@
 import time
 import unittest
-from TestCases.Package_maintenance.TC_corrective_maintenance import Test_Corrective
 from pageObjects.corrective_maintenance import corrective_maintenance
+from pageObjects.remedial_maintenance import remedial_maintenance
 from pageObjects.plant_module import Plant
 import pytest
 from pageObjects.login_Module import login_Module
@@ -10,13 +10,11 @@ from utilities.readProperties import ReadConfig
 @pytest.mark.usefixtures("setup_class")
 class Test_plant(unittest.TestCase):
     # corrective = Test_Corrective()
+    
 
     url = ReadConfig.getApplicationUrl()
     useremail = ReadConfig.getUseremail()
     password = ReadConfig.getPassword()
-    
-    def __init__(self, driver):
-        self.driver = driver
     
     @pytest.mark.order(1)
     def test_login(self):
@@ -63,9 +61,57 @@ class Test_plant(unittest.TestCase):
     def test_corrective_tab(self):
         self.plant = Plant(self.driver)
         self.plant.corrective_maintenance_tab_in_view_plant()
-        self.corrective = Test_Corrective(self.driver)
-        self.corrective.test_add_corrective_maintenance() 
-        time.sleep(3)
-        
-
+    @pytest.mark.order(6)
+    def test_add_btn_in_corrective_ticket(self):    
+        self.corrective = corrective_maintenance(self.driver)
+        self.corrective.add_corrective_maintenance()
+    @pytest.mark.order(7)
+    def test_create_corrective_ticket_plant_name_were_displayed(self):
+        self.plant = Plant(self.driver)
+        self.plant.validate_plant_name_in_corrective_tab("test")
+    @pytest.mark.order(8)
+    def test_create_corrective_ticket(self):
+        self.corrective = corrective_maintenance(self.driver) 
+        self.corrective.task_name("task_corrective_ticket")
+        self.corrective.priority("High")
+        self.corrective.status("open")
+        self.corrective.plant_name("Mobile_Plant")
+        self.corrective.field_engineer("Mobile User")
+        self.corrective.assigned_to("Mobile User")
+        self.corrective.asset_category("Asset Category 51")
+        self.corrective.description("This is created for testing purpose")
+        self.corrective.comment("This comment is for testing purpose")
+        self.corrective.attachments()
+        self.corrective.add_corrective()
+    @pytest.mark.order(9)
+    def test_corrective_ticket_in_list_view(self):
+        self.corrective = corrective_maintenance(self.driver)
+        self.corrective.corrective_ticket_listView("task_corrective_ticket")
+    @pytest.mark.order(10)
+    def test_navigate_to_remedial_tab_in_view_plant(self):
+        self.plant = Plant(self.driver)
+        self.plant.remedial_maintenance_tab_in_view_plant()
+    @pytest.mark.order(11)
+    def test_add_btn_in_remedial_maintenance(self):
+        self.remedial = remedial_maintenance(self.driver)
+        self.remedial.add_remedial_maintenance()
+    @pytest.mark.order(12)
+    def test_create_remedial_ticket_plant_name_were_displayed(self):
+        self.plant = Plant(self.driver)
+        self.plant.validate_plant_name_in_remedial_tab("test")
+    @pytest.mark.order(13)
+    def test_create_remedial_maintenance(self):
+        self.remedial = remedial_maintenance(self.driver)
+        self.remedial.task_name("ticket_issue_01")
+        self.remedial.priority("Low")
+        self.remedial.status("Open")    
+        self.remedial.field_engineer("Mobile User")
+        self.remedial.assigned_to("Mobile User")
+        self.remedial.asset_category("Asset Category 51")
+        self.remedial.create_remedial_maintenance()
+    @pytest.mark.order(14)
+    def test_created_ticket_in_list_view(self):    
+        self.remedial = remedial_maintenance(self.driver)
+        self.remedial.remedial_task_in_listView("ticket_issue_01")
+    
     
