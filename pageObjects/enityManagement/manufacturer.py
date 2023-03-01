@@ -120,7 +120,7 @@ class manufacturer():
         else:
                 self.driver.save_screenshot("Edit_Manufacturer_page.png")   
                 assert False
-    def edit_manufacturer_field(self):
+    def edit_manufacturer_mandatory_field(self):
            phone_number = self.driver.find_element(By.XPATH,self.input_phone_number_xpath)
            email =self.driver.find_element(By.XPATH,self.input_email_xpath)
            actions = ActionChains(self.driver)
@@ -135,7 +135,7 @@ class manufacturer():
                 if element.is_displayed():
                     assert True
                 else:
-                    self.driver.save_screenshot("create_manufacturer_mandatory_fields.png")  
+                    self.driver.save_screenshot("edit_manufacturer_mandatory_fields.png")  
                     assert False
     def edit_manufacturer(self):
         self.driver.find_element(By.XPATH,self.btn_save_information_xpath).click()

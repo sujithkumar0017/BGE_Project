@@ -4,6 +4,7 @@ from utilities.readProperties import ReadConfig
 from pageObjects.login_Module import login_Module
 import unittest
 import pytest
+import allure
 
 
 
@@ -23,71 +24,80 @@ class Test_DNO(unittest.TestCase):
        self.lp.password(self.password)
        self.lp.login()
 
-
+   @allure.description("Should navigate to Dno page")
+   @allure.severity(severity_level="CRITICAL")
    @pytest.mark.order(2)
-   def test_navigate_entity_management(self):
+   def test_navigate_to_DNO_Page(self):
        self.dno = DNO(self.driver)
        self.dno.navigate_DNO()
 
-
+   @allure.description("Should display the DNO popup window")
+   @allure.severity(severity_level="CRITICAL")
    @pytest.mark.order(3)
    def test_add_dno(self):
        self.dno = DNO(self.driver)
        self.dno.add_DNO()
 
-
+   @allure.description("Should display the validation message on the mandatory field")
+   @allure.severity(severity_level="CRITICAL")
    @pytest.mark.order(4)
    def test_mandatory_fields(self):
        self.dno = DNO(self.driver)
        self.dno.DNO_mandatory_fields()
-
-
+   @allure.description("Should able to create DNO")
+   @allure.severity(severity_level="CRITICAL") 
    @pytest.mark.order(5)
    def test_create_dno(self):
        self.dno = DNO(self.driver)
        self.dno.name("Dno 5")
        self.dno.create_DNO()
-
-
+   @allure.description("Should display the created DNO in list view")
+   @allure.severity(severity_level="CRITICAL")
    @pytest.mark.order(6)
    def test_created_dno_in_listView(self):
        self.dno = DNO(self.driver)
        self.dno.DNO_in_listView("Dno 5")
 
-
+   @allure.description("Should view the created DNO")
+   @allure.severity(severity_level="CRITICAL")
    @pytest.mark.order(7)
    def test_view_created_dno(self):
        self.dno = DNO(self.driver)
        self.dno.view_DNO("Dno 5")
-
-
+   
+   @allure.description("Should display the edit DNO popup window ")
+   @allure.severity(severity_level="CRITICAL")
    @pytest.mark.order(8)
    def test_edit_button_in_view_dno(self):
        self.dno = DNO(self.driver)
        self.dno.edit_dno_button()
 
-
+   @allure.description("Should display the validation message on mandatory fields")
+   @allure.severity(severity_level="CRITICAL")
    @pytest.mark.order(9)
    def test_edit_mandatory_fields(self):
        self.dno = DNO(self.driver)
        self.dno.edit_dno_mandatory_field()
 
-
+   @allure.description("Should able to edit and save the DNO and navigate to DNO page")
+   @allure.severity(severity_level="CRITICAL")
    @pytest.mark.order(10)
    def test_edit_dno(self):
        self.dno = DNO(self.driver)
        self.dno.edit_name("Dno 51")
        self.dno.save_information_button()
 
-
+   @allure.description("Should able to edit and save the DNO in DNO list view option")
+   @allure.severity(severity_level="CRITICAL")
    @pytest.mark.order(11)
    def test_edit_option_in_listView(self):
        self.dno = DNO(self.driver)
        self.dno.list_view_edit_option("Dno 51")
        self.dno.edit_name("Dno 512")
        self.dno.save_information_button()
-
-
+    
+   @allure.description("Should able to search DNO using search functionality")
+   @allure.severity(severity_level="CRITICAL")
    @pytest.mark.order(12)
    def test_search_option_listView(self):
        self.dno = DNO(self.driver)

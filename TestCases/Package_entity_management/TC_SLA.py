@@ -4,7 +4,7 @@ from utilities.readProperties import ReadConfig
 from pageObjects.login_Module import login_Module
 import unittest
 import pytest
-
+import allure
 
 
 
@@ -23,22 +23,28 @@ class Test_SLA(unittest.TestCase):
         self.lp.email(self.useremail)
         self.lp.password(self.password)
         self.lp.login()
-   
+    @allure.description("Should navigate to SLA page")
+    @allure.severity(severity_level="CRITICAL")   
     @pytest.mark.order(2)
     def test_navigate_sla(self):
         self.sla =sla(self.driver)
         self.sla.navigate_sla() 
-    
+    @allure.description("Should display the SLA popup window")
+    @allure.severity(severity_level="CRITICAL")
     @pytest.mark.order(3)
     def test_add_sla(self):
         self.sla = sla(self.driver)
         self.sla.add_sla()
-
+    @allure.description("Should display the validation message on the mandatory field")
+    @allure.severity(severity_level="CRITICAL")
+    @pytest.mark.order(4)
     @pytest.mark.order(4)
     def test_mandatory_field(self):
         self.sla = sla(self.driver)
         self.sla.sla_mandatory_field()
     
+    @allure.description("Should able to create SLA")
+    @allure.severity(severity_level="CRITICAL")  
     @pytest.mark.order(5)
     def test_create_sla(self):
         self.sla = sla(self.driver)
@@ -46,55 +52,69 @@ class Test_SLA(unittest.TestCase):
         self.sla.description("This is created for testing purpose")
         self.sla.create_sla()
     
+    @allure.description("Should display the created SLA in list view")
+    @allure.severity(severity_level="CRITICAL")
     @pytest.mark.order(6)
     def test_created_sla_in_listView(self):
         self.sla = sla(self.driver)
         self.sla.level_in_listView("mobile sla")
 
+    @allure.description("Should view the created SLA")
+    @allure.severity(severity_level="CRITICAL")
     @pytest.mark.order(7)
     def test_view_sla(self):
         self.sla = sla(self.driver)
         self.sla.view_level("mobile slaa")
    
+    @allure.description("Should display the edit SLA popup window ")
+    @allure.severity(severity_level="CRITICAL")
     @pytest.mark.order(8)
     def test_edit_option_in_view(self):
         self.sla = sla(self.driver)
         self.sla.edit_sla_button()
-    
+    @allure.description("Should display the validation message on mandatory fields")
+    @allure.severity(severity_level="CRITICAL")
     @pytest.mark.order(9)
     def test_edit_sla_mandatory_field(self):
         self.sla = sla(self.driver)
         self.sla.edit_sla_mandatory_field()
-    
+    @allure.description("Should able to edit and save the SLA Fields and navigate to SLA page")
+    @allure.severity(severity_level="CRITICAL")
     @pytest.mark.order(10)
     def test_edit_sla(self):
         self.sla = sla(self.driver)
         self.sla.edit_level("adaptor sla")
         self.sla.edit_description("this sla is created for testing purpose")
         self.sla.save_information()
-        
+    
+    @allure.description("Should the edited sla in list view")
+    @allure.severity(severity_level="CRITICAL")     
     @pytest.mark.order(11)
     def test_edited_sla_in_listView(self):
         self.sla = sla(self.driver)
         self.sla.level_in_listView("adaptor sla")
-    
+    @allure.description("Should able to select the edit option in Level list view and display the edit SLA popup window.")
+    @allure.severity(severity_level="CRITICAL") 
     @pytest.mark.order(12)
     def test_edit_option_in_listView(self):
         self.sla = sla(self.driver)
         self.sla.list_view_edit_option("adaptor sla")
-    
+    @allure.description("Should display the validation message on mandatory fields")
+    @allure.severity(severity_level="CRITICAL")
     @pytest.mark.order(13)
     def test_listView_edit_sla_mandatory_fields(self):
         self.sla = sla(self.driver)
         self.sla.edit_sla_mandatory_field()
-    
+    @allure.description("Should able to edit and save the SLA fields in category list view option and navigate to SLA page")
+    @allure.severity(severity_level="CRITICAL") 
     @pytest.mark.order(14)
     def test_listView_edit_sla(self):
         self.sla = sla(self.driver)
         self.sla.edit_level("adaptor sla_01")
         self.sla.edit_description("This is created for testing purpose")
         self.sla.save_information()
-    
+    @allure.description("Should able to search level using search functionality")
+    @allure.severity(severity_level="CRITICAL")
     @pytest.mark.order(15)
     def test_search_option(self):
         self.sla = sla(self.driver)

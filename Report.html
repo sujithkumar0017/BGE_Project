@@ -189,9 +189,9 @@ function showOutput(id, name) {
 
 <div class='heading'>
 <h1>Test Report</h1>
-<p class='attribute'><strong>Start Time:</strong> 2023-03-01 07:46:21</p>
-<p class='attribute'><strong>Duration:</strong> 0:00:00.003418</p>
-<p class='attribute'><strong>Status:</strong> Error 19</p>
+<p class='attribute'><strong>Start Time:</strong> 2023-03-01 15:05:17</p>
+<p class='attribute'><strong>Duration:</strong> 0:00:00.030496</p>
+<p class='attribute'><strong>Status:</strong> Error 31</p>
 
 <p class='description'></p>
 </div>
@@ -222,16 +222,16 @@ function showOutput(id, name) {
 </tr>
 
 <tr class='errorClass'>
-    <td>TestCases.Package_Plant.TC_plant.Test_plant</td>
-    <td>19</td>
+    <td>TestCases.Package_Client_02.TC_Client.Test_client</td>
+    <td>31</td>
     <td>0</td>
     <td>0</td>
-    <td>19</td>
-    <td><a href="javascript:showClassDetail('c1',19)">Detail</a></td>
+    <td>31</td>
+    <td><a href="javascript:showClassDetail('c1',31)">Detail</a></td>
 </tr>
 
 <tr id='ft1.1' class='none'>
-    <td class='errorCase'><div class='testcase'>test_add_btn_in_corrective_ticket</div></td>
+    <td class='errorCase'><div class='testcase'>test_add_client_btn</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
@@ -246,9 +246,9 @@ function showOutput(id, name) {
         <pre>
         
 ft1.1: Traceback (most recent call last):
-  File "/home/sujith/Documents/BGE_Project/TestCases/Package_Plant/TC_plant.py", line 82, in test_add_btn_in_corrective_ticket
-    self.corrective = corrective_maintenance(self.driver)
-AttributeError: 'Test_plant' object has no attribute 'driver'
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 46, in test_add_client_btn
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
 
 
         </pre>
@@ -259,7 +259,7 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
 </tr>
 
 <tr id='ft1.2' class='none'>
-    <td class='errorCase'><div class='testcase'>test_add_btn_in_remedial_maintenance</div></td>
+    <td class='errorCase'><div class='testcase'>test_add_plant_btn_in_add_client_page</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
@@ -274,9 +274,9 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
         <pre>
         
 ft1.2: Traceback (most recent call last):
-  File "/home/sujith/Documents/BGE_Project/TestCases/Package_Plant/TC_plant.py", line 117, in test_add_btn_in_remedial_maintenance
-    self.remedial = remedial_maintenance(self.driver)
-AttributeError: 'Test_plant' object has no attribute 'driver'
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 73, in test_add_plant_btn_in_add_client_page
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
 
 
         </pre>
@@ -287,7 +287,7 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
 </tr>
 
 <tr id='ft1.3' class='none'>
-    <td class='errorCase'><div class='testcase'>test_add_plant_btn</div></td>
+    <td class='errorCase'><div class='testcase'>test_add_plant_mandatory_fields</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
@@ -302,9 +302,9 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
         <pre>
         
 ft1.3: Traceback (most recent call last):
-  File "/home/sujith/Documents/BGE_Project/TestCases/Package_Plant/TC_plant.py", line 34, in test_add_plant_btn
-    self.plant = Plant(self.driver)
-AttributeError: 'Test_plant' object has no attribute 'driver'
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 79, in test_add_plant_mandatory_fields
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
 
 
         </pre>
@@ -315,7 +315,7 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
 </tr>
 
 <tr id='ft1.4' class='none'>
-    <td class='errorCase'><div class='testcase'>test_corrective_tab</div></td>
+    <td class='errorCase'><div class='testcase'>test_add_user_in_add_client_page</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
@@ -330,9 +330,9 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
         <pre>
         
 ft1.4: Traceback (most recent call last):
-  File "/home/sujith/Documents/BGE_Project/TestCases/Package_Plant/TC_plant.py", line 77, in test_corrective_tab
-    self.plant = Plant(self.driver)
-AttributeError: 'Test_plant' object has no attribute 'driver'
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 104, in test_add_user_in_add_client_page
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
 
 
         </pre>
@@ -343,7 +343,7 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
 </tr>
 
 <tr id='ft1.5' class='none'>
-    <td class='errorCase'><div class='testcase'>test_corrective_ticket_in_list_view</div></td>
+    <td class='errorCase'><div class='testcase'>test_add_user_mandatory_fields</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
@@ -358,9 +358,9 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
         <pre>
         
 ft1.5: Traceback (most recent call last):
-  File "/home/sujith/Documents/BGE_Project/TestCases/Package_Plant/TC_plant.py", line 107, in test_corrective_ticket_in_list_view
-    self.corrective = corrective_maintenance(self.driver)
-AttributeError: 'Test_plant' object has no attribute 'driver'
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 111, in test_add_user_mandatory_fields
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
 
 
         </pre>
@@ -371,7 +371,7 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
 </tr>
 
 <tr id='ft1.6' class='none'>
-    <td class='errorCase'><div class='testcase'>test_create_client</div></td>
+    <td class='errorCase'><div class='testcase'>test_archived_client</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
@@ -386,9 +386,9 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
         <pre>
         
 ft1.6: Traceback (most recent call last):
-  File "/home/sujith/Documents/BGE_Project/TestCases/Package_Plant/TC_plant.py", line 44, in test_create_client
-    self.plant = Plant(self.driver)
-AttributeError: 'Test_plant' object has no attribute 'driver'
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 194, in test_archived_client
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
 
 
         </pre>
@@ -399,7 +399,7 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
 </tr>
 
 <tr id='ft1.7' class='none'>
-    <td class='errorCase'><div class='testcase'>test_create_client_mandatory_fields</div></td>
+    <td class='errorCase'><div class='testcase'>test_create_client</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
@@ -414,9 +414,9 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
         <pre>
         
 ft1.7: Traceback (most recent call last):
-  File "/home/sujith/Documents/BGE_Project/TestCases/Package_Plant/TC_plant.py", line 39, in test_create_client_mandatory_fields
-    self.plant = Plant(self.driver)
-AttributeError: 'Test_plant' object has no attribute 'driver'
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 58, in test_create_client
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
 
 
         </pre>
@@ -427,7 +427,7 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
 </tr>
 
 <tr id='ft1.8' class='none'>
-    <td class='errorCase'><div class='testcase'>test_create_corrective_ticket</div></td>
+    <td class='errorCase'><div class='testcase'>test_create_client_button</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
@@ -442,9 +442,9 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
         <pre>
         
 ft1.8: Traceback (most recent call last):
-  File "/home/sujith/Documents/BGE_Project/TestCases/Package_Plant/TC_plant.py", line 92, in test_create_corrective_ticket
-    self.corrective = corrective_maintenance(self.driver)
-AttributeError: 'Test_plant' object has no attribute 'driver'
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 134, in test_create_client_button
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
 
 
         </pre>
@@ -455,7 +455,7 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
 </tr>
 
 <tr id='ft1.9' class='none'>
-    <td class='errorCase'><div class='testcase'>test_create_corrective_ticket_plant_name_were_displayed</div></td>
+    <td class='errorCase'><div class='testcase'>test_create_client_existing_client</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
@@ -470,9 +470,9 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
         <pre>
         
 ft1.9: Traceback (most recent call last):
-  File "/home/sujith/Documents/BGE_Project/TestCases/Package_Plant/TC_plant.py", line 87, in test_create_corrective_ticket_plant_name_were_displayed
-    self.plant = Plant(self.driver)
-AttributeError: 'Test_plant' object has no attribute 'driver'
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 236, in test_create_client_existing_client
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
 
 
         </pre>
@@ -483,7 +483,7 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
 </tr>
 
 <tr id='ft1.10' class='none'>
-    <td class='errorCase'><div class='testcase'>test_create_remedial_maintenance</div></td>
+    <td class='errorCase'><div class='testcase'>test_create_client_mandatory_fields</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
@@ -498,9 +498,9 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
         <pre>
         
 ft1.10: Traceback (most recent call last):
-  File "/home/sujith/Documents/BGE_Project/TestCases/Package_Plant/TC_plant.py", line 127, in test_create_remedial_maintenance
-    self.remedial = remedial_maintenance(self.driver)
-AttributeError: 'Test_plant' object has no attribute 'driver'
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 52, in test_create_client_mandatory_fields
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
 
 
         </pre>
@@ -511,7 +511,7 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
 </tr>
 
 <tr id='ft1.11' class='none'>
-    <td class='errorCase'><div class='testcase'>test_create_remedial_ticket_plant_name_were_displayed</div></td>
+    <td class='errorCase'><div class='testcase'>test_create_plant</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
@@ -526,9 +526,9 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
         <pre>
         
 ft1.11: Traceback (most recent call last):
-  File "/home/sujith/Documents/BGE_Project/TestCases/Package_Plant/TC_plant.py", line 122, in test_create_remedial_ticket_plant_name_were_displayed
-    self.plant = Plant(self.driver)
-AttributeError: 'Test_plant' object has no attribute 'driver'
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 85, in test_create_plant
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
 
 
         </pre>
@@ -539,7 +539,7 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
 </tr>
 
 <tr id='ft1.12' class='none'>
-    <td class='errorCase'><div class='testcase'>test_created_plant_in_list_view</div></td>
+    <td class='errorCase'><div class='testcase'>test_create_user</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
@@ -554,9 +554,9 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
         <pre>
         
 ft1.12: Traceback (most recent call last):
-  File "/home/sujith/Documents/BGE_Project/TestCases/Package_Plant/TC_plant.py", line 55, in test_created_plant_in_list_view
-    self.plant = Plant(self.driver)
-AttributeError: 'Test_plant' object has no attribute 'driver'
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 117, in test_create_user
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
 
 
         </pre>
@@ -567,7 +567,7 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
 </tr>
 
 <tr id='ft1.13' class='none'>
-    <td class='errorCase'><div class='testcase'>test_created_ticket_in_list_view</div></td>
+    <td class='errorCase'><div class='testcase'>test_created_client_in_listview</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
@@ -582,9 +582,9 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
         <pre>
         
 ft1.13: Traceback (most recent call last):
-  File "/home/sujith/Documents/BGE_Project/TestCases/Package_Plant/TC_plant.py", line 138, in test_created_ticket_in_list_view
-    self.remedial = remedial_maintenance(self.driver)
-AttributeError: 'Test_plant' object has no attribute 'driver'
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 140, in test_created_client_in_listview
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
 
 
         </pre>
@@ -595,7 +595,7 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
 </tr>
 
 <tr id='ft1.14' class='none'>
-    <td class='errorCase'><div class='testcase'>test_edit_btn_in_view_plant</div></td>
+    <td class='errorCase'><div class='testcase'>test_created_plant_in_list_view</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
@@ -610,9 +610,9 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
         <pre>
         
 ft1.14: Traceback (most recent call last):
-  File "/home/sujith/Documents/BGE_Project/TestCases/Package_Plant/TC_plant.py", line 65, in test_edit_btn_in_view_plant
-    self.plant = Plant(self.driver)
-AttributeError: 'Test_plant' object has no attribute 'driver'
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 96, in test_created_plant_in_list_view
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
 
 
         </pre>
@@ -623,7 +623,7 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
 </tr>
 
 <tr id='ft1.15' class='none'>
-    <td class='errorCase'><div class='testcase'>test_edit_plant</div></td>
+    <td class='errorCase'><div class='testcase'>test_created_user_in_list_view</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
@@ -638,9 +638,9 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
         <pre>
         
 ft1.15: Traceback (most recent call last):
-  File "/home/sujith/Documents/BGE_Project/TestCases/Package_Plant/TC_plant.py", line 70, in test_edit_plant
-    self.plant = Plant(self.driver)
-AttributeError: 'Test_plant' object has no attribute 'driver'
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 128, in test_created_user_in_list_view
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
 
 
         </pre>
@@ -651,7 +651,7 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
 </tr>
 
 <tr id='ft1.16' class='none'>
-    <td class='errorCase'><div class='testcase'>test_login</div></td>
+    <td class='errorCase'><div class='testcase'>test_edit_client</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
@@ -666,9 +666,9 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
         <pre>
         
 ft1.16: Traceback (most recent call last):
-  File "/home/sujith/Documents/BGE_Project/TestCases/Package_Plant/TC_plant.py", line 21, in test_login
-    self.driver.get(self.url)
-AttributeError: 'Test_plant' object has no attribute 'driver'
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 164, in test_edit_client
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
 
 
         </pre>
@@ -679,7 +679,7 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
 </tr>
 
 <tr id='ft1.17' class='none'>
-    <td class='errorCase'><div class='testcase'>test_navigate_to_plant</div></td>
+    <td class='errorCase'><div class='testcase'>test_edit_client_button_view</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
@@ -694,9 +694,9 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
         <pre>
         
 ft1.17: Traceback (most recent call last):
-  File "/home/sujith/Documents/BGE_Project/TestCases/Package_Plant/TC_plant.py", line 29, in test_navigate_to_plant
-    self.plant = Plant(self.driver)
-AttributeError: 'Test_plant' object has no attribute 'driver'
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 152, in test_edit_client_button_view
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
 
 
         </pre>
@@ -707,7 +707,7 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
 </tr>
 
 <tr id='ft1.18' class='none'>
-    <td class='errorCase'><div class='testcase'>test_navigate_to_remedial_tab_in_view_plant</div></td>
+    <td class='errorCase'><div class='testcase'>test_edit_client_mandatory_field</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
@@ -722,9 +722,9 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
         <pre>
         
 ft1.18: Traceback (most recent call last):
-  File "/home/sujith/Documents/BGE_Project/TestCases/Package_Plant/TC_plant.py", line 112, in test_navigate_to_remedial_tab_in_view_plant
-    self.plant = Plant(self.driver)
-AttributeError: 'Test_plant' object has no attribute 'driver'
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 158, in test_edit_client_mandatory_field
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
 
 
         </pre>
@@ -735,7 +735,7 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
 </tr>
 
 <tr id='ft1.19' class='none'>
-    <td class='errorCase'><div class='testcase'>test_view_created_client</div></td>
+    <td class='errorCase'><div class='testcase'>test_edit_client_save_information_btn</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
@@ -750,9 +750,345 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
         <pre>
         
 ft1.19: Traceback (most recent call last):
-  File "/home/sujith/Documents/BGE_Project/TestCases/Package_Plant/TC_plant.py", line 60, in test_view_created_client
-    self.plant = Plant(self.driver)
-AttributeError: 'Test_plant' object has no attribute 'driver'
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 170, in test_edit_client_save_information_btn
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.20' class='none'>
+    <td class='errorCase'><div class='testcase'>test_list_view_edit_client</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.20')" >
+        error</a>
+
+    <div id='div_ft1.20' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft1.20').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+ft1.20: Traceback (most recent call last):
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 182, in test_list_view_edit_client
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.21' class='none'>
+    <td class='errorCase'><div class='testcase'>test_list_view_edit_option</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.21')" >
+        error</a>
+
+    <div id='div_ft1.21' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft1.21').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+ft1.21: Traceback (most recent call last):
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 176, in test_list_view_edit_option
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.22' class='none'>
+    <td class='errorCase'><div class='testcase'>test_list_view_edit_save_information</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.22')" >
+        error</a>
+
+    <div id='div_ft1.22' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft1.22').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+ft1.22: Traceback (most recent call last):
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 188, in test_list_view_edit_save_information
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.23' class='none'>
+    <td class='errorCase'><div class='testcase'>test_login</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.23')" >
+        error</a>
+
+    <div id='div_ft1.23' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft1.23').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+ft1.23: Traceback (most recent call last):
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 31, in test_login
+    self.driver.get(self.url)
+AttributeError: 'Test_client' object has no attribute 'driver'
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.24' class='none'>
+    <td class='errorCase'><div class='testcase'>test_navigate_to_client_page</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.24')" >
+        error</a>
+
+    <div id='div_ft1.24' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft1.24').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+ft1.24: Traceback (most recent call last):
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 40, in test_navigate_to_client_page
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.25' class='none'>
+    <td class='errorCase'><div class='testcase'>test_search_client_functionality</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.25')" >
+        error</a>
+
+    <div id='div_ft1.25' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft1.25').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+ft1.25: Traceback (most recent call last):
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 230, in test_search_client_functionality
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.26' class='none'>
+    <td class='errorCase'><div class='testcase'>test_total_client_count</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.26')" >
+        error</a>
+
+    <div id='div_ft1.26' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft1.26').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+ft1.26: Traceback (most recent call last):
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 224, in test_total_client_count
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.27' class='none'>
+    <td class='errorCase'><div class='testcase'>test_unarchived_client</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.27')" >
+        error</a>
+
+    <div id='div_ft1.27' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft1.27').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+ft1.27: Traceback (most recent call last):
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 212, in test_unarchived_client
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.28' class='none'>
+    <td class='errorCase'><div class='testcase'>test_unarchived_client_in_list_view</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.28')" >
+        error</a>
+
+    <div id='div_ft1.28' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft1.28').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+ft1.28: Traceback (most recent call last):
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 218, in test_unarchived_client_in_list_view
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.29' class='none'>
+    <td class='errorCase'><div class='testcase'>test_view_archived_client</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.29')" >
+        error</a>
+
+    <div id='div_ft1.29' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft1.29').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+ft1.29: Traceback (most recent call last):
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 206, in test_view_archived_client
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.30' class='none'>
+    <td class='errorCase'><div class='testcase'>test_view_client_archive_list</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.30')" >
+        error</a>
+
+    <div id='div_ft1.30' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft1.30').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+ft1.30: Traceback (most recent call last):
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 200, in test_view_client_archive_list
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.31' class='none'>
+    <td class='errorCase'><div class='testcase'>test_view_created_client</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.31')" >
+        error</a>
+
+    <div id='div_ft1.31' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft1.31').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+ft1.31: Traceback (most recent call last):
+  File "/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/TC_Client.py", line 146, in test_view_created_client
+    self.client = Client(self.driver)
+AttributeError: 'Test_client' object has no attribute 'driver'
 
 
         </pre>
@@ -764,10 +1100,10 @@ AttributeError: 'Test_plant' object has no attribute 'driver'
 
 <tr id='total_row'>
     <td>Total</td>
-    <td>19</td>
+    <td>31</td>
     <td>0</td>
     <td>0</td>
-    <td>19</td>
+    <td>31</td>
     <td>&nbsp;</td>
 </tr>
 </table>

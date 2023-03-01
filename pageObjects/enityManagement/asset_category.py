@@ -4,6 +4,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+import allure
+from allure_commons.types import AttachmentType
 
 
 
@@ -26,6 +28,7 @@ class asset_category:
 
     def __init__(self,driver) -> None:
         self.driver=driver
+    @allure.severity(allure.severity_level.NORMAL)
     def navigate_assetCategory(self):
         self.driver.find_element(By.XPATH,self.entity_management_xpath).click()
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.asset_category_option)))
@@ -34,7 +37,8 @@ class asset_category:
         if self.driver.title == "Brighter App | AssetCategory":
             assert True
         else:
-            self.driver.save_screenshot("assetCategory_Page.png")   
+            allure.attach(self.driver.get_screenshot_as_png(),name="assetCategory_Page",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("assetCategory_Page.png")   
             assert False
     def add_assetCategory(self):
         self.driver.find_element(By.ID,self.add_asset_category_id).click()

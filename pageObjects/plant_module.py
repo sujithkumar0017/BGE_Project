@@ -15,40 +15,36 @@ class Plant:
     add_plant_xpath = '//button[@id="add-pvplant-btn"]'
 
     # Create Plant
-    plant_name_xpath = '//div[@id="plant-name-input"]//div[@class="form-control-wrap"]'
-    size_xpath = '//div[@id="plant-size-input"]//div[@class="form-control-wrap"]'
-    acronym_xpath = (
-        '//div[@id="plant-identifier-input"]//div[@class="form-control-wrap"]'
-    )
-    on_boarding_date_xpath = (
-        '//div[@id="plant-onBoardDate-input"]//div[@class="form-control-wrap"]'
-    )
-    client_name_xpath = (
-        '//div[@id="plant-clientName-select"]//div[@class="form-control-wrap"]'
-    )
+    plant_name_xpath = '//div[@id="plant-name-input"]//input'
+    size_xpath = '//div[@id="plant-size-input"]//input'
+    acronym_xpath ='//div[@id="plant-identifier-input"]//input'
+    
+    on_boarding_date_xpath = '//div[@id="plant-onBoardDate-input"]//input'
+    client_name_xpath = '(//div[@id="plant-clientName-select"]//input)[1]'
+    
     plant_manager_xpath = (
-        '//div[@id="plant-manager-select"]//div[@class="form-control-wrap"]'
+        '(//div[@id="plant-manager-select"]//input)[1]'
     )
     team_leader_xpath = (
-        '//div[@id="plant-team-select"]//div[@class="form-control-wrap"]'
+        '(//div[@id="plant-team-select"]//input)[1]'
     )
     field_engineer_xpath = (
-        '//div[@id="plant-engineer-select"]//div[@class="form-control-wrap"]'
+        '(//div[@id="plant-engineer-select"]//input)[1]'
     )
-    status_xpath = '//div[@id="plant-status-select"]//div[@class="form-control-select"]'
+    status_xpath = '(//div[@id="plant-status-select"]//input)[1]'
     postal_code_xpath = (
-        '//div[@id="plant-postal-input"]//div[@class="form-control-wrap"]'
+        '//div[@id="plant-postal-input"]//input'
     )
-    address_xpath = '//div[@id="plant-address-input"]//div[@class="form-control-wrap"]'
+    address_xpath = '//div[@id="plant-address-input"]//input'
     google_map_link_xpath = (
-        '//div[@id="plant-map-input"]//div[@class="form-control-wrap"]'
+        '//div[@id="plant-map-input"]//input'
     )
     what3word_link_xpath = (
-        '//div[@id="plant-what3word-input"]//div[@class="form-control-wrap"]'
+        '//div[@id="plant-what3word-input"]//input'
     )
-    dno_xpath = '//div[@id="plant-dno-select"]//div[@class="form-control-wrap "]'
+    dno_xpath = '(//div[@id="plant-dno-select"]//input)[1]'
     hospital_xpath = (
-        '//div[@id="plant-hospital-select"]//div[@class="form-control-wrap"]'
+        '(//div[@id="plant-hospital-select"]//input)[1]'
     )
     btn_cancel_xpath = '//button[@id="cancel-plant"]'
     btn_create_plant_xpath = '//button[@id="create-plant-form"]'

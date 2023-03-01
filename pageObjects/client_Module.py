@@ -9,7 +9,8 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from datetime import date
-from selenium.common import exceptions
+import allure
+from allure_commons.types import AttachmentType
 
 
 class Client:
@@ -145,19 +146,27 @@ class Client:
     def navigate_to_client_page(self):
         time.sleep(5)
         self.driver.find_element(By.XPATH, self.menuitem_client_Xpath).click()
-        # wait =  WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.XPATH,self.menuitem_client_Xpath)))
-        # wait.click()
-        # assert "https://bge.tkea.in/clients" in self.driver.current_url
-
-    # def client_PageContents(self):
-    #     self.driver.find_element(By.Xpath,self.text_Xpath).is_displayed()
-    #     self.driver.find_element(By.Xpath,self.exportButton_Xpath).is_displayed()
-    #     self.driver.find_element(By.Xpath,self.addClient_Xpath).is_displayed()
-    #     self.driver.find_element(By.Xpath,self.clientList_Xpath).is_displayed()
-    #     self.driver.find_element(By.Xpath,self.text_Xpath).is_displayed()
+        time.sleep(2)
+        title = WebDriverWait(self.driver, 20).until(
+            EC.presence_of_element_located((By.TAG_NAME, "title"))
+        )
+        if title.get_attribute("innerHTML") == "Brighter App | Client":
+            assert True
+        else:
+            allure.attach(self.driver.get_screenshot_as_png(),name="add_plant_popup",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("add_plant_popup.png")
+            assert False
     def add_Client(self):
         self.driver.find_element(By.ID, self.addClient_Id).click()
-        assert "https://bge.tkea.in/client/add" in self.driver.current_url
+        title = WebDriverWait(self.driver, 20).until(
+            EC.presence_of_element_located((By.TAG_NAME, "title"))
+        )
+        if title.get_attribute("innerHTML") == "Brighter App | Client | Create":
+            assert True
+        else:
+            allure.attach(self.driver.get_screenshot_as_png(),name="add_plant_popup",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("add_plant_popup.png")
+            assert False
 
     def add_Client_Page_Contents(self):
         pass
@@ -239,13 +248,15 @@ class Client:
     # Add Plant
     def add_plant_in_client_page(self):
         self.driver.find_element(By.XPATH,'//button[@id="client-add-plant"]').click()
+        time.sleep(2)
         title = WebDriverWait(self.driver, 20).until(
             EC.presence_of_element_located((By.TAG_NAME, "title"))
         )
         if title.get_attribute("innerHTML") == "Brighter App | Plant | Create":
             assert True
         else:
-            self.driver.save_screenshot("add_plant_popup.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="add_plant_popup",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("add_plant_popup.png")
             assert False
 
     def plant_name(self, name):
@@ -277,7 +288,14 @@ class Client:
 
     def add_plant(self):
         self.driver.find_element(By.XPATH, self.plantOwned_btn_addPlant_Xpath).click()
-
+        # self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space="Successfully Created"]')))
+        # time.sleep(3)
+        # if "Successfully Created" in self.msg.text:
+        #     assert True
+        # else:
+        #     self.driver.save_screenshot("add_corrective.png")
+        #     assert False
+        # self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
     def created_plant_in_list_view(self, plant_name):
         element = WebDriverWait(self.driver, 20).until(
             EC.presence_of_all_elements_located(
@@ -309,7 +327,8 @@ class Client:
             if element.is_displayed():
                 assert True
             else:
-                self.driver.save_screenshot("create_remedial_mandatory_fields.png")
+                allure.attach(self.driver.get_screenshot_as_png(),name="create_remedial_mandatory_fields",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("create_remedial_mandatory_fields.png")
                 assert False
 
     # Add User
@@ -318,10 +337,12 @@ class Client:
         title = WebDriverWait(self.driver, 20).until(
             EC.presence_of_element_located((By.TAG_NAME, "title"))
         )
+        time.sleep(2)
         if title.get_attribute("innerHTML") == "Brighter App | User | Create":
             assert True
         else:
-            self.driver.save_screenshot("add_user_popup.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="add_user_popup",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("add_user_popup.png")
             assert False
 
     def user_firstName(self, name):
@@ -366,8 +387,7 @@ class Client:
                 self.driver.save_screenshot("created_user_listview.png")
                 assert False
 
-    def userCreation_mandatory_fields(
-self):  # need to add password as a required field.
+    def userCreation_mandatory_fields(self):  # need to add password as a required field.
         self.driver.find_element(
             By.XPATH, self.userCreation_btn_addUser_AddUser_Xpath
         ).click()
@@ -385,7 +405,8 @@ self):  # need to add password as a required field.
             if element.is_displayed():
                 assert True
             else:
-                self.driver.save_screenshot("create_remedial_mandatory_fields.png")
+                allure.attach(self.driver.get_screenshot_as_png(),name="create_userCreation_mandatory_fields",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("create_remedial_mandatory_fields.png")
                 assert False
 
     def createClient(self):
@@ -401,8 +422,10 @@ self):  # need to add password as a required field.
         if "Client created successfully" in self.msg.text:
             assert True
         else:
-            self.driver.save_screenshot("client.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="create_client_toast",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("client.png")
             assert False
+        self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
 
     def client_view(self, client):
         element = WebDriverWait(self.driver, 10).until(
@@ -421,7 +444,8 @@ self):  # need to add password as a required field.
                 if title.get_attribute("innerHTML") == "Brighter App | Client | View":
                     assert True
                 else:
-                    self.driver.save_screenshot("client_view_page.png")
+                    allure.attach(self.driver.get_screenshot_as_png(),name="client_view_page",attachment_type=AttachmentType.PNG)
+                    # self.driver.save_screenshot("client_view_page.png")
                     assert False
                 break
             else:
@@ -439,7 +463,8 @@ self):  # need to add password as a required field.
                 assert True
             break
         else:
-            self.driver.save_screenshot("listView_plant.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="client_no_found_in_listView",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("listView_plant.png")
             assert False
 
     def validation(self):
@@ -451,7 +476,7 @@ self):  # need to add password as a required field.
 
     #    --------------------------------------------Edit Client---------------------------------------------------------
     def view_edit_client_page(self):
-        self.driver.find_element(By.XPATH, '//em[@class="icon ni ni-edit"]').click()
+        self.driver.find_element(By.XPATH, '//button[@id="client-edit-btn"]').click()
         time.sleep(2)
         title = WebDriverWait(self.driver, 20).until(
             EC.presence_of_element_located((By.TAG_NAME, "title"))
@@ -459,7 +484,8 @@ self):  # need to add password as a required field.
         if title.get_attribute("innerHTML") == "Brighter App | Client | Edit":
             assert True
         else:
-            self.driver.save_screenshot("edit_client_page.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="edit_client_page",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("edit_client_page.png")
             assert False
 
     # def cancel_button(self):
@@ -484,6 +510,21 @@ self):  # need to add password as a required field.
         self.driver.find_element(By.XPATH, '//input[@type="file"]').send_keys(
             file_to_upload_path
         )
+        self.msg = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located(
+                (
+                    By.XPATH,
+                    '//div[@class="toastr-text"]//p[normalize-space()="File uploaded successfully "]',
+                )
+            )
+        )
+        if "File uploaded successfully" in self.msg.text:
+            assert True
+        else:
+            allure.attach(self.driver.get_screenshot_as_png(),name="Attachment_toast",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("update_client.png")
+            assert False
+        self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
 
     def save_information_btn(self):
         self.driver.find_element(
@@ -500,8 +541,10 @@ self):  # need to add password as a required field.
         if "Client details updated successfully" in self.msg.text:
             assert True
         else:
-            self.driver.save_screenshot("update_client.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="update_client_toast",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("update_client.png")
             assert False
+        self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
 
     # ---------------------------------------------- List_View_three_dotted_icon-----------------------------------------------
 
@@ -525,7 +568,8 @@ self):  # need to add password as a required field.
         if self.driver.title == "Brighter App | Client | Edit":
             assert True
         else:
-            self.driver.save_screenshot("edit_client.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="edit_client_in_user_dropdown",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("edit_client.png")
             assert False
 
     def archive_user(self, client_name):
@@ -546,13 +590,14 @@ self):  # need to add password as a required field.
         element.click()
         self.msg = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located(
-                (By.XPATH, '//div[@class="toastr-text"]//p')
+                (By.XPATH, '//div[@class="toastr-text"]//p[normalize-space()="Client Archived successfully"]')
             )
         )
         if "Client Archived successfully" in self.msg.text:
             assert True
         else:
-            self.driver.save_screenshot("archive_client.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="archive_client",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("archive_client.png")
             assert False
         self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
 
@@ -573,7 +618,8 @@ self):  # need to add password as a required field.
                 assert True
                 break
             else:
-                self.driver.save_screenshot("archive_client_list.png")
+                allure.attach(self.driver.get_screenshot_as_png(),name="archive_client_list",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("archive_client_list.png")
                 assert False
 
     def unarchived_client(self, client_name):
@@ -603,7 +649,8 @@ self):  # need to add password as a required field.
         if "Client Unarchived successfully" in self.msg.text:
             assert True
         else:
-            self.driver.save_screenshot("unarchive_client.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="unarchive_client",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("unarchive_client.png")
             assert False
         self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
 
@@ -621,7 +668,8 @@ self):  # need to add password as a required field.
                 assert True
                 break
             else:
-                self.driver.save_screenshot("unarchive_client_listView.png")
+                allure.attach(self.driver.get_screenshot_as_png(),name="unarchive_client_listView",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("unarchive_client_listView.png")
                 assert False
 
     def ticket_listview_count(self):
@@ -655,7 +703,8 @@ self):  # need to add password as a required field.
         if element[20:22] == str(count):
             assert True
         else:
-            self.driver.save_screenshot("Number_of_client_count.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="Number_of_client_count",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("Number_of_client_count.png")
             assert False
 
     def search_client(self, search_term):
@@ -681,5 +730,6 @@ self):  # need to add password as a required field.
         if "Error Client emailId already exits" in self.msg.text:
             assert True
         else:
-            self.driver.save_screenshot("create_client_with_existing_email.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="create_client_with_existing_email",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("create_client_with_existing_email.png")
             assert False
