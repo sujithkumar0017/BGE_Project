@@ -1,9 +1,11 @@
+import random
 import time
 from pageObjects.corrective_maintenance import corrective_maintenance
 from utilities.readProperties import ReadConfig
 from pageObjects.login_Module import login_Module
 import unittest
 import pytest
+from faker import Faker
 
 
 @pytest.mark.usefixtures("setup_class")
@@ -11,7 +13,7 @@ class Test_Corrective(unittest.TestCase):
     url = ReadConfig.getApplicationUrl()
     useremail = ReadConfig.getUseremail()
     password = ReadConfig.getPassword()
-    
+    fake = Faker()
     
 
     @pytest.mark.order(1)
@@ -38,8 +40,8 @@ class Test_Corrective(unittest.TestCase):
     @pytest.mark.order(5)
     def test_add_corrective_maintenance(self):
         self.corrective = corrective_maintenance(self.driver)
-        self.corrective.task_name("task_corrective_ticket")
-        self.corrective.priority("High")
+        self.corrective.task_name(self.fake.name())
+        self.corrective.priority(random.choice(["High", "Low","Normal"]))
         self.corrective.status("open")
         self.corrective.plant_name("Mobile_Plant")
         self.corrective.field_engineer("Mobile User")
@@ -82,8 +84,8 @@ class Test_Corrective(unittest.TestCase):
     @pytest.mark.order(12)
     def test_add_followUp_task(self):
         self.corrective = corrective_maintenance(self.driver)
-        self.corrective.followup_task_name("Child_task_01")
-        self.corrective.followup_priority("high")
+        self.corrective.followup_task_name("_".join(["childtask",self.fake.name()]))
+        self.corrective.followup_priority(random.choice(["High", "Low","Normal"]))
         self.corrective.followup_sla("Mobile_Sla")
         self.corrective.followup_status("open")
         self.corrective.plant_name("Mobile_Plant")

@@ -5,7 +5,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-
+import allure
+from allure_commons.types import AttachmentType
 
 class remedial_maintenance:
     maintenance = '//span[normalize-space()="Maintenance"]'
@@ -54,7 +55,8 @@ class remedial_maintenance:
         if title.get_attribute("innerHTML") == "Brighter App | Remedial Maintenance":
             assert True
         else:
-            self.driver.save_screenshot("remedial_page.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="remedial_page",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("remedial_page.png")
             assert False
 
     def add_remedial_maintenance(self):
@@ -68,7 +70,8 @@ class remedial_maintenance:
         if title.get_attribute("innerHTML") == "Brighter App | Remedial | Create":
             assert True
         else:
-            self.driver.save_screenshot("add_remedial_popup.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="add_remedial_popup",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("add_remedial_popup.png")
             assert False
 
     def task_name(self, name):
@@ -168,7 +171,8 @@ class remedial_maintenance:
         if "File uploaded successfully" in self.msg.text:
             assert True
         else:
-            self.driver.save_screenshot("add_followup_task.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="add_followup_task",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("add_followup_task.png")
             assert False
 
     def create_remedial_maintenance(self):
@@ -187,7 +191,8 @@ class remedial_maintenance:
         if "Successfully Created" in self.msg.text:
             assert True
         else:
-            self.driver.save_screenshot("create_remedial.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="create_remedial",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("create_remedial.png")
             assert False
 
     def remedial_mandatory_fields(self):
@@ -207,7 +212,8 @@ class remedial_maintenance:
             if element.is_displayed():
                 assert True
             else:
-                self.driver.save_screenshot("create_remedial_mandatory_fields.png")
+                allure.attach(self.driver.get_screenshot_as_png(),name="create_remedial_mandatory_fields",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("create_remedial_mandatory_fields.png")
                 assert False
 
     # ------------------------------------List View---------------------------------------------------------#
@@ -222,7 +228,8 @@ class remedial_maintenance:
                 assert True
             break
         else:
-            self.driver.save_screenshot("listView_plant.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="listView_plant",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("listView_plant.png")
             assert False
 
     def view_remedial_task(self, plant):
@@ -241,11 +248,13 @@ class remedial_maintenance:
                 if title.get_attribute("innerHTML") == "Brighter App | Remedial | View":
                     assert True
                 else:
-                    self.driver.save_screenshot("view_plant.png")
+                    allure.attach(self.driver.get_screenshot_as_png(),name="view_plant",attachment_type=AttachmentType.PNG)
+                    # self.driver.save_screenshot("view_plant.png")
                     assert False
                 break
             else:
-                self.driver.save_screenshot("listView_plant_notFound.png")
+                allure.attach(self.driver.get_screenshot_as_png(),name="listView_plant_notFound",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("listView_plant_notFound.png")
                 assert False
 
     def ticketView_edit_button(self):
@@ -256,7 +265,8 @@ class remedial_maintenance:
         if title.get_attribute("innerHTML") == "Brighter App | Remedial | Edit":
             assert True
         else:
-            self.driver.save_screenshot("Edit_remedial_ticket_page.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="Edit_remedial_ticket_page",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("Edit_remedial_ticket_page.png")
             assert False
 
     def edit_mandatory_field(self):
@@ -289,7 +299,8 @@ class remedial_maintenance:
             if element.is_displayed():
                 assert True
             else:
-                self.driver.save_screenshot("edit_remedial_mandatory_fields.png")
+                allure.attach(self.driver.get_screenshot_as_png(),name="edit_remedial_mandatory_fields",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("edit_remedial_mandatory_fields.png")
                 assert False
 
     def save_information(self):
@@ -305,7 +316,8 @@ class remedial_maintenance:
         if "Successfully Updated" in self.msg.text:
             assert True
         else:
-            self.driver.save_screenshot("edit_remedial_toast.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="edit_remedial_toast",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("edit_remedial_toast.png")
             assert False
 
     # ---------------------------------------------- List_View_three_dotted_icon-----------------------------------------------
@@ -332,7 +344,8 @@ class remedial_maintenance:
         if title.get_attribute("innerHTML") == "Brighter App | Remedial | Edit":
             assert True
         else:
-            self.driver.save_screenshot("edit_ticket.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="edit_ticket",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("edit_ticket.png")
             assert False
 
     def archive_ticket(self, ticket):
@@ -362,7 +375,8 @@ class remedial_maintenance:
         if "Remedial Task Archived successfully" in self.msg.text:
             assert True
         else:
-            self.driver.save_screenshot("archive_ticket.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="archive_ticket",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("archive_ticket.png")
             assert False
         self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
 
@@ -383,7 +397,8 @@ class remedial_maintenance:
                 assert True
                 break
             else:
-                self.driver.save_screenshot("archive_ticket_list.png")
+                allure.attach(self.driver.get_screenshot_as_png(),name="archive_ticket_list",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("archive_ticket_list.png")
                 assert False
 
     def unarchived_ticket(self, ticket):
@@ -413,7 +428,8 @@ class remedial_maintenance:
         if "Remedial Task UnArchived successfully" in self.msg.text:
             assert True
         else:
-            self.driver.save_screenshot("unarchive_ticket.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="unarchive_ticket",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("unarchive_ticket.png")
             assert False
         self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
 
@@ -433,40 +449,9 @@ class remedial_maintenance:
                 assert True
                 break
             else:
-                self.driver.save_screenshot("unarchive_client_listView.png")
+                allure.attach(self.driver.get_screenshot_as_png(),name="unarchive_client_listView",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("unarchive_client_listView.png")
                 assert False
-
-    def tickets_listview_count(self):
-        count = 0
-        isNextDisabled = False
-        while not isNextDisabled:
-            validate_status = self.driver.find_elements(
-                By.XPATH, '//div[@class="user-name"]'
-            )
-            for x in validate_status:
-                count += 1
-            nxt_btn = WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located(
-                    (By.XPATH, "//div[@class='card-inner']//li[last()-2]")
-                )
-            )
-            next_class = nxt_btn.get_attribute("class")
-            if "page-item disabled" in next_class:
-                isNextDisabled = True
-                break
-            else:
-                self.driver.find_element(
-                    By.XPATH, "//div[@class='card-inner']//li[last()-2]"
-                ).click()
-        self.driver.find_element(
-            By.XPATH, "(//div[@class='card-inner']//li)[2]"
-        ).click()
-        element = self.driver.find_element(By.XPATH, "//p").text
-        if element[20:22] == count:
-            assert True
-        else:
-            self.driver.save_screenshot("Number_of_ticket_count.png")
-            assert False
 
     def ticket_listview_count(self):
         count = 0
@@ -497,10 +482,11 @@ class remedial_maintenance:
             By.XPATH, '//p[contains(text(),"You have a total")]'
         ).text
         
-        if element[20:21] == str(count):
+        if element[20:22] == str(count):
             assert True
         else:
-            self.driver.save_screenshot("Number_of_ticket_count.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="Number_of_ticket_count",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("Number_of_ticket_count.png")
             assert False
 
     def search_remedial_ticket(self, search_term):

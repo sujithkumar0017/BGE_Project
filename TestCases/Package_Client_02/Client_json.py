@@ -27,7 +27,7 @@ class random_data:
                      
           }
 
-          f=open("/home/sujith/codebase/BGE_Framework_Design/utilities/client.json","w")
+          f=open("/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_entity_management","w")
           json.dump(client,f)
           f.close()
 

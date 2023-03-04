@@ -5,7 +5,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-
+import allure
+from allure_commons.types import AttachmentType
 
 
 
@@ -41,14 +42,16 @@ class asset:
         if self.driver.title == "Brighter App | Asset":
             assert True
         else:
-            self.driver.save_screenshot("asset_Page.png")   
+            allure.attach(self.driver.get_screenshot_as_png(),name="asset_Page",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("asset_Page.png")   
             assert False
     def add_asset(self):
         self.driver.find_element(By.ID,self.add_asset_id).click()
         if self.driver.title == "Brighter App | Asset | Create":
             assert True
         else:
-            self.driver.save_screenshot("create_Asset_webpage_title.png")   
+            allure.attach(self.driver.get_screenshot_as_png(),name="create_Asset_webpage_title",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("create_Asset_webpage_title.png")   
             assert False
     def asset_mandatory_fields(self):
         element = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH,self.create_asset_xpath)))
@@ -60,7 +63,8 @@ class asset:
             if element.is_displayed():
                 assert True
             else:
-                self.driver.save_screenshot("create_asset_mandatory_fields.png")  
+                allure.attach(self.driver.get_screenshot_as_png(),name="create_asset_mandatory_fields",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("create_asset_mandatory_fields.png")  
                 assert False
     def modal(self,modal):
         self.driver.find_element(By.XPATH,self.input_modal_xpath).send_keys(modal)
@@ -86,7 +90,8 @@ class asset:
         if "Successfully Created" in self.msg.text:
             assert True
         else:
-            self.driver.save_screenshot("create_asset_toast.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="create_asset_toast",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("create_asset_toast.png")
             assert False
     #---------------------------------------List View-------------------------------------------------------#
     def asset_in_listView(self,name):
@@ -96,7 +101,8 @@ class asset:
                 assert True
             break
         else:
-            self.driver.save_screenshot("listView_asset.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="listView_asset",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("listView_asset.png")
             assert False     
     def view_asset(self,modal):
         element = WebDriverWait(self.driver, 10).until(EC.presence_of_all_elements_located((By.XPATH,self.created_asset_in_listView_xpath)))
@@ -107,11 +113,13 @@ class asset:
                 if self.driver.title == "Brighter App | Asset | View":
                     assert True
                 else:
-                    self.driver.save_screenshot("view_asset.png")   
+                    allure.attach(self.driver.get_screenshot_as_png(),name="view_asset",attachment_type=AttachmentType.PNG)
+                    # self.driver.save_screenshot("view_asset.png")   
                     assert False
                 break
             else:
-                self.driver.save_screenshot("listView_asset_notFound.png")
+                allure.attach(self.driver.get_screenshot_as_png(),name="listView_asset_notFound",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("listView_asset_notFound.png")
                 assert False 
 
     #---------------------------------- Edit asset -----------------------------------------------------------#
@@ -120,7 +128,8 @@ class asset:
         if self.driver.title == "Brighter App | Asset | Edit":
                 assert True
         else:
-                self.driver.save_screenshot("Edit_asset_webpage_title.png")   
+                allure.attach(self.driver.get_screenshot_as_png(),name="Edit_asset_webpage_title",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("Edit_asset_webpage_title.png")   
                 assert False
     def edit_asset_mandatory_field(self):
            modal = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located((By.XPATH,self.input_modal_xpath)))
@@ -135,7 +144,8 @@ class asset:
            if element.is_displayed():
             assert True
            else:
-            self.driver.save_screenshot("edit_asset_mandatory_fields.png")  
+            allure.attach(self.driver.get_screenshot_as_png(),name="edit_asset_mandatory_fields",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("edit_asset_mandatory_fields.png")  
             assert False
     def weblink(self,weblink):
         element = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located((By.XPATH,self.input_weblink_xpath)))
@@ -157,8 +167,9 @@ class asset:
         self.msg=WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space()="File uploaded successfully"')))
         if "File uploaded successfully" in self.msg.text:
             assert True
-        else:   
-            self.driver.save_screenshot("add_followup_task.png")
+        else:
+            allure.attach(self.driver.get_screenshot_as_png(),name="add_followup_task",attachment_type=AttachmentType.PNG)   
+            # self.driver.save_screenshot("add_followup_task.png")
             assert False
     def save_information(self):
         self.driver.find_element(By.XPATH,self.btn_save_information_xpath).click()
@@ -166,7 +177,8 @@ class asset:
         if "Successfully Updated" in self.msg.text:
             assert True
         else:
-            self.driver.save_screenshot("edit_asset_toast.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="edit_asset_toast",attachment_type=AttachmentType.PNG) 
+            # self.driver.save_screenshot("edit_asset_toast.png")
             assert False
         self.driver.find_element(By.XPATH,'//button[@aria-label="close"]').click()
 #---------------------------------------List View Edit and delete option----------------------------------------------#
@@ -175,7 +187,8 @@ class asset:
         if self.driver.title == "Brighter App | Asset | Edit":
                 assert True
         else:
-                self.driver.save_screenshot("Edit_Asset_page.png")   
+                allure.attach(self.driver.get_screenshot_as_png(),name="Edit_Asset_page",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("Edit_Asset_page.png")   
                 assert False
     def list_view_delete_option(self,model):
         self.driver.find_element(By.XPATH,'(//span[normalize-space()="'+model+'"]/following::em[@class="icon ni ni-edit"])[1]').click()

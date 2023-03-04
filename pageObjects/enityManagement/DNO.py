@@ -5,7 +5,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-
+import allure
+from allure_commons.types import AttachmentType
 
 
 
@@ -44,7 +45,8 @@ class DNO:
        if self.driver.title == "Brighter App | DNO":
            assert True
        else:
-           self.driver.save_screenshot("dno_Page.png")
+           allure.attach(self.driver.get_screenshot_as_png(),name="dno_Page",attachment_type=AttachmentType.PNG) 
+        #    self.driver.save_screenshot("dno_Page.png")
            assert False
 
 
@@ -54,7 +56,8 @@ class DNO:
        if self.driver.title == "Brighter App | DNO | Create":
            assert True
        else:
-           self.driver.save_screenshot("create_dno_webtitle.png")
+           allure.attach(self.driver.get_screenshot_as_png(),name="create_dno_webtitle",attachment_type=AttachmentType.PNG)
+        #    self.driver.save_screenshot("create_dno_webtitle.png")
            assert False
 
 
@@ -70,7 +73,8 @@ class DNO:
        ):
            assert True
        else:
-           self.driver.save_screenshot("create_failure_reason_mandatory_fields.png")
+           allure.attach(self.driver.get_screenshot_as_png(),name="create_failure_reason_mandatory_fields",attachment_type=AttachmentType.PNG)
+        #    self.driver.save_screenshot("create_failure_reason_mandatory_fields.png")
            assert False
 
 
@@ -87,7 +91,8 @@ class DNO:
        if "Successfully Created" in self.msg.text:
            assert True
        else:
-           self.driver.save_screenshot("create_DNO_toast.png")
+           allure.attach(self.driver.get_screenshot_as_png(),name="create_DNO_toast",attachment_type=AttachmentType.PNG)
+        #    self.driver.save_screenshot("create_DNO_toast.png")
            assert False
 
 
@@ -105,7 +110,8 @@ class DNO:
                assert True
            break
        else:
-           self.driver.save_screenshot("listView_DNO.png")
+           allure.attach(self.driver.get_screenshot_as_png(),name="listView_DNO",attachment_type=AttachmentType.PNG)
+        #    self.driver.save_screenshot("listView_DNO.png")
            assert False
 
 
@@ -122,11 +128,13 @@ class DNO:
                if self.driver.title == "Brighter App | DNO | View":
                    assert True
                else:
-                   self.driver.save_screenshot("view_DNO.png")
+                   allure.attach(self.driver.get_screenshot_as_png(),name="view_DNO",attachment_type=AttachmentType.PNG)
+                #    self.driver.save_screenshot("view_DNO.png")
                    assert False
                break
            else:
-               self.driver.save_screenshot("listView_DNO_notFound.png")
+               allure.attach(self.driver.get_screenshot_as_png(),name="listView_DNO_notFound",attachment_type=AttachmentType.PNG)
+            #    self.driver.save_screenshot("listView_DNO_notFound.png")
                assert False
 
 
@@ -138,15 +146,16 @@ class DNO:
        if self.driver.title == "Brighter App | DNO | Edit":
            assert True
        else:
-           self.driver.save_screenshot("Edit_DNO_webpage_title.png")
+           allure.attach(self.driver.get_screenshot_as_png(),name="Edit_DNO_webpage_title",attachment_type=AttachmentType.PNG)
+        #    self.driver.save_screenshot("Edit_DNO_webpage_title.png")
            assert False
 
 
    def edit_dno_mandatory_field(self):
        element = self.driver.find_element(By.XPATH, '//input[@name="name"]')
-       time.sleep(2)
-       element.clear()
-       time.sleep(2)
+       actions = ActionChains(self.driver)
+       actions.click(element)
+       actions.key_down(Keys.CONTROL).send_keys('a').key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
        element = WebDriverWait(self.driver, 10).until(
            EC.presence_of_element_located(
                (By.XPATH, self.save_information_button_xpath)
@@ -161,7 +170,8 @@ class DNO:
        ):
            assert True
        else:
-           self.driver.save_screenshot("DNO_edit_mandatory_fields.png")
+           allure.attach(self.driver.get_screenshot_as_png(),name="DNO_edit_mandatory_fields",attachment_type=AttachmentType.PNG)
+        #    self.driver.save_screenshot("DNO_edit_mandatory_fields.png")
            assert False
 
 
@@ -178,7 +188,8 @@ class DNO:
        if "Successfully Updated" in self.msg.text:
            assert True
        else:
-           self.driver.save_screenshot("edit_DNO_toast.png")
+           allure.attach(self.driver.get_screenshot_as_png(),name="edit_DNO_toast",attachment_type=AttachmentType.PNG)
+        #    self.driver.save_screenshot("edit_DNO_toast.png")
            assert False
 
 
@@ -192,7 +203,8 @@ class DNO:
        if self.driver.title == "Brighter App | DNO | Edit":
            assert True
        else:
-           self.driver.save_screenshot("Edit_Modal_page.png")
+           allure.attach(self.driver.get_screenshot_as_png(),name="Edit_Modal_page",attachment_type=AttachmentType.PNG)
+        #    self.driver.save_screenshot("Edit_Modal_page.png")
            assert False
        self.edit_dno_mandatory_field()
 

@@ -6,6 +6,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.common import exceptions  
+import allure
+from allure_commons.types import AttachmentType
 
 
 class corrective_maintenance:
@@ -57,7 +59,8 @@ class corrective_maintenance:
         if self.driver.title == "Brighter App | Corrective Maintenance":
             assert True
         else:
-            self.driver.save_screenshot("add_corrective_window.png")   
+            allure.attach(self.driver.get_screenshot_as_png(),name="corrective_maintenance_page",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("add_corrective_window.png")   
             assert False
     def add_corrective_maintenance(self):
         element = self.driver.find_element(By.XPATH,'//em[@class="icon ni ni-plus"]')
@@ -66,7 +69,8 @@ class corrective_maintenance:
         if self.driver.title == "Brighter App | Corrective | Create":
             assert True
         else:
-            self.driver.save_screenshot("add_corrective_window.png")   
+            allure.attach(self.driver.get_screenshot_as_png(),name="add_corrective_window",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("add_corrective_window.png")   
             assert False
     def task_name(self,name):
          element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.task_name_xpath)))
@@ -139,7 +143,8 @@ class corrective_maintenance:
         if "Successfully Created" in self.msg.text:
             assert True
         else:
-            self.driver.save_screenshot("add_corrective.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="Create_corrective_ticket",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("add_corrective.png")
             assert False
     def corrective_mandatory_fields(self):
         self.driver.find_element(By.XPATH, self.add_button_xpath).click()
@@ -158,7 +163,8 @@ class corrective_maintenance:
             if element.is_displayed():
                 assert True
             else:
-                self.driver.save_screenshot("create_corrective_mandatory_fields.png")
+                allure.attach(self.driver.get_screenshot_as_png(),name="create_corrective_mandatory_fields",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("create_corrective_mandatory_fields.png")
                 assert False
 
     #-----------------------List View---------------------------------------------#
@@ -169,7 +175,8 @@ class corrective_maintenance:
                 assert True
             break
         else:
-            self.driver.save_screenshot("listView_ticket_view.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="listView_ticket_view",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("listView_ticket_view.png")
             assert False     
     def search_corrective_ticket(self,search_term):
         self.driver.find_element(By.XPATH,'//a[@href="#search"]').click()
@@ -187,11 +194,13 @@ class corrective_maintenance:
                 if self.driver.title == "Brighter App | Corrective | View":
                     assert True
                 else:
-                    self.driver.save_screenshot("view_corrective_ticket.png")   
+                    allure.attach(self.driver.get_screenshot_as_png(),name="view_corrective_ticket",attachment_type=AttachmentType.PNG)
+                    # self.driver.save_screenshot("view_corrective_ticket.png")   
                     assert False
                 break
         else:
-            self.driver.save_screenshot("select_corrective_ticket.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="select_corrective_ticket",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("select_corrective_ticket.png")
             assert False 
     #---------------------------View-Edit Ticket-------------------------------#           
     def ticketView_edit_button(self):
@@ -200,7 +209,8 @@ class corrective_maintenance:
         if self.driver.title == "Brighter App | Corrective | Edit":
             assert True
         else:
-            self.driver.save_screenshot("Edit_corrective_ticket_page.png")   
+            allure.attach(self.driver.get_screenshot_as_png(),name="Edit_corrective_ticket_page",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("Edit_corrective_ticket_page.png")   
             assert False
     def edit_ticket(self,sla,labour_hours):
         self.sla(sla)
@@ -228,7 +238,8 @@ class corrective_maintenance:
             if element.is_displayed():
                 assert True
             else:
-                self.driver.save_screenshot("create_followup_task_fields.png")
+                allure.attach(self.driver.get_screenshot_as_png(),name="create_followup_task_fields",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("create_followup_task_fields.png")
                 assert False
     def followup_task_name(self,name):
          element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.followup_task_name_xpath)))
@@ -261,7 +272,8 @@ class corrective_maintenance:
        if element.text == plant_name:
            assert True
        else:
-           self.driver.save_screenshot("Plant_name_in_create_remedial.png")
+           allure.attach(self.driver.get_screenshot_as_png(),name="Plant_name_in_create_followup_task",attachment_type=AttachmentType.PNG)
+        #    self.driver.save_screenshot("Plant_name_in_create_remedial.png")
            assert False
     def followup_field_engineer(self,field_engineer):
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.followup_field_engineer_xpath)))
@@ -304,9 +316,10 @@ class corrective_maintenance:
         if element.text in plant_name:
            assert True
         else:
-           self.driver.save_screenshot("Plant_name_in_create_remedial.png")
+           allure.attach(self.driver.get_screenshot_as_png(),name="Parent_task_in_followup_task",attachment_type=AttachmentType.PNG)
+        #    self.driver.save_screenshot("Parent_task_in_followup_task.png")
            assert False
-    def followup_attachments(self):
+    def followup_attachments(self): 
         file_to_upload_path = os.getcwd() + "/Files/file.png"
         button=self.driver.find_element(By.XPATH,'//div[@id="subtask-parenttask-select"]/following::div//span[@class="dz-message-text"]')
         self.driver.execute_script("arguments[0].scrollIntoView();", button)
@@ -314,8 +327,9 @@ class corrective_maintenance:
         self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[text()="File uploaded successfully"')))
         if "File uploaded successfully" in self.msg.text:
             assert True
-        else:   
-            self.driver.save_screenshot("add_followup_task.png")
+        else:
+            allure.attach(self.driver.get_screenshot_as_png(),name="add_attachments_followup_task",attachment_type=AttachmentType.PNG)   
+            # self.driver.save_screenshot("add_followup_task.png")
             assert False
         
     def create_add_followup_task_button(self):
@@ -326,7 +340,8 @@ class corrective_maintenance:
         if "Successfully Created" in self.msg.text:
             assert True
         else:
-            self.driver.save_screenshot("add_followup_task.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="create_followup_task",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("create_followup_task.png")
             assert False
     
     def followup_task_listview(self,name):
@@ -336,7 +351,8 @@ class corrective_maintenance:
                 assert True
             break
         else:
-                self.driver.save_screenshot("followup_ticket_view.png")
+                allure.attach(self.driver.get_screenshot_as_png(),name="followup_ticket_view",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("followup_ticket_view.png")
                 assert False 
     def followup_ticket_visible_in_corrective_list_view(self,name):
         # self.driver.find_element(By.XPATH,'//button[@class="close"]').click()
@@ -346,7 +362,8 @@ class corrective_maintenance:
                 assert True
             break
         else:
-            self.driver.save_screenshot("listView_ticket_view.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="listView_ticket_view",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("listView_ticket_view.png")
             assert False
     def save_information_button(self):
         self.driver.find_element(By.XPATH,'//button[@id="save-correctiveForm"]').click()
@@ -355,7 +372,8 @@ class corrective_maintenance:
         if "Successfully Updated" in self.msg.text:
             assert True
         else:
-            self.driver.save_screenshot("edit_corrective_ticket.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="edit_corrective_ticket",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("edit_corrective_ticket.png")
             assert False
     
     
@@ -369,7 +387,8 @@ class corrective_maintenance:
         if "Corrective Task Archived successfully" in self.msg.text:
             assert True
         else:
-            self.driver.save_screenshot("archive_corrective_ticket.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="archive_corrective_ticket",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("archive_corrective_ticket.png")
             assert False
         self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
     def view_archive_ticket_list(self):
@@ -386,7 +405,8 @@ class corrective_maintenance:
                 assert True
                 break
             else:
-                self.driver.save_screenshot("archive_corrective_ticket_list.png")
+                allure.attach(self.driver.get_screenshot_as_png(),name="archive_corrective_ticket_list",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("archive_corrective_ticket_list.png")
                 assert False   
     def unarchived_ticket(self,client_name):
         self.driver.find_element(By.XPATH,'(//div[normalize-space()="'+client_name+'"]/following::div[@class="dropdown"])[1]').click() 
@@ -396,7 +416,8 @@ class corrective_maintenance:
         if "Corrective Task UnArchived successfully" in self.msg.text:
             assert True
         else:
-            self.driver.save_screenshot("unarchive_corrective_ticket.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="unarchive_corrective_ticket",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("unarchive_corrective_ticket.png")
             assert False
         self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
     def unarchived_ticket_listView(self,corrective_ticket):
@@ -413,7 +434,8 @@ class corrective_maintenance:
                 assert True
                 break
             else:
-                self.driver.save_screenshot("unarchive_corrective_ticket_listView.png")
+                allure.attach(self.driver.get_screenshot_as_png(),name="unarchive_corrective_ticket_listView",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("unarchive_corrective_ticket_listView.png")
                 assert False 
 
     def ticket_listview_count(self):
@@ -435,7 +457,8 @@ class corrective_maintenance:
         if element[20:22] == str(count):
             assert True
         else:
-            self.driver.save_screenshot("Number_of_client_count.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="Number_of_client_count",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("Number_of_client_count.png")
             assert False
 
 

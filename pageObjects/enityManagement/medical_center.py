@@ -5,7 +5,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-
+import allure
+from allure_commons.types import AttachmentType
 
 
 
@@ -50,7 +51,8 @@ class medical_centre:
         if self.driver.title == "Brighter App | Medical Centre":
             assert True
         else:
-            self.driver.save_screenshot("medical_reason_Page.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="medical_reason_Page",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("medical_reason_Page.png")
             assert False
     def add_medical_centre(self):
         self.driver.find_element(By.XPATH, self.add_medical_centre_xpath).click()
@@ -58,7 +60,8 @@ class medical_centre:
         if self.driver.title == "Brighter App | Medical Centre | Create":
             assert True
         else:
-            self.driver.save_screenshot("medical_reason_webtitle.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="medical_reason_webtitle",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("medical_reason_webtitle.png")
             assert False
     
     # ---------------------------------DNO Popup window -------------------------------------------------#
@@ -70,7 +73,8 @@ class medical_centre:
             if element.is_displayed():
                 assert True
             else:
-                self.driver.save_screenshot("create_medical_centre_mandatory_fields.png") 
+                allure.attach(self.driver.get_screenshot_as_png(),name="create_medical_centre_mandatory_fields",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("create_medical_centre_mandatory_fields.png") 
                 assert False
 
 
@@ -91,7 +95,8 @@ class medical_centre:
         if "Successfully Created" in self.msg.text:
             assert True
         else:
-            self.driver.save_screenshot("create_medical_centre_toast.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="create_medical_centre_toast",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("create_medical_centre_toast.png")
             assert False
 
 
@@ -103,7 +108,8 @@ class medical_centre:
                 assert True
             break
         else:
-            self.driver.save_screenshot("listView_medical_centre.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="listView_medical_centre",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("listView_medical_centre.png")
             assert False    
     def view_medical_centre(self,hospital):
         element = WebDriverWait(self.driver, 10).until(EC.presence_of_all_elements_located((By.XPATH,self.created_medical_centre_in_listView_xpath)))
@@ -114,11 +120,13 @@ class medical_centre:
                 if self.driver.title == "Brighter App | Medical Centre | View":
                     assert True
                 else:
-                    self.driver.save_screenshot("view_medical_centre.png")  
+                    allure.attach(self.driver.get_screenshot_as_png(),name="view_medical_centre",attachment_type=AttachmentType.PNG)
+                    # self.driver.save_screenshot("view_medical_centre.png")  
                     assert False
                 break
             else:
-                self.driver.save_screenshot("listView_medical_centre_notFound.png")
+                allure.attach(self.driver.get_screenshot_as_png(),name="listView_medical_centre_notFound",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("listView_medical_centre_notFound.png")
                 assert False
     #----------------------------Edit Medical Reason---------------------------------------------#
     def edit_medical_center_button(self):  
@@ -127,7 +135,8 @@ class medical_centre:
         if self.driver.title == "Brighter App | Medical Centre | Edit":
                 assert True
         else:
-                self.driver.save_screenshot("Edit_medical_centre_page.png")   
+                allure.attach(self.driver.get_screenshot_as_png(),name="Edit_medical_centre_page",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("Edit_medical_centre_page.png")   
                 assert False 
     def edit_medical_centre_mandatory_field(self):
            phone_number = self.driver.find_element(By.XPATH,self.input_phone_number_xpath)
@@ -146,7 +155,8 @@ class medical_centre:
                 if element.is_displayed():
                     assert True
                 else:
-                    self.driver.save_screenshot("edit_medical_centre_mandatory_fields.png")  
+                    allure.attach(self.driver.get_screenshot_as_png(),name="edit_medical_centre_mandatory_fields",attachment_type=AttachmentType.PNG)
+                    # self.driver.save_screenshot("edit_medical_centre_mandatory_fields.png")  
                     assert False
     def save_information(self):
         self.driver.find_element(By.XPATH,self.btn_save_information_xpath).click()
@@ -154,7 +164,8 @@ class medical_centre:
         if "Successfully Updated" in self.msg.text:
             assert True
         else:
-            self.driver.save_screenshot("edit_medical_centre_toast.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="edit_medical_centre_toast",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("edit_medical_centre_toast.png")
             assert False
         self.driver.find_element(By.XPATH,'//button[@aria-label="close"]').click()
 
@@ -164,11 +175,11 @@ class medical_centre:
         if self.driver.title == "Brighter App | Medical Centre | Edit":
                 assert True
         else:
-                self.driver.save_screenshot("Edit_medical_centre_page.png")   
+                allure.attach(self.driver.get_screenshot_as_png(),name="Edit_medical_centre_page",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("Edit_medical_centre_page.png")   
                 assert False
     def list_view_edit_mandatory_field(self):
            address = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.input_address_xpath)))
-        #    address = self.driver.find_element(By.XPATH, self.input_address_xpath)
            actions = ActionChains(self.driver)
            actions.click(address).key_down(Keys.CONTROL).send_keys('a').key_up(Keys.CONTROL).send_keys(Keys.DELETE)
            actions.perform()
@@ -177,7 +188,8 @@ class medical_centre:
            if element.is_displayed():
                     assert True
            else:
-                    self.driver.save_screenshot("edit_listView_medical_centre_mandatory_fields.png")  
+                    allure.attach(self.driver.get_screenshot_as_png(),name="edit_listView_medical_centre_mandatory_fields",attachment_type=AttachmentType.PNG)
+                    # self.driver.save_screenshot("edit_listView_medical_centre_mandatory_fields.png")  
                     assert False
     def list_view_delete_option(self,manufacturer):
         self.driver.find_element(By.XPATH,'(//span[normalize-space()="'+manufacturer+'"]/following::em[@class="icon ni ni-edit"])[1]').click()

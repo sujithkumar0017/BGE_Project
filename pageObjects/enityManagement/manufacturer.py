@@ -4,6 +4,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+import allure
+from allure_commons.types import AttachmentType
 
 
 
@@ -44,7 +46,8 @@ class manufacturer():
         if self.driver.title == "Brighter App | Manufacturer":
             assert True
         else:
-            self.driver.save_screenshot("Manufacturer_Page.png")   
+            allure.attach(self.driver.get_screenshot_as_png(),name="Manufacturer_Page",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("Manufacturer_Page.png")   
             assert False
     def add_manufacturer(self):
         self.driver.find_element(By.XPATH,self.add_manufacturer_xpath).click()
@@ -52,7 +55,8 @@ class manufacturer():
         if self.driver.title == "Brighter App | Manufacturer | Create":
             assert True
         else:
-            self.driver.save_screenshot("create_manufacturer_webtitle.png")   
+            allure.attach(self.driver.get_screenshot_as_png(),name="create_manufacturer_webtitle",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("create_manufacturer_webtitle.png")   
             assert False
     def manufacturer_mandatory_field(self):
         self.driver.find_element(By.XPATH,self.btn_create_manufacturer_xpath).click()
@@ -62,7 +66,8 @@ class manufacturer():
             if element.is_displayed():
                 assert True
             else:
-                self.driver.save_screenshot("create_manufacturer_mandatory_fields.png")  
+                allure.attach(self.driver.get_screenshot_as_png(),name="create_manufacturer_mandatory_fields",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("create_manufacturer_mandatory_fields.png")  
                 assert False
     def corporate_brand_name(self,name):
         self.driver.find_element(By.XPATH,self.input_name_xpath).send_keys(name)
@@ -83,7 +88,8 @@ class manufacturer():
         if "Successfully Created" in self.msg.text:
             assert True
         else:
-            self.driver.save_screenshot("create_DNO_toast.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="create_DNO_toast",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("create_DNO_toast.png")
             assert False 
     
     #------------------------------------List View---------------------------------------------------------#
@@ -94,7 +100,8 @@ class manufacturer():
                 assert True
             break
         else:
-            self.driver.save_screenshot("listView_manufacturer.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="listView_manufacturer",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("listView_manufacturer.png")
             assert False     
     def view_manufacturer(self,name):
         element = WebDriverWait(self.driver, 10).until(EC.presence_of_all_elements_located((By.XPATH,self.created_manufacturer_in_listView_xpath)))
@@ -105,11 +112,13 @@ class manufacturer():
                 if self.driver.title == "Brighter App | Manufacturer | View":
                     assert True
                 else:
-                    self.driver.save_screenshot("view_manufacturer.png")   
+                    allure.attach(self.driver.get_screenshot_as_png(),name="view_manufacturer",attachment_type=AttachmentType.PNG)
+                    # self.driver.save_screenshot("view_manufacturer.png")   
                     assert False
                 break
             else:
-                self.driver.save_screenshot("listView_manufacturer_notFound.png")
+                allure.attach(self.driver.get_screenshot_as_png(),name="listView_manufacturer_notFound",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("listView_manufacturer_notFound.png")
                 assert False 
     
     #----------------------------Edit Manufacturer---------------------------------------------#
@@ -118,7 +127,8 @@ class manufacturer():
         if self.driver.title == "Brighter App | Manufacturer | Edit":
                 assert True
         else:
-                self.driver.save_screenshot("Edit_Manufacturer_page.png")   
+                allure.attach(self.driver.get_screenshot_as_png(),name="Edit_Manufacturer_page",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("Edit_Manufacturer_page.png")   
                 assert False
     def edit_manufacturer_mandatory_field(self):
            phone_number = self.driver.find_element(By.XPATH,self.input_phone_number_xpath)
@@ -135,7 +145,8 @@ class manufacturer():
                 if element.is_displayed():
                     assert True
                 else:
-                    self.driver.save_screenshot("edit_manufacturer_mandatory_fields.png")  
+                    allure.attach(self.driver.get_screenshot_as_png(),name="edit_manufacturer_mandatory_fields",attachment_type=AttachmentType.PNG)
+                    # self.driver.save_screenshot("edit_manufacturer_mandatory_fields.png")  
                     assert False
     def edit_manufacturer(self):
         self.driver.find_element(By.XPATH,self.btn_save_information_xpath).click()
@@ -143,14 +154,16 @@ class manufacturer():
         if "Successfully Updated" in self.msg.text:
             assert True
         else:
-            self.driver.save_screenshot("edit_manufacturer_toast.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="edit_manufacturer_toast",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("edit_manufacturer_toast.png")
             assert False
     def list_view_edit_option(self,manufacturer):
         self.driver.find_element(By.XPATH,'(//span[normalize-space()="'+manufacturer+'"]/following::em[@class="icon ni ni-edit"])[1]').click()
         if self.driver.title == "Brighter App | Manufacturer | Edit":
                 assert True
         else:
-                self.driver.save_screenshot("Edit_Modal_page.png")   
+                allure.attach(self.driver.get_screenshot_as_png(),name="Edit_Modal_page",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("Edit_Modal_page.png")   
                 assert False
     def website(self,website):
         element = WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.XPATH,'self.input_website_xpath')))

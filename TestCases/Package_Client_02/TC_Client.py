@@ -18,13 +18,13 @@ class Test_client(unittest.TestCase):
     useremail = ReadConfig.getUseremail()
     password = ReadConfig.getPassword()
 
-    # def setup_class(self):
-    #     self.faker = random_data()
-    #     self.faker.data()
-    #     with open(
-    #         "/home/sujith/codebase/BGE_Framework_Design/utilities/client.json"
-    #     ) as json_file:
-    #         self.data = json.load(json_file)
+    def setup_class(self):
+        self.faker = random_data()
+        self.faker.data()
+        with open(
+            "/home/sujith/codebase/BGE_Framework_Design/utilities/client.json"
+        ) as json_file:
+            self.data = json.load(json_file)
 
     @pytest.mark.order(1)
     def test_login(self):
