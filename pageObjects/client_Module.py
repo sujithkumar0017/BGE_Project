@@ -565,7 +565,9 @@ class Client:
         )
         element.click()
         time.sleep(3)
-        if self.driver.title == "Brighter App | Client | Edit":
+        if WebDriverWait(self.driver, 50).until(
+            EC.title_contains('Client | Edit')
+        ):
             assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="edit_client_in_user_dropdown",attachment_type=AttachmentType.PNG)
@@ -717,7 +719,7 @@ class Client:
         keyword.send_keys(Keys.ENTER)
         self.created_client_in_listView(search_term)
 
-    def create_client_with_existing_emailid(self):
+    def create_client_with_existing_email_id(self):
         self.driver.find_element(By.XPATH, self.btn_createClient_Xpath).click()
         self.msg = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located(

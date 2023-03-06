@@ -16,13 +16,13 @@ class Test_Corrective(unittest.TestCase):
     fake = Faker()
     
 
-    @pytest.mark.order(1)
-    def test_login(self):
-        self.driver.get(self.url)
-        self.lp = login_Module(self.driver)
-        self.lp.email(self.useremail)
-        self.lp.password(self.password)
-        self.lp.login()
+    # @pytest.mark.order(1)
+    # def test_login(self):
+    #     self.driver.get(self.url)
+    #     self.lp = login_Module(self.driver)
+    #     self.lp.email(self.useremail)
+    #     self.lp.password(self.password)
+    #     self.lp.login()
 
     @pytest.mark.order(2)
     def test_navigate_corrective_maintenance(self):

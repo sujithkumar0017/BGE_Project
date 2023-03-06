@@ -6,9 +6,9 @@ class random_data:
      def data(self):
           client={
                "name":fake.name(),
-               "phone_number_countryCode":random.choice(["+91", "+55","+47","+237"]),
+               "phone_number_countryCode":random.choice(["+91", "+55","+47","+237","+1684"]),
                "phone_number":str(random.randint(9000000000, 9999999999)),
-               "mobile_number_countryCode":random.choice(["+91", "+55","+47","+237"]),
+               "mobile_number_countryCode":random.choice(["+91", "+55","+47","+237","+1849"]),
                "mobile_number":str(random.randint(9000000000, 9999999999)),
                "address":fake.street_address(),
                "email":fake.email(),
@@ -27,12 +27,6 @@ class random_data:
                      
           }
 
-          f=open("/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_entity_management","w")
+          f=open("/home/sujith/codebase/BGE_Framework_Design/TestCases/Package_Client_02/client.json","w")
           json.dump(client,f)
           f.close()
-
-
-
-
-
-#python -u "/home/sujith/codebase/BGE_Framework_Design/utilities/dd_using_json.py"
