@@ -146,11 +146,8 @@ class Client:
     def navigate_to_client_page(self):
         time.sleep(5)
         self.driver.find_element(By.XPATH, self.menuitem_client_Xpath).click()
-        time.sleep(2)
-        title = WebDriverWait(self.driver, 20).until(
-            EC.presence_of_element_located((By.TAG_NAME, "title"))
-        )
-        if title.get_attribute("innerHTML") == "Brighter App | Client":
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains("Brighter App | Client")):
             assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="add_plant_popup",attachment_type=AttachmentType.PNG)
@@ -158,10 +155,8 @@ class Client:
             assert False
     def add_Client(self):
         self.driver.find_element(By.ID, self.addClient_Id).click()
-        title = WebDriverWait(self.driver, 20).until(
-            EC.presence_of_element_located((By.TAG_NAME, "title"))
-        )
-        if title.get_attribute("innerHTML") == "Brighter App | Client | Create":
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | Client | Create')):
             assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="add_plant_popup",attachment_type=AttachmentType.PNG)
@@ -288,14 +283,13 @@ class Client:
 
     def add_plant(self):
         self.driver.find_element(By.XPATH, self.plantOwned_btn_addPlant_Xpath).click()
-        # self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space="Successfully Created"]')))
-        # time.sleep(3)
-        # if "Successfully Created" in self.msg.text:
-        #     assert True
-        # else:
-        #     self.driver.save_screenshot("add_corrective.png")
-        #     assert False
-        # self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
+        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space="Successfully Created"]')))
+        if "Successfully Created" in self.msg.text:
+            assert True
+        else:
+            self.driver.save_screenshot("add_corrective.png")
+            assert False
+        self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
     def created_plant_in_list_view(self, plant_name):
         element = WebDriverWait(self.driver, 20).until(
             EC.presence_of_all_elements_located(
@@ -334,11 +328,8 @@ class Client:
     # Add User
     def client_page_addUser(self):
         self.driver.find_element(By.XPATH, self.btn_addUser_Xpath).click()
-        title = WebDriverWait(self.driver, 20).until(
-            EC.presence_of_element_located((By.TAG_NAME, "title"))
-        )
-        time.sleep(2)
-        if title.get_attribute("innerHTML") == "Brighter App | User | Create":
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | User | Create')):
             assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="add_user_popup",attachment_type=AttachmentType.PNG)
@@ -370,6 +361,32 @@ class Client:
 
     def addUser(self):
         self.driver.find_element(By.XPATH, '//button[@id="client-add-user"]').click()
+        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space="Successfully Created"]')))
+        if "Successfully Created" in self.msg.text:
+            assert True
+        else:
+            self.driver.save_screenshot("add_corrective.png")
+            assert False
+        self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
+    
+
+    def createClient(self):
+        self.driver.find_element(By.XPATH, self.btn_createClient_Xpath).click()
+        self.msg = WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(
+                (
+                    By.XPATH,
+                    '//div[@class="toastr-text"]//p[normalize-space()="Client created successfully"]',
+                )
+            )
+        )
+        if "Client created successfully" in self.msg.text:
+            assert True
+        else:
+            allure.attach(self.driver.get_screenshot_as_png(),name="create_client_toast",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("client.png")
+            assert False
+        self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
 
     def created_user_in_list_view(self, user):
         element = WebDriverWait(self.driver, 20).until(
@@ -409,23 +426,6 @@ class Client:
                 # self.driver.save_screenshot("create_remedial_mandatory_fields.png")
                 assert False
 
-    def createClient(self):
-        self.driver.find_element(By.XPATH, self.btn_createClient_Xpath).click()
-        self.msg = WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(
-                (
-                    By.XPATH,
-                    '//div[@class="toastr-text"]//p[normalize-space()="Client created successfully"]',
-                )
-            )
-        )
-        if "Client created successfully" in self.msg.text:
-            assert True
-        else:
-            allure.attach(self.driver.get_screenshot_as_png(),name="create_client_toast",attachment_type=AttachmentType.PNG)
-            # self.driver.save_screenshot("client.png")
-            assert False
-        self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
 
     def client_view(self, client):
         element = WebDriverWait(self.driver, 10).until(
@@ -437,11 +437,8 @@ class Client:
             print(x.text)
             if x.text in client:
                 x.click()
-                time.sleep(2)
-                title = WebDriverWait(self.driver, 30).until(
-                    EC.presence_of_element_located((By.TAG_NAME, "title"))
-                )
-                if title.get_attribute("innerHTML") == "Brighter App | Client | View":
+                if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | Client | View')):
                     assert True
                 else:
                     allure.attach(self.driver.get_screenshot_as_png(),name="client_view_page",attachment_type=AttachmentType.PNG)
@@ -477,11 +474,8 @@ class Client:
     #    --------------------------------------------Edit Client---------------------------------------------------------
     def view_edit_client_page(self):
         self.driver.find_element(By.XPATH, '//button[@id="client-edit-btn"]').click()
-        time.sleep(2)
-        title = WebDriverWait(self.driver, 20).until(
-            EC.presence_of_element_located((By.TAG_NAME, "title"))
-        )
-        if title.get_attribute("innerHTML") == "Brighter App | Client | Edit":
+        if WebDriverWait(self.driver, 50).until(
+            EC.title_contains('Brighter App | Client | Edit')):
             assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="edit_client_page",attachment_type=AttachmentType.PNG)
@@ -564,7 +558,6 @@ class Client:
             )
         )
         element.click()
-        time.sleep(3)
         if WebDriverWait(self.driver, 50).until(
             EC.title_contains('Client | Edit')
         ):
@@ -735,3 +728,4 @@ class Client:
             allure.attach(self.driver.get_screenshot_as_png(),name="create_client_with_existing_email",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("create_client_with_existing_email.png")
             assert False
+        

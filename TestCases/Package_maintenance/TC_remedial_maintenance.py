@@ -21,7 +21,7 @@ class Test_Remedial(unittest.TestCase):
         self.lp.email(self.useremail)
         self.lp.password(self.password)
         self.lp.login()
-
+    
     @pytest.mark.order(2)
     def test_navigate_remedial_maintenance(self):
         self.remedial = remedial_maintenance(self.driver)

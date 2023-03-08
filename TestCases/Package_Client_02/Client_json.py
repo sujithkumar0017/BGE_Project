@@ -23,7 +23,9 @@ class random_data:
                "user_first_name":fake.first_name(),
                "user_last_name":fake.last_name(),
                "user_email":"".join([fake.first_name(),"@yopmail.com"]),
-               "user_password":"qwerty123"
+               "user_password":"qwerty123",
+               #Edit Name
+               "edit_name":fake.first_name()
                      
           }
 
