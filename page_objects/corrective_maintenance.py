@@ -65,9 +65,9 @@ class corrective_maintenance:
     def add_corrective_maintenance(self):
         element = self.driver.find_element(By.XPATH,'//em[@class="icon ni ni-plus"]')
         element.click()
-        time.sleep(3)
-        if self.driver.title == "Brighter App | Corrective | Create":
-            assert True
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | Corrective | Create')):
+                    assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="add_corrective_window",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("add_corrective_window.png")   
@@ -135,17 +135,35 @@ class corrective_maintenance:
     def attachments(self):
         file_to_upload_path = os.getcwd() + "/Files/file.png"
         self.driver.find_element(By.XPATH,'//input[@type="file"]').send_keys(file_to_upload_path)
+        # self.msg = WebDriverWait(self.driver, 20).until(
+        #     EC.presence_of_element_located
+        #    (
+        #         (
+        #             By.XPATH,
+        #             '//div[@class="toastr-text"]//p[text()="File uploaded successfully"',
+        #         )
+        #     )
+        # )
+        # if "File uploaded successfully" in self.msg.text:
+        #     assert True
+        # else:
+        #     allure.attach(self.driver.get_screenshot_as_png(),name="attachments",attachment_type=AttachmentType.PNG)
+        #     # self.driver.save_screenshot("add_followup_task.png")
+        #     assert False
+        # self.driver.find_element(By.XPATH, '//p[normalize-space()="File uploaded successfully"]/following::button[@aria-label="close"]').click()
+        
     def add_corrective(self):
-        element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.add_button_xpath)))    
+        element = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH,self.add_button_xpath)))    
         element.click()
-        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p')))
-        time.sleep(3)
+        self.msg= WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space()="Successfully Created"]')))
         if "Successfully Created" in self.msg.text:
             assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="Create_corrective_ticket",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("add_corrective.png")
             assert False
+        self.driver.find_element(By.XPATH, '//p[normalize-space()="Successfully Created"]/following::button[@aria-label="close"]').click()    
+
     def corrective_mandatory_fields(self):
         self.driver.find_element(By.XPATH, self.add_button_xpath).click()
         validation_message = [
@@ -190,8 +208,8 @@ class corrective_maintenance:
         for x in element:
             if x.text in name:
                 x.click()
-                time.sleep(3)
-                if self.driver.title == "Brighter App | Corrective | View":
+                if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | Corrective | View')):
                     assert True
                 else:
                     allure.attach(self.driver.get_screenshot_as_png(),name="view_corrective_ticket",attachment_type=AttachmentType.PNG)
@@ -205,9 +223,9 @@ class corrective_maintenance:
     #---------------------------View-Edit Ticket-------------------------------#           
     def ticketView_edit_button(self):
         self.driver.find_element(By.XPATH,'//span[normalize-space()="Edit"]').click()
-        time.sleep(3)
-        if self.driver.title == "Brighter App | Corrective | Edit":
-            assert True
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | Corrective | Edit')):
+                assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="Edit_corrective_ticket_page",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("Edit_corrective_ticket_page.png")   
@@ -331,7 +349,7 @@ class corrective_maintenance:
             allure.attach(self.driver.get_screenshot_as_png(),name="add_attachments_followup_task",attachment_type=AttachmentType.PNG)   
             # self.driver.save_screenshot("add_followup_task.png")
             assert False
-        
+        self.driver.find_element(By.XPATH, '//p[normalize-space()="File uploaded successfully"]/following::button[@aria-label="close"]').click()
     def create_add_followup_task_button(self):
         button = self.driver.find_element(By.XPATH,'//button[normalize-space()="Add"]')
         self.driver.execute_script("arguments[0].scrollIntoView();", button)
@@ -343,6 +361,7 @@ class corrective_maintenance:
             allure.attach(self.driver.get_screenshot_as_png(),name="create_followup_task",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("create_followup_task.png")
             assert False
+        self.driver.find_element(By.XPATH, '//p[normalize-space()="Successfully Created"]/following::button[@aria-label="close"]').click()
     
     def followup_task_listview(self,name):
         element = WebDriverWait(self.driver, 10).until(EC.presence_of_all_elements_located((By.XPATH,'//div[@class="user-card dropdown-toggle"]')))
@@ -367,14 +386,14 @@ class corrective_maintenance:
             assert False
     def save_information_button(self):
         self.driver.find_element(By.XPATH,'//button[@id="save-correctiveForm"]').click()
-        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[text()="Successfully Updated"]')))
-        time.sleep(3)
+        self.msg=WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'(//div[@class="toastr-text"]//p[text()="Successfully Updated"])[1]')))  
         if "Successfully Updated" in self.msg.text:
             assert True
-        else:
+        else:   
             allure.attach(self.driver.get_screenshot_as_png(),name="edit_corrective_ticket",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("edit_corrective_ticket.png")
             assert False
+        self.driver.find_element(By.XPATH, '//p[normalize-space()="Successfully Updated"]/following::button[@aria-label="close"]').click()
     
     
 
@@ -383,14 +402,14 @@ class corrective_maintenance:
         self.driver.find_element(By.XPATH,'(//div[normalize-space()="'+corrective_ticket+'"]/following::div[@class="dropdown"])[1]').click() 
         element= WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH,'//div[@class="dropdown show"]//ul[@class="link-list-opt no-bdr"]//span[normalize-space()="Archive Task"]')))
         element.click()
-        self.msg=WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space()="Corrective Task Archived successfully"]')))
+        self.msg=WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'(//div[@class="toastr-text"]//p[normalize-space()="Corrective Task Archived successfully"])[1]')))
         if "Corrective Task Archived successfully" in self.msg.text:
             assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="archive_corrective_ticket",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("archive_corrective_ticket.png")
             assert False
-        self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
+        self.driver.find_element(By.XPATH, '//p[normalize-space()="Corrective Task Archived successfully"]/following::button[@aria-label="close"]').click()
     def view_archive_ticket_list(self):
             self.driver.find_element(By.XPATH,'//em[@class="icon ni ni-filter-alt"]').click()
             element = WebDriverWait(self.driver, 10).until(
@@ -419,7 +438,7 @@ class corrective_maintenance:
             allure.attach(self.driver.get_screenshot_as_png(),name="unarchive_corrective_ticket",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("unarchive_corrective_ticket.png")
             assert False
-        self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
+        self.driver.find_element(By.XPATH, '//p[normalize-space()="Corrective Task UnArchived successfully"]/following::button[@aria-label="close"]').click()
     def unarchived_ticket_listView(self,corrective_ticket):
         self.driver.find_element(By.XPATH,'//em[@class="icon ni ni-filter-alt"]').click()
         reset_btn = WebDriverWait(self.driver, 10).until(

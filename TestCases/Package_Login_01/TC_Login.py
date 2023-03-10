@@ -43,7 +43,7 @@ from parameterized import parameterized
 
 import pytest
 from utilities.readProperties import ReadConfig
-from pageObjects.login_Module import login_Module
+from page_objects.login_Module import login_Module
 import time
 from selenium.webdriver.common.by import By
 
@@ -57,14 +57,14 @@ class basetest():
     def __init__(self,driver) -> None:
         self.driver = driver
         
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("init_driver")
 class Test_login(unittest.TestCase):
     url = ReadConfig.getApplicationUrl()
     @pytest.mark.order(1)
     def test_navigate_to_login_page(self):
-        self.login = login_Module(self.driver)
         self.driver.get(self.url)
-        self.login.navigate_to_login_page()
+        # self.login = login_Module(self.driver)
+        # self.login.navigate_to_login_page()
     @parameterized.expand([
         ("invalid_password","bge02@yopmail.com", "qwerty", "Email or Password is invalid"),
         ("invalid_username","user04@yopmail.com", "qwerty123", "Email or Password is invalid"),

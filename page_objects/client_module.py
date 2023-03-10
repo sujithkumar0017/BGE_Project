@@ -144,8 +144,15 @@ class Client:
         self.driver = driver
 
     def navigate_to_client_page(self):
-        time.sleep(5)
-        self.driver.find_element(By.XPATH, self.menuitem_client_Xpath).click()
+        element = WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(
+                (
+                    By.XPATH,self.menuitem_client_Xpath,
+                )
+            )
+        )
+        element.click()
+        
         if WebDriverWait(self.driver, 50).until(
                     EC.title_contains("Brighter App | Client")):
             assert True
@@ -154,7 +161,15 @@ class Client:
             # self.driver.save_screenshot("add_plant_popup.png")
             assert False
     def add_Client(self):
-        self.driver.find_element(By.ID, self.addClient_Id).click()
+        element = WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable(
+                (
+                    By.ID,self.addClient_Id,
+                )
+            )
+        )
+        element.click()
+        
         if WebDriverWait(self.driver, 50).until(
                     EC.title_contains('Brighter App | Client | Create')):
             assert True
@@ -283,13 +298,13 @@ class Client:
 
     def add_plant(self):
         self.driver.find_element(By.XPATH, self.plantOwned_btn_addPlant_Xpath).click()
-        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space="Successfully Created"]')))
+        self.msg=WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space()="Successfully Created"]')))
         if "Successfully Created" in self.msg.text:
             assert True
         else:
             self.driver.save_screenshot("add_corrective.png")
             assert False
-        self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
+        self.driver.find_element(By.XPATH, '(//button[@aria-label="close"])[1]').click()
     def created_plant_in_list_view(self, plant_name):
         element = WebDriverWait(self.driver, 20).until(
             EC.presence_of_all_elements_located(
@@ -361,13 +376,13 @@ class Client:
 
     def addUser(self):
         self.driver.find_element(By.XPATH, '//button[@id="client-add-user"]').click()
-        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space="Successfully Created"]')))
+        self.msg=WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space()="Successfully Created"]')))
         if "Successfully Created" in self.msg.text:
             assert True
         else:
             self.driver.save_screenshot("add_corrective.png")
             assert False
-        self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
+        self.driver.find_element(By.XPATH, '(//button[@aria-label="close"])[1]').click()
     
 
     def createClient(self):
@@ -504,21 +519,22 @@ class Client:
         self.driver.find_element(By.XPATH, '//input[@type="file"]').send_keys(
             file_to_upload_path
         )
-        self.msg = WebDriverWait(self.driver, 10).until(
+        self.msg = WebDriverWait(self.driver, 30).until(
             EC.visibility_of_element_located(
                 (
                     By.XPATH,
-                    '//div[@class="toastr-text"]//p[normalize-space()="File uploaded successfully "]',
+                    '//div[@class="toastr-text"]//p[normalize-space()="File uploaded successfully"]',
                 )
             )
         )
+        print(self.msg.text)
         if "File uploaded successfully" in self.msg.text:
             assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="Attachment_toast",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("update_client.png")
             assert False
-        self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
+        # self.driver.find_element(By.XPATH, '(//button[@aria-label="close"])[1]').click()
 
     def save_information_btn(self):
         self.driver.find_element(
@@ -538,17 +554,20 @@ class Client:
             allure.attach(self.driver.get_screenshot_as_png(),name="update_client_toast",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("update_client.png")
             assert False
-        self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
+        self.driver.find_element(By.XPATH, '//p[normalize-space()="Client details updated successfully"]/following::button[@aria-label="close"]').click()
 
     # ---------------------------------------------- List_View_three_dotted_icon-----------------------------------------------
 
     def edit_client_dropdown(self, client_name):
-        self.driver.find_element(
-            By.XPATH,
-            '(//div[normalize-space()="'
-            + client_name
-            + '"]/following::div[@class="dropdown"])[1]',
-        ).click()
+        dropdown = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(
+                (
+                    By.XPATH,
+                    '(//div[normalize-space()="'+client_name+'"]/following::div[@class="dropdown"])[1]',
+                )
+            )
+        )
+        dropdown.click()
         element = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable(
                 (
@@ -594,7 +613,7 @@ class Client:
             allure.attach(self.driver.get_screenshot_as_png(),name="archive_client",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("archive_client.png")
             assert False
-        self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
+        self.driver.find_element(By.XPATH, '(//button[@aria-label="close"])[1]').click()
 
     def view_archive_client_list(self):
         self.driver.find_element(By.ID, "client-filter-btn").click()
@@ -647,7 +666,7 @@ class Client:
             allure.attach(self.driver.get_screenshot_as_png(),name="unarchive_client",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("unarchive_client.png")
             assert False
-        self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
+        self.driver.find_element(By.XPATH, '//p[normalize-space()="Client Unarchived successfully"]/following::button[@aria-label="close"]').click()
 
     def unarchived_client_listView(self, client_name):
         self.driver.find_element(By.ID, "client-filter-btn").click()
@@ -666,35 +685,24 @@ class Client:
                 allure.attach(self.driver.get_screenshot_as_png(),name="unarchive_client_listView",attachment_type=AttachmentType.PNG)
                 # self.driver.save_screenshot("unarchive_client_listView.png")
                 assert False
-
+       
+        
     def ticket_listview_count(self):
-        count = 0
+        count =0
         isNextDisabled = False
         while not isNextDisabled:
-            validate_status = self.driver.find_elements(
-                By.XPATH, '//div[@class="user-name"]'
-            )
+            validate_status = self.driver.find_elements(By.XPATH,'//div[@class="user-name"]')
             for x in validate_status:
-                count += 1
-            nxt_btn = WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located(
-                    (By.XPATH, "//div[@class='card-inner']//li[last()-2]")
-                )
-            )
-            next_class = nxt_btn.get_attribute("class")
+                count+=1
+            nxt_btn = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,"//div[@class='card-inner']//li[last()-2]")))
+            next_class = nxt_btn.get_attribute('class')  
             if "page-item disabled" in next_class:
                 isNextDisabled = True
                 break
             else:
-                self.driver.find_element(
-                    By.XPATH, "//div[@class='card-inner']//li[last()-2]"
-                ).click()
-        self.driver.find_element(
-            By.XPATH, "(//div[@class='card-inner']//li)[2]"
-        ).click()
-        element = self.driver.find_element(
-            By.XPATH, '//p[contains(text(),"You have a total")]'
-        ).text
+                self.driver.find_element(By.XPATH,"//div[@class='card-inner']//li[last()-2]").click()
+        self.driver.find_element(By.XPATH,"(//div[@class='card-inner']//li)[2]").click()
+        element = self.driver.find_element(By.XPATH,'//p[contains(text(),"You have a total")]').text
         if element[20:22] == str(count):
             assert True
         else:
@@ -728,4 +736,5 @@ class Client:
             allure.attach(self.driver.get_screenshot_as_png(),name="create_client_with_existing_email",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("create_client_with_existing_email.png")
             assert False
+        self.driver.find_element(By.XPATH, '(//button[@aria-label="close"])[1]').click()
         

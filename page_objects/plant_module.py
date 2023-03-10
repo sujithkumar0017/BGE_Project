@@ -15,36 +15,36 @@ class Plant:
     add_plant_xpath = '//button[@id="add-pvplant-btn"]'
 
     # Create Plant
-    plant_name_xpath = '//div[@id="plant-name-input"]//input'
-    size_xpath = '//div[@id="plant-size-input"]//input'
-    acronym_xpath ='//div[@id="plant-identifier-input"]//input'
+    plant_name_xpath = '//input[@id="plant-name-input"]'
+    size_xpath = '//input[@id="plant-size-input"]'
+    acronym_xpath ='//input[@id="plant-identifier-input"]'
     
-    on_boarding_date_xpath = '//div[@id="plant-onBoardDate-input"]//input'
-    client_name_xpath = '(//div[@id="plant-clientName-select"]//input)[1]'
+    on_boarding_date_xpath = '//input[@id="plant-onBoardDate-input"]'
+    client_name_xpath = '//div[@id="plant-clientName-select"]'
     
     plant_manager_xpath = (
-        '(//div[@id="plant-manager-select"]//input)[1]'
+        '//div[@id="plant-manager-select"]'
     )
     team_leader_xpath = (
-        '(//div[@id="plant-team-select"]//input)[1]'
+        '//div[@id="plant-team-select"]'
     )
     field_engineer_xpath = (
-        '(//div[@id="plant-engineer-select"]//input)[1]'
+        '//div[@id="plant-engineer-select"]'
     )
-    status_xpath = '(//div[@id="plant-status-select"]//input)[1]'
+    status_xpath = '//div[@id="plant-status-select"]'
     postal_code_xpath = (
-        '//div[@id="plant-postal-input"]//input'
+        '//input[@id="plant-postal-input"]'
     )
-    address_xpath = '//div[@id="plant-address-input"]//input'
+    address_xpath = '//input[@id="plant-address-input"]'
     google_map_link_xpath = (
-        '//div[@id="plant-map-input"]//input'
+        '//input[@id="plant-map-input"]'
     )
     what3word_link_xpath = (
-        '//div[@id="plant-what3word-input"]//input'
+        '//input[@id="plant-what3word-input"]'
     )
-    dno_xpath = '(//div[@id="plant-dno-select"]//input)[1]'
+    dno_xpath = '//div[@id="plant-dno-select"]'
     hospital_xpath = (
-        '(//div[@id="plant-hospital-select"]//input)[1]'
+        '//div[@id="plant-hospital-select"]'
     )
     btn_cancel_xpath = '//button[@id="cancel-plant"]'
     btn_create_plant_xpath = '//button[@id="create-plant-form"]'
@@ -53,6 +53,9 @@ class Plant:
     created_plant_in_listView_xpath = (
         '//div[@class="user-name"]//span[@class="tb-lead"]'
     )
+
+    #save information Button
+    save_information_btn_xpath = '//button[@id="save-plant-form"]'
 
     def __init__(self, driver) -> None:
         self.driver = driver
@@ -115,22 +118,35 @@ class Plant:
         actions.send_keys(Keys.ENTER).perform()
 
     def client_name(self, client):
-        element = self.driver.find_element(By.XPATH, self.client_name_xpath)
+        element = self.driver.find_element(By.XPATH,self.client_name_xpath)
         actions = ActionChains(self.driver)
         actions.click(element)
-        actions.send_keys(client)
+        actions.send_keys(client).send_keys(Keys.ENTER).perform()
 
     def plant_manager(self, manager):
-        self.driver.find_element(By.XPATH, self.plant_manager_xpath).send_keys(manager)
+        element = self.driver.find_element(By.XPATH, self.plant_manager_xpath)
+        actions = ActionChains(self.driver)
+        actions.click(element)
+        actions.send_keys(manager).send_keys(Keys.ENTER).perform()
 
     def team_leader(self, leader):
-        self.driver.find_element(By.XPATH, self.team_leader_xpath).send_keys(leader)
+        element = self.driver.find_element(By.XPATH, self.team_leader_xpath)
+        actions = ActionChains(self.driver)
+        actions.click(element)
+        actions.send_keys(leader).send_keys(Keys.ENTER).perform()
 
     def field_engineer(self, engineer):
-        self.driver.find_element(By.XPATH, self.team_leader_xpath).send_keys(engineer)
+        element = self.driver.find_element(By.XPATH, self.team_leader_xpath)
+        actions = ActionChains(self.driver)
+        actions.click(element)
+        actions.send_keys(engineer).send_keys(Keys.ENTER).perform()
+
 
     def status(self, status):
-        self.driver.find_element(By.XPATH, self.status_xpath).send_keys(status)
+        element = self.driver.find_element(By.XPATH, self.status_xpath)
+        actions = ActionChains(self.driver)
+        actions.click(element)
+        actions.send_keys(status).send_keys(Keys.ENTER).perform()
 
     def postal_code(self, code):
         self.driver.find_element(By.XPATH, self.postal_code_xpath).send_keys(code)
@@ -145,10 +161,19 @@ class Plant:
         self.driver.find_element(By.XPATH, self.what3word_link_xpath).send_keys(link)
 
     def dno(self, dno):
-        self.driver.find_element(By.XPATH, self.dno_xpath).send_keys(dno)
+        element = self.driver.find_element(By.XPATH, self.dno_xpath)
+        actions = ActionChains(self.driver)
+        actions.click(element)
+        actions.send_keys(dno).send_keys(Keys.ENTER).perform()
+
 
     def hospital(self, hospital):
-        self.driver.find_element(By.XPATH, self.hospital_xpath).send_keys(hospital)
+        element = self.driver.find_element(By.XPATH, self.hospital_xpath)
+        actions = ActionChains(self.driver)
+        actions.click(element)
+        actions.send_keys(hospital).send_keys(Keys.ENTER).perform()
+
+
 
     def attachments(self):
         file_to_upload_path = os.getcwd() + "/Files/file.png"
@@ -218,18 +243,15 @@ class Plant:
     # ------------------------------------------------Edit Plant-------------------------------------------#
     def edit_button_view_plant(self):
         self.driver.find_element(By.XPATH, '//a[@id="edit-Plants-btn"]').click()
-        time.sleep(2)
-        title = WebDriverWait(self.driver, 20).until(
-            EC.presence_of_element_located((By.TAG_NAME, "title"))
-        )
-        if title.get_attribute("innerHTML") == "Brighter App | Pv-Plant | Edit":
-            assert True
+        if WebDriverWait(self.driver, 50).until(
+            EC.title_contains('Brighter App | Pv-Plant | Edit')):
+           assert True
         else:
             self.driver.save_screenshot("edit_plant_page.png")
             assert False
 
     def save_information(self):
-        self.driver.find_element(By.XPATH, self.btn_save_information_xpath).click()
+        self.driver.find_element(By.XPATH, self.save_information_btn_xpath).click()
         self.msg = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located(
                 (

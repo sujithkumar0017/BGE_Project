@@ -1,14 +1,14 @@
 import time
 import unittest
-from pageObjects.corrective_maintenance import corrective_maintenance
-from pageObjects.remedial_maintenance import remedial_maintenance
-from pageObjects.plant_module import Plant
+from page_objects.corrective_maintenance import corrective_maintenance
+from page_objects.remedial_maintenance import remedial_maintenance
+from page_objects.plant_module import Plant
 import pytest
-from pageObjects.login_Module import login_Module
+from page_objects.login_Module import login_Module
 from utilities.readProperties import ReadConfig
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("init_driver")
 class Test_plant(unittest.TestCase):
     # corrective = Test_Corrective()
 
@@ -35,16 +35,16 @@ class Test_plant(unittest.TestCase):
         self.plant.add_plant()
 
     @pytest.mark.order(4)
-    def test_create_client_mandatory_fields(self):
+    def test_create_plant_mandatory_fields(self):
         self.plant = Plant(self.driver)
         self.plant.create_plant_mandatory_field()
 
     @pytest.mark.order(5)
-    def test_create_client(self):
+    def test_create_plant(self):
         self.plant = Plant(self.driver)
-        self.plant.plant_name("Plant_Diamond")
+        self.plant.plant_name("Plant_Diamond_01")
         self.plant.size("9")
-        self.plant.acronym("XWERTY")
+        self.plant.acronym("XWERTY124")
         self.plant.on_boarding_date()
         self.plant.client_name("client_user_03")
         self.plant.status("Active")
@@ -56,7 +56,7 @@ class Test_plant(unittest.TestCase):
         self.plant.plant_in_listView("Plant_Diamond")
 
     @pytest.mark.order(7)
-    def test_view_created_client(self):
+    def test_view_created_plant(self):
         self.plant = Plant(self.driver)
         self.plant.view_plant("Plant_Diamond")
 

@@ -42,13 +42,13 @@ class remedial_maintenance:
 
     def navigate_to_remedial_maintenance(self):
         self.driver.find_element(By.XPATH, self.maintenance).click()
-        time.sleep(2)
         element = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located(
                 (By.XPATH, self.menu_item_remedial_maintenance_xpath)
             )
         )
         element.click()
+        time.sleep(3)
         title = WebDriverWait(self.driver, 20).until(
             EC.presence_of_element_located((By.TAG_NAME, "title"))
         )
@@ -60,10 +60,16 @@ class remedial_maintenance:
             assert False
 
     def add_remedial_maintenance(self):
-        element = self.driver.find_element(
-            By.XPATH, self.add_remedial_maintenance_xpath
-        )
+        element = self.driver.find_element(By.XPATH,'//em[@class="icon ni ni-plus"]')
         element.click()
+        # element = WebDriverWait(self.driver, 20).until(
+        #     EC.element_to_be_clickable(
+        #         (
+        #            By.XPATH, self.add_remedial_maintenance_xpath,
+        #         )
+        #     )
+        # )
+        # element.click()
         title = WebDriverWait(self.driver, 20).until(
             EC.presence_of_element_located((By.TAG_NAME, "title"))
         )
@@ -73,6 +79,13 @@ class remedial_maintenance:
             allure.attach(self.driver.get_screenshot_as_png(),name="add_remedial_popup",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("add_remedial_popup.png")
             assert False
+        element = WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(
+                (
+                   By.XPATH,'//h5[normalize-space()="Remedial Maintenance Ticket"]',
+                )
+            )
+        )
 
     def task_name(self, name):
         element = WebDriverWait(self.driver, 10).until(
@@ -171,9 +184,10 @@ class remedial_maintenance:
         if "File uploaded successfully" in self.msg.text:
             assert True
         else:
-            allure.attach(self.driver.get_screenshot_as_png(),name="add_followup_task",attachment_type=AttachmentType.PNG)
+            allure.attach(self.driver.get_screenshot_as_png(),name="attachments",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("add_followup_task.png")
             assert False
+        self.driver.find_element(By.XPATH, '//p[normalize-space()="File uploaded successfully"]/following::button[@aria-label="close"]').click()
 
     def create_remedial_maintenance(self):
         element = WebDriverWait(self.driver, 10).until(
@@ -194,6 +208,7 @@ class remedial_maintenance:
             allure.attach(self.driver.get_screenshot_as_png(),name="create_remedial",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("create_remedial.png")
             assert False
+        self.driver.find_element(By.XPATH, '//p[normalize-space()="Successfully Created"]/following::button[@aria-label="close"]').click()
 
     def remedial_mandatory_fields(self):
         self.driver.find_element(By.XPATH, self.add_button_xpath).click()
@@ -319,6 +334,7 @@ class remedial_maintenance:
             allure.attach(self.driver.get_screenshot_as_png(),name="edit_remedial_toast",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("edit_remedial_toast.png")
             assert False
+        self.driver.find_element(By.XPATH, '//p[normalize-space()="Successfully Updated"]/following::button[@aria-label="close"]').click()
 
     # ---------------------------------------------- List_View_three_dotted_icon-----------------------------------------------
 
@@ -378,7 +394,7 @@ class remedial_maintenance:
             allure.attach(self.driver.get_screenshot_as_png(),name="archive_ticket",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("archive_ticket.png")
             assert False
-        self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
+        self.driver.find_element(By.XPATH, '//p[normalize-space()="Remedial Task Archived successfully"]/following::button[@aria-label="close"]').click()
 
     def view_archive_list(self):
         self.driver.find_element(By.ID, "filter-remedial").click()
@@ -431,7 +447,7 @@ class remedial_maintenance:
             allure.attach(self.driver.get_screenshot_as_png(),name="unarchive_ticket",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("unarchive_ticket.png")
             assert False
-        self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
+        self.driver.find_element(By.XPATH, '//p[normalize-space()="Remedial Task UnArchived successfully"]/following::button[@aria-label="close"]').click()
 
     def unarchived_ticket_listView(self, ticket):
         self.driver.find_element(By.ID, "filter-remedial").click()
@@ -493,7 +509,7 @@ class remedial_maintenance:
         self.driver.find_element(By.XPATH, '//a[@href="#search"]').click()
         keyword = self.driver.find_element(
             By.XPATH,
-            '//input[@placeholder="Search by Ticket Name, status and Plant Name.enter to search"]',
+            '//input[@placeholder="Search by Ticket Name, Status, Plant Name.enter to search"]',
         )
         keyword.send_keys(search_term)
         keyword.send_keys(Keys.ENTER)
