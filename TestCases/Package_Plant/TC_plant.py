@@ -42,9 +42,9 @@ class Test_plant(unittest.TestCase):
     @pytest.mark.order(5)
     def test_create_plant(self):
         self.plant = Plant(self.driver)
-        self.plant.plant_name("Plant_Diamond_01")
+        self.plant.plant_name("Plant_Diamond_015")
         self.plant.size("9")
-        self.plant.acronym("XWERTY124")
+        self.plant.acronym("XWERTY143")
         self.plant.on_boarding_date()
         self.plant.client_name("client_user_03")
         self.plant.status("Active")
@@ -53,12 +53,12 @@ class Test_plant(unittest.TestCase):
     @pytest.mark.order(6)
     def test_created_plant_in_list_view(self):
         self.plant = Plant(self.driver)
-        self.plant.plant_in_listView("Plant_Diamond")
+        self.plant.plant_in_listView("Plant_Diamond_015")
 
     @pytest.mark.order(7)
     def test_view_created_plant(self):
         self.plant = Plant(self.driver)
-        self.plant.view_plant("Plant_Diamond")
+        self.plant.view_plant("Plant_Diamond_015")
 
     @pytest.mark.order(8)
     def test_edit_btn_in_view_plant(self):
@@ -68,6 +68,9 @@ class Test_plant(unittest.TestCase):
     @pytest.mark.order(9)
     def test_edit_plant(self):
         self.plant = Plant(self.driver)
+        self.plant.plant_manager("Admin user")
+        self.plant.team_leader("Mobile User")
+        self.plant.field_engineer("Mobile User")
         self.plant.postal_code("894432")
         self.plant.address("Chennai")
         self.plant.save_information()
@@ -93,13 +96,12 @@ class Test_plant(unittest.TestCase):
         self.corrective.task_name("task_corrective_ticket")
         self.corrective.priority("High")
         self.corrective.status("open")
-        self.corrective.plant_name("Mobile_Plant")
+        self.corrective.plant_name("Plant_Diamond_015")
         self.corrective.field_engineer("Mobile User")
         self.corrective.assigned_to("Mobile User")
         self.corrective.asset_category("Asset Category 51")
         self.corrective.description("This is created for testing purpose")
         self.corrective.comment("This comment is for testing purpose")
-        self.corrective.attachments()
         self.corrective.add_corrective()
 
     @pytest.mark.order(14)
@@ -120,7 +122,7 @@ class Test_plant(unittest.TestCase):
     @pytest.mark.order(17)
     def test_create_remedial_ticket_plant_name_were_displayed(self):
         self.plant = Plant(self.driver)
-        self.plant.validate_plant_name_in_create_remedial_ticket("Plant_Diamond")
+        self.plant.validate_plant_name_in_create_remedial_ticket("Plant_Diamond_015")
 
     @pytest.mark.order(18)
     def test_create_remedial_maintenance(self):

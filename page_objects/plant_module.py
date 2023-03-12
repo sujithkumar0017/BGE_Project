@@ -17,35 +17,21 @@ class Plant:
     # Create Plant
     plant_name_xpath = '//input[@id="plant-name-input"]'
     size_xpath = '//input[@id="plant-size-input"]'
-    acronym_xpath ='//input[@id="plant-identifier-input"]'
-    
+    acronym_xpath = '//input[@id="plant-identifier-input"]'
+
     on_boarding_date_xpath = '//input[@id="plant-onBoardDate-input"]'
     client_name_xpath = '//div[@id="plant-clientName-select"]'
-    
-    plant_manager_xpath = (
-        '//div[@id="plant-manager-select"]'
-    )
-    team_leader_xpath = (
-        '//div[@id="plant-team-select"]'
-    )
-    field_engineer_xpath = (
-        '//div[@id="plant-engineer-select"]'
-    )
+
+    plant_manager_xpath = '//div[@id="plant-manager-select"]'
+    team_leader_xpath = '//div[@id="plant-team-select"]'
+    field_engineer_xpath = '//div[@id="plant-engineer-select"]'
     status_xpath = '//div[@id="plant-status-select"]'
-    postal_code_xpath = (
-        '//input[@id="plant-postal-input"]'
-    )
+    postal_code_xpath = '//input[@id="plant-postal-input"]'
     address_xpath = '//input[@id="plant-address-input"]'
-    google_map_link_xpath = (
-        '//input[@id="plant-map-input"]'
-    )
-    what3word_link_xpath = (
-        '//input[@id="plant-what3word-input"]'
-    )
+    google_map_link_xpath = '//input[@id="plant-map-input"]'
+    what3word_link_xpath = '//input[@id="plant-what3word-input"]'
     dno_xpath = '//div[@id="plant-dno-select"]'
-    hospital_xpath = (
-        '//div[@id="plant-hospital-select"]'
-    )
+    hospital_xpath = '//div[@id="plant-hospital-select"]'
     btn_cancel_xpath = '//button[@id="cancel-plant"]'
     btn_create_plant_xpath = '//button[@id="create-plant-form"]'
 
@@ -54,7 +40,7 @@ class Plant:
         '//div[@class="user-name"]//span[@class="tb-lead"]'
     )
 
-    #save information Button
+    # save information Button
     save_information_btn_xpath = '//button[@id="save-plant-form"]'
 
     def __init__(self, driver) -> None:
@@ -118,7 +104,7 @@ class Plant:
         actions.send_keys(Keys.ENTER).perform()
 
     def client_name(self, client):
-        element = self.driver.find_element(By.XPATH,self.client_name_xpath)
+        element = self.driver.find_element(By.XPATH, self.client_name_xpath)
         actions = ActionChains(self.driver)
         actions.click(element)
         actions.send_keys(client).send_keys(Keys.ENTER).perform()
@@ -129,18 +115,17 @@ class Plant:
         actions.click(element)
         actions.send_keys(manager).send_keys(Keys.ENTER).perform()
 
-    def team_leader(self, leader):
+    def team_leader(self, t_leader):
         element = self.driver.find_element(By.XPATH, self.team_leader_xpath)
         actions = ActionChains(self.driver)
         actions.click(element)
-        actions.send_keys(leader).send_keys(Keys.ENTER).perform()
+        actions.send_keys(t_leader).send_keys(Keys.ENTER).perform()
 
     def field_engineer(self, engineer):
-        element = self.driver.find_element(By.XPATH, self.team_leader_xpath)
+        element = self.driver.find_element(By.XPATH, self.field_engineer_xpath)
         actions = ActionChains(self.driver)
         actions.click(element)
         actions.send_keys(engineer).send_keys(Keys.ENTER).perform()
-
 
     def status(self, status):
         element = self.driver.find_element(By.XPATH, self.status_xpath)
@@ -166,20 +151,21 @@ class Plant:
         actions.click(element)
         actions.send_keys(dno).send_keys(Keys.ENTER).perform()
 
-
     def hospital(self, hospital):
         element = self.driver.find_element(By.XPATH, self.hospital_xpath)
         actions = ActionChains(self.driver)
         actions.click(element)
         actions.send_keys(hospital).send_keys(Keys.ENTER).perform()
 
-
-
     def attachments(self):
         file_to_upload_path = os.getcwd() + "/Files/file.png"
         self.driver.find_element(By.XPATH, '//input[@type="file"]').send_keys(
             file_to_upload_path
         )
+        self.driver.find_element(
+            By.XPATH,
+            '//p[normalize-space()="File uploaded successfully"]/following::button[@aria-label="close"]',
+        ).click()
 
     def create_plant_btn(self):
         self.driver.find_element(By.XPATH, self.btn_create_plant_xpath).click()
@@ -196,6 +182,10 @@ class Plant:
         else:
             self.driver.save_screenshot("create_plant_toast.png")
             assert False
+        self.driver.find_element(
+            By.XPATH,
+            '//p[normalize-space()="Successfully Created"]/following::button[@aria-label="close"]',
+        ).click()
 
     def cancel_btn(self):
         self.driver.find_element(By.XPATH, self.btn_cancel_xpath).click()
@@ -244,8 +234,9 @@ class Plant:
     def edit_button_view_plant(self):
         self.driver.find_element(By.XPATH, '//a[@id="edit-Plants-btn"]').click()
         if WebDriverWait(self.driver, 50).until(
-            EC.title_contains('Brighter App | Pv-Plant | Edit')):
-           assert True
+            EC.title_contains("Brighter App | Pv-Plant | Edit")
+        ):
+            assert True
         else:
             self.driver.save_screenshot("edit_plant_page.png")
             assert False
@@ -265,6 +256,10 @@ class Plant:
         else:
             self.driver.save_screenshot("edit_plant_toast.png")
             assert False
+        self.driver.find_element(
+            By.XPATH,
+            '//p[normalize-space()="Successfully Updated"]/following::button[@aria-label="close"]',
+        ).click()
 
     # --------------------------------------------------------Corrective Ticket--------------------------------------------------------#
     def corrective_maintenance_tab_in_view_plant(self):
