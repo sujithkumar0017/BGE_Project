@@ -1,7 +1,7 @@
 import time
-from pageObjects.enityManagement.asset import asset
+from page_objects.entity_Management.asset import asset
 from utilities.readProperties import ReadConfig
-from pageObjects.login_Module import login_Module
+from page_objects.login_Module import login_Module
 import unittest
 import pytest
 import allure
@@ -10,7 +10,7 @@ import allure
 
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("init_driver")
 class Test_Asset(unittest.TestCase):
     url = ReadConfig.getApplicationUrl()
     useremail = ReadConfig.getUseremail()
@@ -48,7 +48,7 @@ class Test_Asset(unittest.TestCase):
     @pytest.mark.order(5)
     def test_create_asset(self):
        self.asset = asset(self.driver)
-       self.asset.modal("Model_05")
+       self.asset.modal("Model_10")
        self.asset.rating("9.0")
        self.asset.factory_barcode("OXPWR")
        self.asset.category("Asset Category 512")
@@ -60,13 +60,13 @@ class Test_Asset(unittest.TestCase):
     @pytest.mark.order(6)
     def test_created_asset_in_listView(self):
         self.asset = asset(self.driver)
-        self.asset.asset_in_listView("Model_05")  
+        self.asset.asset_in_listView("Model_10")  
     @allure.description("Should view the created asset")
     @allure.severity(severity_level="CRITICAL")
     @pytest.mark.order(7)
     def test_view_asset(self):
         self.asset = asset(self.driver)  
-        self.asset.view_asset("Model_05")    
+        self.asset.view_asset("Model_10")    
     @allure.description("Should display the Edit asset popup window")
     @allure.severity(severity_level="CRITICAL")
     @pytest.mark.order(8)
@@ -84,14 +84,14 @@ class Test_Asset(unittest.TestCase):
     @pytest.mark.order(10)
     def test_edit_asset(self):
         self.asset = asset(self.driver)
-        self.asset.modal("Model_008")
+        self.asset.modal("Model_15")
         self.asset.save_information() 
     @allure.description("Should able to edit and save the asset category in asset category list view option ")
     @allure.severity(severity_level="CRITICAL")
     @pytest.mark.order(11)
     def test_listView_edit_asset(self):
         self.asset = asset(self.driver)
-        self.asset.list_view_edit_option("Model_008")
+        self.asset.list_view_edit_option("Model_15")
         self.asset.weblink("www.gmail.com")
         self.asset.description("This created for testing purpose")
         self.asset.save_information()
@@ -100,4 +100,4 @@ class Test_Asset(unittest.TestCase):
     @pytest.mark.order(12)
     def test_search_option(self):
         self.asset = asset(self.driver)
-        self.asset.search_functionality("Model_008")
+        self.asset.search_functionality("Model_15")

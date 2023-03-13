@@ -42,8 +42,8 @@ class manufacturer():
         self.driver.find_element(By.XPATH,self.entity_management_xpath).click()
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.manufacturer_option)))
         element.click()
-        time.sleep(3)
-        if self.driver.title == "Brighter App | Manufacturer":
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | Manufacturer')):
             assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="Manufacturer_Page",attachment_type=AttachmentType.PNG)
@@ -51,8 +51,9 @@ class manufacturer():
             assert False
     def add_manufacturer(self):
         self.driver.find_element(By.XPATH,self.add_manufacturer_xpath).click()
-        time.sleep(3)
-        if self.driver.title == "Brighter App | Manufacturer | Create":
+       
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | Manufacturer | Create')):
             assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="create_manufacturer_webtitle",attachment_type=AttachmentType.PNG)
@@ -91,6 +92,7 @@ class manufacturer():
             allure.attach(self.driver.get_screenshot_as_png(),name="create_DNO_toast",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("create_DNO_toast.png")
             assert False 
+        self.driver.find_element(By.XPATH, '//p[normalize-space()="Successfully Created"]/following::button[@aria-label="close"]').click()
     
     #------------------------------------List View---------------------------------------------------------#
     def manufacturer_in_listView(self,name):
@@ -108,9 +110,9 @@ class manufacturer():
         for x in element:
             if x.text in name:
                 x.click()
-                time.sleep(3)
-                if self.driver.title == "Brighter App | Manufacturer | View":
-                    assert True
+                if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | Manufacturer | View')):
+                        assert True
                 else:
                     allure.attach(self.driver.get_screenshot_as_png(),name="view_manufacturer",attachment_type=AttachmentType.PNG)
                     # self.driver.save_screenshot("view_manufacturer.png")   
@@ -123,8 +125,17 @@ class manufacturer():
     
     #----------------------------Edit Manufacturer---------------------------------------------#
     def edit_manufacturer_button(self):
-        self.driver.find_element(By.XPATH,self.btn_edit_manufacturer_xpath).click()
-        if self.driver.title == "Brighter App | Manufacturer | Edit":
+        element = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(
+                (
+                    By.XPATH,self.btn_edit_manufacturer_xpath,
+                )
+            )
+        )
+        element.click()
+        # self.driver.find_element(By.XPATH,self.btn_edit_manufacturer_xpath).click()
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | Manufacturer | Edit')):
                 assert True
         else:
                 allure.attach(self.driver.get_screenshot_as_png(),name="Edit_Manufacturer_page",attachment_type=AttachmentType.PNG)
@@ -157,9 +168,11 @@ class manufacturer():
             allure.attach(self.driver.get_screenshot_as_png(),name="edit_manufacturer_toast",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("edit_manufacturer_toast.png")
             assert False
+        self.driver.find_element(By.XPATH, '//p[normalize-space()="Successfully Updated"]/following::button[@aria-label="close"]').click()
     def list_view_edit_option(self,manufacturer):
         self.driver.find_element(By.XPATH,'(//span[normalize-space()="'+manufacturer+'"]/following::em[@class="icon ni ni-edit"])[1]').click()
-        if self.driver.title == "Brighter App | Manufacturer | Edit":
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | Manufacturer | Edit')):
                 assert True
         else:
                 allure.attach(self.driver.get_screenshot_as_png(),name="Edit_Modal_page",attachment_type=AttachmentType.PNG)

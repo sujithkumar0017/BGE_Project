@@ -32,8 +32,8 @@ class failure_reason:
         self.driver.find_element(By.XPATH,self.entity_management_xpath).click()
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.failure_reason_option)))
         element.click()
-        time.sleep(3)
-        if self.driver.title == "Brighter App | Failure Reason":
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | Failure Reason')):
             assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="Failure_reason_Page",attachment_type=AttachmentType.PNG)
@@ -41,8 +41,8 @@ class failure_reason:
             assert False
     def add_failure_reason(self):
         self.driver.find_element(By.ID,self.add_failure_reason_category_id).click()
-        time.sleep(3)
-        if self.driver.title == "Brighter App | Failure Reason | Create":
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | Failure Reason | Create')):
             assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="create_Failure Reason_webtitle",attachment_type=AttachmentType.PNG)
@@ -51,8 +51,12 @@ class failure_reason:
     #---------------------------------Failure reason Popup window -------------------------------------------------#
     def failure_reason_mandatory_fields(self):
         self.driver.find_element(By.XPATH,self.add_failure_reason_xpath).click()
-        time.sleep(2)
-        if "name is a required field"== self.driver.find_element(By.XPATH,'//span[normalize-space()="name is a required field"]').text:
+        validation_message = WebDriverWait(self.driver, 20).until(
+                EC.visibility_of_element_located(
+                    (By.XPATH, '//span[normalize-space()="name is a required field"]')
+                )
+            )
+        if "name is a required field"== validation_message.text:
             assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="create_failure_reason_mandatory_fields",attachment_type=AttachmentType.PNG)
@@ -62,8 +66,7 @@ class failure_reason:
         self.driver.find_element(By.ID,self.input_name_id).send_keys(name)
     def create_failure_reason(self):
         self.driver.find_element(By.XPATH,self.add_failure_reason_xpath).click()
-        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p')))
-        time.sleep(3)
+        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space()="Successfully Created"]')))
         if "Successfully Created" in self.msg.text:
             assert True
         else:
@@ -88,9 +91,9 @@ class failure_reason:
         for x in element:
             if x.text in name:
                 x.click()
-                time.sleep(3)
-                if self.driver.title == "Brighter App | Failure Reason | View":
-                    assert True
+                if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | Failure Reason | View')):
+                        assert True
                 else:
                     allure.attach(self.driver.get_screenshot_as_png(),name="view_failure_reason",attachment_type=AttachmentType.PNG)
                     # self.driver.save_screenshot("view_failure_reason.png")   
@@ -104,7 +107,8 @@ class failure_reason:
     #---------------------------------Edit Failure reason ------------------------------------------------#
     def edit_failure_reason_button(self):
         self.driver.find_element(By.XPATH,self.edit_failure_reason_button_xpath).click()
-        if self.driver.title == "Brighter App | Failure Reason | Edit":
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | Failure Reason | Edit')):
                 assert True
         else:
                 allure.attach(self.driver.get_screenshot_as_png(),name="Edit_Failure_reason_page",attachment_type=AttachmentType.PNG)
@@ -121,7 +125,12 @@ class failure_reason:
            )
        )
         element.click()
-        if "name is a required field"== self.driver.find_element(By.XPATH,'//span[normalize-space()="name is a required field"]').text:
+        validation_message = WebDriverWait(self.driver, 20).until(
+                EC.visibility_of_element_located(
+                    (By.XPATH, '//span[normalize-space()="name is a required field"]')
+                )
+            )
+        if "name is a required field"== validation_message.text:
             assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="edit_mandatory_fields",attachment_type=AttachmentType.PNG)
@@ -132,8 +141,7 @@ class failure_reason:
         self.driver.find_element(By.ID,self.edit_failure_reason_id).send_keys(name)
     def save_information_button(self):
         self.driver.find_element(By.ID,self.save_information_button_id).click()
-        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p')))
-        time.sleep(3)
+        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space()="Successfully Updated"]')))
         if "Successfully Updated" in self.msg.text:
             assert True
         else:
@@ -143,7 +151,8 @@ class failure_reason:
     
     def list_view_edit_option(self,category):
         self.driver.find_element(By.XPATH,'(//div[normalize-space()="'+category+'"]/following::button[@id="edit-faliure"])[1]').click()
-        if self.driver.title == "Brighter App | Failure Reason | Edit":
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | Failure Reason | Edit')):
                 assert True
         else:
                 allure.attach(self.driver.get_screenshot_as_png(),name="Edit_Failure_reason_page",attachment_type=AttachmentType.PNG)

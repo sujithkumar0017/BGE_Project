@@ -1,7 +1,7 @@
 import time
-from pageObjects.enityManagement.SLA import sla
+from page_objects.entity_Management.SLA import sla
 from utilities.readProperties import ReadConfig
-from pageObjects.login_Module import login_Module
+from page_objects.login_Module import login_Module
 import unittest
 import pytest
 import allure
@@ -9,7 +9,7 @@ import allure
 
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("init_driver")
 class Test_SLA(unittest.TestCase):
     url = ReadConfig.getApplicationUrl()
     useremail = ReadConfig.getUseremail()

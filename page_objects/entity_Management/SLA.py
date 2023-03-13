@@ -34,8 +34,8 @@ class sla:
         self.driver.find_element(By.XPATH,self.entity_management_xpath).click()
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.sla_option)))
         element.click()
-        time.sleep(3)
-        if self.driver.title == "Brighter App | SLA":
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | SLA')):
             assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="sla_Page",attachment_type=AttachmentType.PNG)
@@ -43,8 +43,8 @@ class sla:
             assert False
     def add_sla(self):
         self.driver.find_element(By.XPATH,self.add_sla_xpath).click()
-        time.sleep(3)
-        if self.driver.title == "Brighter App | SLA | Create":
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | SLA | Create')):
             assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="create_sla_webpage_title",attachment_type=AttachmentType.PNG)
@@ -52,20 +52,30 @@ class sla:
             assert False
     def sla_mandatory_field(self):
         self.driver.find_element(By.XPATH,self.create_sla_xpath).click()
-        if (self.driver.find_element(By.XPATH,'//span[normalize-space()="name is a required field"]').is_displayed()) and (self.driver.find_element(By.XPATH,'//p[normalize-space()="description is a required field"]').is_displayed()):
-            assert True
-        else:
-            allure.attach(self.driver.get_screenshot_as_png(),name="create_sla_mandatory_fields",attachment_type=AttachmentType.PNG)
-            # self.driver.save_screenshot("create_sla_mandatory_fields.png")  
-            assert False 
+        validation_message = ["name is a required field","description is a required field"]
+        for x in validation_message:
+            print(x)
+            element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//span[normalize-space()="'+x+'"]')))
+            print(element.text)
+            if element.is_displayed():
+                assert True
+            else:
+                allure.attach(self.driver.get_screenshot_as_png(),name="create_Sla_mandatory_fields",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("create_manufacturer_mandatory_fields.png")  
+                assert False
+        # if (self.driver.find_element(By.XPATH,'//span[normalize-space()="name is a required field"]').is_displayed()) and (self.driver.find_element(By.XPATH,'//p[normalize-space()="description is a required field"]').is_displayed()):
+        #     assert True
+        # else:
+        #     allure.attach(self.driver.get_screenshot_as_png(),name="create_sla_mandatory_fields",attachment_type=AttachmentType.PNG)
+        #     # self.driver.save_screenshot("create_sla_mandatory_fields.png")  
+        #     assert False 
     def level(self,level):
         self.driver.find_element(By.XPATH,self.input_level_xpath).send_keys(level)
     def description(self,description):
         self.driver.find_element(By.XPATH,self.input_description_xpath).send_keys(description)  
     def create_sla(self):
         self.driver.find_element(By.XPATH,self.create_sla_xpath).click()
-        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p')))
-        time.sleep(3)
+        self.msg=WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space()="Successfully Created"]')))
         if "Successfully Created" in self.msg.text:
             assert True
         else:
@@ -89,8 +99,8 @@ class sla:
         for x in element:
             if x.text in level:
                 x.click()
-                time.sleep(3)
-                if self.driver.title == "Brighter App | SLA | View":
+                if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | SLA | View')):
                     assert True
                 else:
                     allure.attach(self.driver.get_screenshot_as_png(),name="view_level",attachment_type=AttachmentType.PNG)
@@ -104,10 +114,18 @@ class sla:
     
     #-------------------------------------------Edit asset----------------------------------------------------#
     def edit_sla_button(self):
-        self.driver.find_element(By.XPATH,self.btn_edit_xpath).click()
-        time.sleep(2)
-        if self.driver.title == "Brighter App | SLA | Edit":
-                assert True
+        element = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(
+                (
+                    By.XPATH,self.btn_edit_xpath,
+                )
+            )
+        )
+        element.click()
+        # self.driver.find_element(By.XPATH,self.btn_edit_xpath).click()
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | SLA | Edit')):
+                    assert True
         else:
                 allure.attach(self.driver.get_screenshot_as_png(),name="Edit_Sla_webpage_title",attachment_type=AttachmentType.PNG)
                 # self.driver.save_screenshot("Edit_Sla_webpage_title.png")   
@@ -152,8 +170,7 @@ class sla:
         self.driver.find_element(By.XPATH,self.input_description_xpath).send_keys(description)
     def save_information(self):
         self.driver.find_element(By.XPATH,self.btn_save_information_xpath).click()
-        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p')))
-        time.sleep(3)
+        self.msg=WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space()="Successfully Updated"]')))
         if "Successfully Updated" in self.msg.text:
             assert True
         else:
@@ -162,8 +179,9 @@ class sla:
             assert False
     def list_view_edit_option(self,level):
         self.driver.find_element(By.XPATH,'(//span[normalize-space()="'+level+'"]/following::em[@class="icon ni ni-edit"])[1]').click()
-        if self.driver.title == "Brighter App | SLA | Edit":
-                assert True
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | SLA | Edit')):
+                    assert True
         else:
                 allure.attach(self.driver.get_screenshot_as_png(),name="Edit_SLA_page",attachment_type=AttachmentType.PNG)
                 # self.driver.save_screenshot("Edit_SLA_page.png")   

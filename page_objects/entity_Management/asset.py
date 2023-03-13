@@ -54,9 +54,12 @@ class asset:
             # self.driver.save_screenshot("create_Asset_webpage_title.png")   
             assert False
     def asset_mandatory_fields(self):
+        # button  = self.driver.find_element(By.XPATH,self.create_asset_xpath)
         element = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH,self.create_asset_xpath)))
+        self.driver.execute_script("arguments[0].scrollIntoView();",element)
+        time.sleep(2)
         element.click()
-        # self.driver.find_element(By.XPATH,self.create_asset_xpath).click()
+        # .click()
         validation_message = ["model is a required field","assetCategory is required","manufacturer is required"]
         for x in validation_message:
             element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//span[normalize-space()="'+x+'"]')))
@@ -109,8 +112,8 @@ class asset:
         for x in element:
             if x.text in modal:
                 x.click()
-                time.sleep(3)
-                if self.driver.title == "Brighter App | Asset | View":
+                if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | Asset | View')):
                     assert True
                 else:
                     allure.attach(self.driver.get_screenshot_as_png(),name="view_asset",attachment_type=AttachmentType.PNG)
@@ -138,6 +141,8 @@ class asset:
            actions.click(modal).key_down(Keys.CONTROL).send_keys('a').key_up(Keys.CONTROL).send_keys(Keys.DELETE)
            actions.perform()
            save_information_btn = WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH,self.btn_save_information_xpath)))
+           self.driver.execute_script("arguments[0].scrollIntoView();",save_information_btn)
+           time.sleep(2)
            save_information_btn.click()
         #    self.driver.find_element(By.XPATH,self.btn_save_information_xpath).click()
            element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//span[normalize-space()="model is a required field"]')))

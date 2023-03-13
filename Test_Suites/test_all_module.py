@@ -197,11 +197,15 @@
 import unittest
 # from TestCases.Package_Login_01.TC_Login import Test_login
 # from TestCases.Package_Client_02.test_client import Test_client 
-from TestCases.Package_Plant.TC_plant import Test_plant
+# from TestCases.Package_Plant.TC_plant import Test_plant
 # from TestCases.Package_maintenance.test_corrective_maintenance import Test_Corrective
 # from TestCases.Package_maintenance.TC_remedial_maintenance import Test_Remedial
-
-
+# from TestCases.Package_entity_management.TC_asset_category import Test_Asset_Category
+# from TestCases.Package_entity_management.TC_asset import Test_Asset
+# from TestCases.Package_entity_management.TC_DNO import Test_DNO
+# from TestCases.Package_entity_management.TC_failure_reason import Test_Failure_Reason
+# from TestCases.Package_entity_management.TC_manufacturer import Test_Manufacturer
+from TestCases.Package_entity_management.TC_SLA import Test_SLA
 
 # if __name__ == '__main__':
 #     suite = unittest.TestSuite()

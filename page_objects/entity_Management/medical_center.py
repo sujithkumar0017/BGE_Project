@@ -47,18 +47,18 @@ class medical_centre:
             EC.visibility_of_element_located((By.XPATH, self.medical_reason_option_xpath))
         )
         element.click()
-        time.sleep(3)
-        if self.driver.title == "Brighter App | Medical Centre":
-            assert True
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | Medical Centre')):
+                    assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="medical_reason_Page",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("medical_reason_Page.png")
             assert False
     def add_medical_centre(self):
         self.driver.find_element(By.XPATH, self.add_medical_centre_xpath).click()
-        time.sleep(3)
-        if self.driver.title == "Brighter App | Medical Centre | Create":
-            assert True
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | Medical Centre | Create')):
+                assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="medical_reason_webtitle",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("medical_reason_webtitle.png")
@@ -98,6 +98,7 @@ class medical_centre:
             allure.attach(self.driver.get_screenshot_as_png(),name="create_medical_centre_toast",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("create_medical_centre_toast.png")
             assert False
+        self.driver.find_element(By.XPATH, '//p[normalize-space()="Successfully Created"]/following::button[@aria-label="close"]').click()
 
 
         #------------------------------------List View---------------------------------------------------------#
@@ -116,8 +117,8 @@ class medical_centre:
         for x in element:
             if x.text in hospital:
                 x.click()
-                time.sleep(3)
-                if self.driver.title == "Brighter App | Medical Centre | View":
+                if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | Medical Centre | View')):
                     assert True
                 else:
                     allure.attach(self.driver.get_screenshot_as_png(),name="view_medical_centre",attachment_type=AttachmentType.PNG)
@@ -131,9 +132,9 @@ class medical_centre:
     #----------------------------Edit Medical Reason---------------------------------------------#
     def edit_medical_center_button(self):  
         self.driver.find_element(By.XPATH,self.edit_medical_centre_button_xpath).click()
-        time.sleep(3)
-        if self.driver.title == "Brighter App | Medical Centre | Edit":
-                assert True
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | Medical Centre | Edit')):
+                    assert True
         else:
                 allure.attach(self.driver.get_screenshot_as_png(),name="Edit_medical_centre_page",attachment_type=AttachmentType.PNG)
                 # self.driver.save_screenshot("Edit_medical_centre_page.png")   
@@ -167,13 +168,14 @@ class medical_centre:
             allure.attach(self.driver.get_screenshot_as_png(),name="edit_medical_centre_toast",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("edit_medical_centre_toast.png")
             assert False
-        self.driver.find_element(By.XPATH,'//button[@aria-label="close"]').click()
+        self.driver.find_element(By.XPATH, '//p[normalize-space()="Successfully Updated"]/following::button[@aria-label="close"]').click()
 
     #---------------------------------------List View Edit and delete option----------------------------------------------#
     def list_view_edit_option(self,hospital):
         self.driver.find_element(By.XPATH,'(//span[normalize-space()="'+hospital+'"]/following::em[@class="icon ni ni-edit"])[1]').click()
-        if self.driver.title == "Brighter App | Medical Centre | Edit":
-                assert True
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | Medical Centre | Edit')):
+                    assert True
         else:
                 allure.attach(self.driver.get_screenshot_as_png(),name="Edit_medical_centre_page",attachment_type=AttachmentType.PNG)
                 # self.driver.save_screenshot("Edit_medical_centre_page.png")   

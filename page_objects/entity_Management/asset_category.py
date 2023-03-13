@@ -22,7 +22,7 @@ class asset_category:
     added_category_in_listView_xpath = '//div[@class="user-name"]//span[@class="tb-lead"]'
 
     #edit category
-    edit_category_button_xpath = '(//em[@class="icon ni ni-edit"])[last()]'
+    edit_category_button_xpath = '(//button[@id="edit-category"])[last()]'
     edit_category_id = "name-input"
     save_information_button_id = "save-category"
 
@@ -33,26 +33,32 @@ class asset_category:
         self.driver.find_element(By.XPATH,self.entity_management_xpath).click()
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.asset_category_option)))
         element.click()
-        time.sleep(3)
-        if self.driver.title == "Brighter App | AssetCategory":
-            assert True
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | AssetCategory')):
+                    assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="assetCategory_Page",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("assetCategory_Page.png")   
             assert False
     def add_assetCategory(self):
         self.driver.find_element(By.ID,self.add_asset_category_id).click()
-        time.sleep(3)
-        if self.driver.title == "Brighter App | Asset Category | Create":
-            assert True
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | Asset Category | Create')):
+                    assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="add_assetCategory_webtitle",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("add_assetCategory_webtitle.png")   
             assert False
     #---------------------------------Asset Category Popup window -------------------------------------------------#
     def assetCategory_mandatory_fields(self):
-        self.driver.find_element(By.XPATH,self.add_category_xpath).click()
-        if "name is a required field"== self.driver.find_element(By.XPATH,'//span[normalize-space()="name is a required field"]').text:
+        element =  WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,self.add_category_xpath)))
+        element.click()
+        validation_message = WebDriverWait(self.driver, 20).until(
+                EC.visibility_of_element_located(
+                    (By.XPATH, '//span[normalize-space()="name is a required field"]')
+                )
+            )
+        if "name is a required field"== validation_message.text:
             assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="asset_category_mandatory_fields",attachment_type=AttachmentType.PNG)
@@ -62,14 +68,14 @@ class asset_category:
         self.driver.find_element(By.ID,self.input_category_id).send_keys(category)
     def create_category(self):
         self.driver.find_element(By.XPATH,self.add_category_xpath).click()
-        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p')))
-        time.sleep(3)
+        self.msg=WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space()="Successfully Created"]')))
         if "Successfully Created" in self.msg.text:
             assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="add_asset_category_toast",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("add_asset_category_toast.png")
-            assert False
+            assert False    
+        self.driver.find_element(By.XPATH, '//p[normalize-space()="Successfully Created"]/following::button[@aria-label="close"]').click()
 
     #------------------------------------------------- List View ---------------------------------------------------#
     
@@ -88,8 +94,8 @@ class asset_category:
         for x in element:
             if x.text in name:
                 x.click()
-                time.sleep(3)
-                if self.driver.title == "Brighter App | Asset Category | View":
+                if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | Asset Category | View')):
                     assert True
                 else:
                     allure.attach(self.driver.get_screenshot_as_png(),name="view_category",attachment_type=AttachmentType.PNG)
@@ -103,15 +109,32 @@ class asset_category:
     
     #---------------------------------Edit Category ------------------------------------------------#
     def edit_category_button(self):
-        self.driver.find_element(By.XPATH,self.edit_category_button_xpath).click()
-        if self.driver.title == "Brighter App | Asset Category | Edit":
-                assert True
+        element = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located(
+                (
+                    By.XPATH,self.edit_category_button_xpath,
+                )
+            )
+        )
+        time.sleep(2)
+        element.click()
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | Asset Category | Edit')):
+            assert True
         else:
                 allure.attach(self.driver.get_screenshot_as_png(),name="Edit_category_page",attachment_type=AttachmentType.PNG)
                 # self.driver.save_screenshot("Edit_category_page.png")   
                 assert False
     def edit_category_mandatory_field(self):
-        element = self.driver.find_element(By.XPATH,'//input[@id="name-input"]')
+        element = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located(
+                (
+                    By.XPATH,'//input[@id="name-input"]',
+                )
+            )
+        )
+        # element = self.driver.find_element(By.XPATH,'//input[@id="name-input"]')
+        element.click()
         actions = ActionChains(self.driver)
         actions.click(element)
         actions.key_down(Keys.CONTROL).send_keys('a').key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
@@ -128,14 +151,14 @@ class asset_category:
         self.driver.find_element(By.ID,self.edit_category_id).send_keys(name)
     def save_information_button(self):
         self.driver.find_element(By.ID,self.save_information_button_id).click()
-        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p')))
-        time.sleep(3)
+        self.msg=WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space()="Successfully Updated"]')))
         if "Successfully Updated" in self.msg.text:
             assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="edit_asset_category_toast",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("edit_asset_category_toast.png")
             assert False
+        self.driver.find_element(By.XPATH, '//p[normalize-space()="Successfully Updated"]/following::button[@aria-label="close"]').click()
     
     def list_view_edit_option(self,category):
         self.driver.find_element(By.XPATH,'(//div[normalize-space()="'+category+'"]/following::button[@id="edit-category"])[1]').click()
@@ -145,7 +168,6 @@ class asset_category:
                 allure.attach(self.driver.get_screenshot_as_png(),name="Edit_category_page",attachment_type=AttachmentType.PNG)
                 # self.driver.save_screenshot("Edit_category_page.png")   
                 assert False
-        self.edit_category_mandatory_field()
     def list_view_delete_option(self,category):
         self.driver.find_element(By.XPATH,'(//div[normalize-space()="'+category+'"]/following::button[@id="delete-category"])[1]').click()
         pass

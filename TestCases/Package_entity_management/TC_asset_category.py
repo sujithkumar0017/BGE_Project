@@ -1,7 +1,7 @@
 import time
-from pageObjects.enityManagement.asset_category import asset_category
+from page_objects.entity_Management.asset_category import asset_category
 from utilities.readProperties import ReadConfig
-from pageObjects.login_Module import login_Module
+from page_objects.login_Module import login_Module
 import unittest
 import pytest
 import allure
@@ -10,7 +10,7 @@ import allure
 
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("init_driver")
 class Test_Asset_Category(unittest.TestCase):
     url = ReadConfig.getApplicationUrl()
     useremail = ReadConfig.getUseremail()
@@ -48,20 +48,20 @@ class Test_Asset_Category(unittest.TestCase):
     @pytest.mark.order(5)
     def test_create_asset_category(self):
         self.asset_category = asset_category(self.driver)
-        self.asset_category.Category("Asset Category 5")
+        self.asset_category.Category("Asset Category 6")
         self.asset_category.create_category()
     @allure.description("Should display the created asset category in list view")
     @allure.severity(severity_level="CRITICAL")
     @pytest.mark.order(6)
     def test_created_asset_category_in_listView(self):
         self.asset_category = asset_category(self.driver)
-        self.asset_category.category_in_listView("Asset Category 5")  
+        self.asset_category.category_in_listView("Asset Category 6")  
     @allure.description("Should view the created asset category")
     @allure.severity(severity_level="CRITICAL")
     @pytest.mark.order(7)
     def test_view_asset_category(self):
         self.asset_category = asset_category(self.driver)   
-        self.asset_category.view_category("Asset Category 5")    
+        self.asset_category.view_category("Asset Category 6")    
     @allure.description("Should display the edit asset category popup window ")
     @allure.severity(severity_level="CRITICAL")
     @pytest.mark.order(8)
@@ -80,15 +80,15 @@ class Test_Asset_Category(unittest.TestCase):
     @pytest.mark.order(10)
     def test_edit_asset_category(self):
         self.asset_category = asset_category(self.driver) 
-        self.asset_category.edit_category("Asset Category 51")  
+        self.asset_category.edit_category("Asset Category 61")  
         self.asset_category.save_information_button()
     @allure.description("Should able to edit and save the asset category in asset category list view option")
     @allure.severity(severity_level="CRITICAL")
     @pytest.mark.order(11)
     def test_edit_option_in_listView(self):
         self.asset_category = asset_category(self.driver)
-        self.asset_category.list_view_edit_option("Asset Category 51")
-        self.asset_category.edit_category_mandatory_field() 
+        self.asset_category.list_view_edit_option("Asset Category 61")
+        self.asset_category.edit_category_mandatory_field()
         self.asset_category.edit_category("Asset Category 512")  
         self.asset_category.save_information_button()
     @allure.description("Should able to search asset using search functionality")

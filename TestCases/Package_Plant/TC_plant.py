@@ -139,3 +139,4 @@ class Test_plant(unittest.TestCase):
     def test_created_ticket_in_list_view(self):
         self.remedial = remedial_maintenance(self.driver)
         self.remedial.remedial_task_in_listView("ticket_issue_01")
+    

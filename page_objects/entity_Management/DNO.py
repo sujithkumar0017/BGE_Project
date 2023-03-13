@@ -41,9 +41,9 @@ class DNO:
            EC.visibility_of_element_located((By.XPATH, self.dno_option))
        )
        element.click()
-       time.sleep(3)
-       if self.driver.title == "Brighter App | DNO":
-           assert True
+       if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | DNO')):
+            assert True
        else:
            allure.attach(self.driver.get_screenshot_as_png(),name="dno_Page",attachment_type=AttachmentType.PNG) 
         #    self.driver.save_screenshot("dno_Page.png")
@@ -52,9 +52,9 @@ class DNO:
 
    def add_DNO(self):
        self.driver.find_element(By.XPATH, self.add_dno_xpath).click()
-       time.sleep(3)
-       if self.driver.title == "Brighter App | DNO | Create":
-           assert True
+       if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | DNO | Create')):
+            assert True
        else:
            allure.attach(self.driver.get_screenshot_as_png(),name="create_dno_webtitle",attachment_type=AttachmentType.PNG)
         #    self.driver.save_screenshot("create_dno_webtitle.png")
@@ -64,14 +64,13 @@ class DNO:
    # ---------------------------------DNO Popup window -------------------------------------------------#
    def DNO_mandatory_fields(self):
        self.driver.find_element(By.XPATH, self.create_dno_xpath).click()
-       time.sleep(2)
-       if (
-           "name is a required field"
-           == self.driver.find_element(
-               By.XPATH, '//span[normalize-space()="name is a required field"]'
-           ).text
-       ):
-           assert True
+       validation_message = WebDriverWait(self.driver, 20).until(
+                EC.visibility_of_element_located(
+                    (By.XPATH, '//span[normalize-space()="name is a required field"]')
+                )
+            )
+       if "name is a required field"== validation_message.text:
+            assert True
        else:
            allure.attach(self.driver.get_screenshot_as_png(),name="create_failure_reason_mandatory_fields",attachment_type=AttachmentType.PNG)
         #    self.driver.save_screenshot("create_failure_reason_mandatory_fields.png")
@@ -85,15 +84,15 @@ class DNO:
    def create_DNO(self):
        self.driver.find_element(By.XPATH, self.create_dno_xpath).click()
        self.msg = WebDriverWait(self.driver, 10).until(
-           EC.presence_of_element_located((By.XPATH, '//div[@class="toastr-text"]//p'))
+           EC.visibility_of_element_located((By.XPATH, '//div[@class="toastr-text"]//p[normalize-space()="Successfully Created"]'))
        )
-       time.sleep(3)
        if "Successfully Created" in self.msg.text:
            assert True
        else:
            allure.attach(self.driver.get_screenshot_as_png(),name="create_DNO_toast",attachment_type=AttachmentType.PNG)
         #    self.driver.save_screenshot("create_DNO_toast.png")
            assert False
+       self.driver.find_element(By.XPATH, '//p[normalize-space()="Successfully Created"]/following::button[@aria-label="close"]').click()
 
 
    # ------------------------------------------------- List View ---------------------------------------------------#
@@ -124,9 +123,9 @@ class DNO:
        for x in element:
            if x.text in dno:
                x.click()
-               time.sleep(3)
-               if self.driver.title == "Brighter App | DNO | View":
-                   assert True
+               if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | DNO | View')):
+                    assert True
                else:
                    allure.attach(self.driver.get_screenshot_as_png(),name="view_DNO",attachment_type=AttachmentType.PNG)
                 #    self.driver.save_screenshot("view_DNO.png")
@@ -142,9 +141,17 @@ class DNO:
 
 
    def edit_dno_button(self):
-       self.driver.find_element(By.XPATH, self.edit_dno_button_xpath).click()
-       if self.driver.title == "Brighter App | DNO | Edit":
-           assert True
+       element = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located(
+                (
+                    By.XPATH,self.edit_dno_button_xpath,
+                )
+            )
+        )
+       element.click()
+       if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | DNO | Edit')):
+                    assert True
        else:
            allure.attach(self.driver.get_screenshot_as_png(),name="Edit_DNO_webpage_title",attachment_type=AttachmentType.PNG)
         #    self.driver.save_screenshot("Edit_DNO_webpage_title.png")
@@ -152,7 +159,14 @@ class DNO:
 
 
    def edit_dno_mandatory_field(self):
-       element = self.driver.find_element(By.XPATH, '//input[@name="name"]')
+       element = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located(
+                (
+                    By.XPATH,'//input[@name="name"]',
+                )
+            )
+        )
+    #    element = self.driver.find_element(By.XPATH, '//input[@name="name"]')
        actions = ActionChains(self.driver)
        actions.click(element)
        actions.key_down(Keys.CONTROL).send_keys('a').key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
@@ -162,13 +176,13 @@ class DNO:
            )
        )
        element.click()
-       if (
-           "name is a required field"
-           == self.driver.find_element(
-               By.XPATH, '//span[normalize-space()="name is a required field"]'
-           ).text
-       ):
-           assert True
+       validation_message = WebDriverWait(self.driver, 20).until(
+                EC.visibility_of_element_located(
+                    (By.XPATH, '//span[normalize-space()="name is a required field"]')
+                )
+            )
+       if "name is a required field"== validation_message.text:
+            assert True
        else:
            allure.attach(self.driver.get_screenshot_as_png(),name="DNO_edit_mandatory_fields",attachment_type=AttachmentType.PNG)
         #    self.driver.save_screenshot("DNO_edit_mandatory_fields.png")
@@ -182,16 +196,15 @@ class DNO:
    def save_information_button(self):
        self.driver.find_element(By.XPATH, self.save_information_button_xpath).click()
        self.msg = WebDriverWait(self.driver, 10).until(
-           EC.presence_of_element_located((By.XPATH, '//div[@class="toastr-text"]//p'))
+           EC.visibility_of_element_located((By.XPATH, '//div[@class="toastr-text"]//p[normalize-space()="Successfully Updated"]'))
        )
-       time.sleep(3)
        if "Successfully Updated" in self.msg.text:
            assert True
        else:
            allure.attach(self.driver.get_screenshot_as_png(),name="edit_DNO_toast",attachment_type=AttachmentType.PNG)
         #    self.driver.save_screenshot("edit_DNO_toast.png")
            assert False
-
+       self.driver.find_element(By.XPATH, '//p[normalize-space()="Successfully Updated"]/following::button[@aria-label="close"]').click()
 
    def list_view_edit_option(self, Model):
        self.driver.find_element(
@@ -200,8 +213,9 @@ class DNO:
            + Model
            + '"]/following::em[@class="icon ni ni-edit"])[1]',
        ).click()
-       if self.driver.title == "Brighter App | DNO | Edit":
-           assert True
+       if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | DNO | Edit')):
+            assert True
        else:
            allure.attach(self.driver.get_screenshot_as_png(),name="Edit_Modal_page",attachment_type=AttachmentType.PNG)
         #    self.driver.save_screenshot("Edit_Modal_page.png")
