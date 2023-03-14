@@ -17,30 +17,30 @@ class Test_Manufacturer(unittest.TestCase):
     password = ReadConfig.getPassword()
 
 
-    @pytest.mark.order(1)
-    def test_login(self):   
-        self.driver.get(self.url)
-        self.lp = login_Module(self.driver)
-        self.lp.email(self.useremail)
-        self.lp.password(self.password)
-        self.lp.login()
+    # @pytest.mark.order(1)
+    # def test_login(self):   
+    #     self.driver.get(self.url)
+    #     self.lp = login_Module(self.driver)
+    #     self.lp.email(self.useremail)
+    #     self.lp.password(self.password)
+    #     self.lp.login()
     @allure.description("Should navigate to failure reason page")
     @allure.severity(severity_level="CRITICAL")
-    @pytest.mark.order(2)
+    @pytest.mark.order(8_01)
     def test_navigate_manufacturer(self):
         self.manufacturer = manufacturer(self.driver)
         self.manufacturer.navigate_manufacturer()
 
     @allure.description("Should display the manufacturer popup window")
     @allure.severity(severity_level="CRITICAL")
-    @pytest.mark.order(3)
+    @pytest.mark.order(8_02)
     def test_add_manufacturer(self):
         self.manufacturer = manufacturer(self.driver)
         self.manufacturer.add_manufacturer()
 
     @allure.description("Should display the validation message on the mandatory field")
     @allure.severity(severity_level="CRITICAL")
-    @pytest.mark.order(4)
+    @pytest.mark.order(8_03)
     def test_create_manufacturer_mandatory_fields(self):
         self.manufacturer = manufacturer(self.driver)
         self.manufacturer.manufacturer_mandatory_field()
@@ -48,7 +48,7 @@ class Test_Manufacturer(unittest.TestCase):
     
     @allure.description("Should able to create Manufacturer")
     @allure.severity(severity_level="CRITICAL")     
-    @pytest.mark.order(5)
+    @pytest.mark.order(8_04)
     def test_create_manufacturer(self):
         self.manufacturer = manufacturer(self.driver)
         self.manufacturer.corporate_brand_name("Test_Manufacturer_01")
@@ -59,35 +59,35 @@ class Test_Manufacturer(unittest.TestCase):
 
     @allure.description("Should display the created manufacturer in list view")
     @allure.severity(severity_level="CRITICAL")
-    @pytest.mark.order(6)
+    @pytest.mark.order(8_05)
     def test_created_manufacturer_in_listView(self):
         self.manufacturer = manufacturer(self.driver)
         self.manufacturer.manufacturer_in_listView("Test_Manufacturer_01") 
 
     @allure.description("Should view the created manufacturer")
     @allure.severity(severity_level="CRITICAL")
-    @pytest.mark.order(7)
+    @pytest.mark.order(8_06)
     def test_view_manufacturer(self):
         self.manufacturer = manufacturer(self.driver) 
         self.manufacturer.view_manufacturer("Test_Manufacturer_01")    
     
     @allure.description("Should display the edit Manufacturer popup window ")
     @allure.severity(severity_level="CRITICAL")
-    @pytest.mark.order(8)
+    @pytest.mark.order(8_07)
     def test_edit_button_in_view_manufacturer(self):
         self.manufacturer = manufacturer(self.driver)
         self.manufacturer.edit_manufacturer_button()
     
     @allure.description("Should display the validation message on mandatory fields")
     @allure.severity(severity_level="CRITICAL")
-    @pytest.mark.order(9)
+    @pytest.mark.order(8_08)
     def test_edit_mandatory_fields(self):
         self.manufacturer = manufacturer(self.driver)
         self.manufacturer.edit_manufacturer_mandatory_field() 
 
     @allure.description("Should able to edit and save the manufacturer and navigate to Manufacturer page")
     @allure.severity(severity_level="CRITICAL")
-    @pytest.mark.order(10)
+    @pytest.mark.order(8_09)
     def test_edit_manufacturer(self):
         self.manufacturer= manufacturer(self.driver)
         self.manufacturer.email("manufacturer_040@yopmail.com")
@@ -96,7 +96,7 @@ class Test_Manufacturer(unittest.TestCase):
 
     @allure.description("Should able to edit and save the manufacturer in category list view option")
     @allure.severity(severity_level="CRITICAL")    
-    @pytest.mark.order(11)
+    @pytest.mark.order(8_10)
     def test_listView_edit_manufacturer(self):
         self.manufacturer= manufacturer(self.driver)
         self.manufacturer.list_view_edit_option("Test_Manufacturer_01")
@@ -104,7 +104,7 @@ class Test_Manufacturer(unittest.TestCase):
         self.manufacturer.edit_manufacturer()
     @allure.description("Should able to search Corporation Brand Name using search functionality")
     @allure.severity(severity_level="CRITICAL")
-    @pytest.mark.order(12)
+    @pytest.mark.order(8_11)
     def test_search_option(self):
         self.manufacturer= manufacturer(self.driver)
         self.manufacturer.search_functionality("Test_Manufacturer_01")

@@ -14,7 +14,7 @@ class random_data:
                "email":fake.email(),
                "city":fake.city(),
                "postalCode":fake.postcode(),
-               "website":fake.uri(),
+               "website":fake.domain_name(),
                #Plant Creation
                "plant_name":" ".join([fake.name(),"plant"]),
                "size": fake.random_digit_not_null_or_empty(),

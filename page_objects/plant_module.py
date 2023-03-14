@@ -6,7 +6,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-
+import allure
+from allure_commons.types import AttachmentType
 
 class Plant:
     menuitem_plant_xpath = '//a[@href="/pv-plants"]'
@@ -48,22 +49,22 @@ class Plant:
 
     def navigate_plant(self):
         self.driver.find_element(By.XPATH, self.menuitem_plant_xpath).click()
-        time.sleep(2)
-        if self.driver.title == "Brighter App | PV-Plant":
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains("Brighter App | PV-Plant")):
             assert True
         else:
-            self.driver.save_screenshot("Pv_plant_Page.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="Pv_plant_Page",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("Pv_plant_Page.png")
             assert False
 
     def add_plant(self):
         self.driver.find_element(By.XPATH, self.add_plant_xpath).click()
-        title = WebDriverWait(self.driver, 20).until(
-            EC.presence_of_element_located((By.TAG_NAME, "title"))
-        )
-        if title.get_attribute("innerHTML") == "Brighter App | Pv-Plant | Create":
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains("Brighter App | Pv-Plant | Create")):
             assert True
         else:
-            self.driver.save_screenshot("add_plant_popup.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="add_plant_popup",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("add_plant_popup.png")
             assert False
 
     def create_plant_mandatory_field(self):
@@ -83,7 +84,8 @@ class Plant:
             if element.is_displayed():
                 assert True
             else:
-                self.driver.save_screenshot("create_plant_mandatory_fields.png")
+                allure.attach(self.driver.get_screenshot_as_png(),name="create_plant_mandatory_fields",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("create_plant_mandatory_fields.png")
                 assert False
 
     def plant_name(self, name):
@@ -180,7 +182,8 @@ class Plant:
         if "Successfully Created" in self.msg.text:
             assert True
         else:
-            self.driver.save_screenshot("create_plant_toast.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="create_plant_toast",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("create_plant_toast.png")
             assert False
         self.driver.find_element(
             By.XPATH,
@@ -189,11 +192,12 @@ class Plant:
 
     def cancel_btn(self):
         self.driver.find_element(By.XPATH, self.btn_cancel_xpath).click()
-        time.sleep(2)
-        if self.driver.title == "Brighter App | PV-Plant":
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains("Brighter App | PV-Plant")):
             assert True
         else:
-            self.driver.save_screenshot("cancel_plant_creation.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="cancel_plant_creation",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("cancel_plant_creation.png")
 
     # ------------------------------------List View---------------------------------------------------------#
     def plant_in_listView(self, plant):
@@ -207,7 +211,8 @@ class Plant:
                 assert True
             break
         else:
-            self.driver.save_screenshot("listView_plant.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="listView_plant",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("listView_plant.png")
             assert False
 
     def view_plant(self, plant):
@@ -219,15 +224,17 @@ class Plant:
         for x in element:
             if x.text == plant:
                 x.click()
-                time.sleep(3)
-                if self.driver.title == "Brighter App | Pv-Plant | View":
-                    assert True
+                if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains("Brighter App | Pv-Plant | View")):
+                        assert True
                 else:
-                    self.driver.save_screenshot("view_plant.png")
+                    allure.attach(self.driver.get_screenshot_as_png(),name="view_plant",attachment_type=AttachmentType.PNG)
+                    # self.driver.save_screenshot("view_plant.png")
                     assert False
                 break
         else:
-            self.driver.save_screenshot("listView_plant_notFound.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="listView_plant_notFound",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("listView_plant_notFound.png")
             assert False
 
     # ------------------------------------------------Edit Plant-------------------------------------------#
@@ -238,7 +245,8 @@ class Plant:
         ):
             assert True
         else:
-            self.driver.save_screenshot("edit_plant_page.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="edit_plant_page",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("edit_plant_page.png")
             assert False
 
     def save_information(self):
@@ -254,12 +262,12 @@ class Plant:
         if "Successfully Updated" in self.msg.text:
             assert True
         else:
-            self.driver.save_screenshot("edit_plant_toast.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="edit_plant_toast",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("edit_plant_toast.png")
             assert False
         self.driver.find_element(
             By.XPATH,
-            '//p[normalize-space()="Successfully Updated"]/following::button[@aria-label="close"]',
-        ).click()
+            '//p[normalize-space()="Successfully Updated"]/following::button[@aria-label="close"]').click()
 
     # --------------------------------------------------------Corrective Ticket--------------------------------------------------------#
     def corrective_maintenance_tab_in_view_plant(self):
@@ -283,7 +291,8 @@ class Plant:
         if element.text == plant_name:
             assert True
         else:
-            self.driver.save_screenshot("Plant_name_in_create_remedial.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="Plant_name_in_create_remedial",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("Plant_name_in_create_remedial.png")
             assert False
 
     # --------------------------------------------------------Remedial Ticket--------------------------------------------------------#
@@ -294,6 +303,7 @@ class Plant:
             )
         )
         element.click()
+       
 
     def validation_message(self):
         pass
@@ -309,5 +319,187 @@ class Plant:
         if element.text == plant_name:
             assert True
         else:
-            self.driver.save_screenshot("Plant_name_in_create_remedial.png")
+            allure.attach(self.driver.get_screenshot_as_png(),name="Validate_Plant_Name",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("Validate_Plant_Name.png")
             assert False
+    
+    #--------------------------------------------------------------------Plant Edit Option in Dropdown-------------------------------------#
+    def back_functionality(self):
+        button = WebDriverWait(self.driver, 20).until(
+            EC.presence_of_element_located(
+                (
+                    By.XPATH,
+                    '//span[normalize-space()="Back"]',
+                )
+            )
+        )
+        button.click()
+        if WebDriverWait(self.driver, 50).until(
+            EC.title_contains("Brighter App | Pv-Plant ")
+        ):
+            assert True
+        else:
+            allure.attach(self.driver.get_screenshot_as_png(),name="back_to_plants_screen",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("back_to_plants_screen.png")
+            assert False
+   
+    def edit_plant_dropdown(self, plant_name):
+        dropdown = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(
+                (
+                    By.XPATH,
+                    '(//div[normalize-space()="'+plant_name+'"]/following::div[@class="dropdown"])[1]',
+                )
+            )
+        )
+        dropdown.click()
+        element = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(
+                (
+                    By.XPATH,
+                    '//div[@class="dropdown show"]//ul[@class="link-list-opt no-bdr"]//a[@id="edit-pvplant-btn"]',
+                )
+            )
+        )
+        element.click()
+        if WebDriverWait(self.driver, 50).until(
+            EC.title_contains('Brighter App | Pv-Plant | Edit')
+        ):
+            assert True
+        else:
+            allure.attach(self.driver.get_screenshot_as_png(),name="edit_client_in_user_dropdown",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("edit_client.png")
+            assert False
+
+    #-------------------------------------------- Archive User -------------------------------------------------------#
+    def archive_user(self, plant_name):
+        self.driver.find_element(
+            By.XPATH,
+            '(//div[normalize-space()="'
+            + plant_name
+            + '"]/following::div[@class="dropdown"])[1]',
+        ).click()
+        element = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(
+                (
+                    By.XPATH,
+                    '//div[@class="dropdown show"]//ul[@class="link-list-opt no-bdr"]//a[@id="archive-pvplant-btn"]',
+                )
+            )
+        )
+        element.click()
+        self.msg = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located(
+                (By.XPATH, '//div[@class="toastr-text"]//p[normalize-space()="PV-Plant Archived successfully"]')
+            )
+        )
+        if "PV-Plant Archived successfully" in self.msg.text:
+            assert True
+        else:
+            allure.attach(self.driver.get_screenshot_as_png(),name="archive_plant",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("archive_client.png")
+            assert False
+        self.driver.find_element(By.XPATH, '//p[normalize-space()="PV-Plant Archived successfully"]/following::button[@aria-label="close"]').click()
+
+    def view_archive_plant(self):
+        self.driver.find_element(By.ID, "pvplant-filter").click()
+        element = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, '//label[@for="isArchived"]'))
+        )
+        element.click()
+        self.driver.find_element(
+            By.XPATH, "//button[normalize-space()='Apply']"
+        ).click()
+
+    def archived_plant_listview(self, plant_name):
+        element = self.driver.find_elements(By.XPATH, '//div[@class="user-name"]')
+        for x in element:
+            if x.text == plant_name:
+                assert True
+                break
+            else:
+                allure.attach(self.driver.get_screenshot_as_png(),name="archive_plant_list",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("archive_client_list.png")
+                assert False
+
+    def unarchived_plant(self, plant_name):
+        self.driver.find_element(
+            By.XPATH,
+            '(//div[normalize-space()="'
+            + plant_name
+            + '"]/following::div[@class="dropdown"])[1]',
+        ).click()
+        element = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(
+                (
+                    By.XPATH,
+                    '//ul[@class="link-list-opt no-bdr"]//a[@id="unarchive-pvplant-btn"]',
+                )
+            )
+        )
+        element.click()
+        self.msg = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located(
+                (
+                    By.XPATH,
+                    '//div[@class="toastr-text"]//p[normalize-space()="PV-Plant UnArchived successfully"]',
+                )
+            )
+        )
+        if "PV-Plant UnArchived successfully" in self.msg.text:
+            assert True
+        else:
+            allure.attach(self.driver.get_screenshot_as_png(),name="unarchive_plant",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("unarchive_client.png")
+            assert False
+        self.driver.find_element(By.XPATH, '//p[normalize-space()="PV-Plant UnArchived successfully"]/following::button[@aria-label="close"]').click()
+
+    def unarchived_plant_listView(self, plant_name):
+        self.driver.find_element(By.ID, "client-filter-btn").click()
+        reset_btn = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, "//button[normalize-space()='Reset Filter']")
+            )
+        )
+        reset_btn.click()
+        element = self.driver.find_elements(By.XPATH, '//div[@class="user-name"]')
+        for x in element:
+            if x.text == plant_name:
+                assert True
+                break
+            else:
+                allure.attach(self.driver.get_screenshot_as_png(),name="unarchive_plant_listView",attachment_type=AttachmentType.PNG)
+                # self.driver.save_screenshot("unarchive_client_listView.png")
+                assert False
+    def plants_listview_count(self):
+        count =0
+        isNextDisabled = False
+        while not isNextDisabled:
+            validate_status = self.driver.find_elements(By.XPATH,'//div[@class="user-name"]')
+            for x in validate_status:
+                count+=1
+            nxt_btn = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,"//div[@class='card-inner']//li[last()-2]")))
+            next_class = nxt_btn.get_attribute('class')  
+            if "page-item disabled" in next_class:
+                isNextDisabled = True
+                break
+            else:
+                self.driver.find_element(By.XPATH,"//div[@class='card-inner']//li[last()-2]").click()
+        self.driver.find_element(By.XPATH,"(//div[@class='card-inner']//li)[2]").click()
+        element = self.driver.find_element(By.XPATH,'//p[contains(text(),"You have a total")]').text
+        if element[20:22] == str(count):
+            assert True
+        else:
+            allure.attach(self.driver.get_screenshot_as_png(),name="Number_of_client_count",attachment_type=AttachmentType.PNG)
+            # self.driver.save_screenshot("Number_of_client_count.png")
+            assert False
+
+    def search_client(self, search_term):
+        self.driver.find_element(By.XPATH, '//a[@href="#search"]').click()
+        keyword = self.driver.find_element(
+            By.XPATH,
+            '//input[@placeholder="Search by user, email and status.enter to search"]',
+        )
+        keyword.send_keys(search_term)
+        keyword.send_keys(Keys.ENTER)
+        self.plant_in_listView(search_term)

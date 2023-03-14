@@ -32,10 +32,10 @@ class Test_client(unittest.TestCase):
     #     self.lp.email(self.useremail)
     #     self.lp.password(self.password)
     #     self.lp.login()
-    @allure.description("Should navigate to Client Page")
-    @allure.severity(severity_level="CRITICAL")
+    # @allure.description("Should navigate to Client Page")
+    # @allure.severity(severity_level="CRITICAL")
     @pytest.mark.order(1_02)
-    def test_navigate_to_client_page2(self):
+    def test_navigate_to_client_page(self):
         self.client = Client(self.driver)
         self.client.navigate_to_client_page()
     @allure.description("Should navigate to Add Client Page")
@@ -206,25 +206,35 @@ class Test_client(unittest.TestCase):
     @allure.description("Should able to click on unarchive client button in client listview and able to unarchive the client")
     @allure.severity(severity_level="CRITICAL")
     @pytest.mark.order(1_27)
-    @allure.severity(severity_level="MEDIUM")
+    def test_unarchived_client(self):
+        self.client = Client(self.driver)
+        self.client.unarchived_client(self.data["edit_name"])
+    @allure.description("Should view the unarchived client in list view")
+    @allure.severity(severity_level="CRITICAL")
     @pytest.mark.order(1_28)
+    def test_unarchived_client_in_list_view(self):
+        self.client = Client(self.driver)
+        self.client.unarchived_client_listView(self.data["edit_name"])
+    @allure.description("Should validate the client count")
+    @allure.severity(severity_level="MEDIUM")
+    @pytest.mark.order(1_29)
     def test_total_client_count(self):
         self.client = Client(self.driver)
         self.client.ticket_listview_count()
     @allure.description("Should able to search the client using search option")
     @allure.severity(severity_level="MEDIUM")
-    @pytest.mark.order(1_29)
+    @pytest.mark.order(1_30)
     def test_search_client_functionality(self):
         self.client = Client(self.driver)
         self.client.search_client(self.data["edit_name"])
     @allure.description("Should display the validation popup on creating the client with existing email id")
     @allure.severity(severity_level="MEDIUM")
-    @pytest.mark.order(1_30)
+    @pytest.mark.order(1_31)
     def test_create_client_existing_client(self):
         self.client = Client(self.driver)
         self.client.add_Client()
-        self.client.name(self.data["edit_name"])
-        self.client.email_address(self.data["email"])
+        self.client.name("sujith")
+        self.client.email_address("awebb@example.com")
         self.client.create_client_with_existing_email_id()
 
     

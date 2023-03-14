@@ -401,7 +401,7 @@ class Client:
             allure.attach(self.driver.get_screenshot_as_png(),name="create_client_toast",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("client.png")
             assert False
-        self.driver.find_element(By.XPATH, '//button[@aria-label="close"]').click()
+        self.driver.find_element(By.XPATH,'//p[normalize-space()="Client created successfully"]/following::button[@aria-label="close"]').click()
 
     def created_user_in_list_view(self, user):
         element = WebDriverWait(self.driver, 20).until(
@@ -534,7 +534,7 @@ class Client:
             allure.attach(self.driver.get_screenshot_as_png(),name="Attachment_toast",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("update_client.png")
             assert False
-        # self.driver.find_element(By.XPATH, '(//button[@aria-label="close"])[1]').click()
+        self.driver.find_element(By.XPATH,'//p[normalize-space()="File uploaded successfully"]/following::button[@aria-label="close"]').click()
 
     def save_information_btn(self):
         self.driver.find_element(
@@ -578,7 +578,7 @@ class Client:
         )
         element.click()
         if WebDriverWait(self.driver, 50).until(
-            EC.title_contains('Client | Edit')
+            EC.title_contains('Brighter App | Client | Edit')
         ):
             assert True
         else:
@@ -613,7 +613,7 @@ class Client:
             allure.attach(self.driver.get_screenshot_as_png(),name="archive_client",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("archive_client.png")
             assert False
-        self.driver.find_element(By.XPATH, '(//button[@aria-label="close"])[1]').click()
+        self.driver.find_element(By.XPATH, '//p[normalize-space()="Client Archived successfully"]/following::button[@aria-label="close"]').click()
 
     def view_archive_client_list(self):
         self.driver.find_element(By.ID, "client-filter-btn").click()
@@ -643,7 +643,7 @@ class Client:
             + client_name
             + '"]/following::div[@class="dropdown"])[1]',
         ).click()
-        element = WebDriverWait(self.driver, 10).until(
+        element = WebDriverWait(self.driver, 20).until(
             EC.element_to_be_clickable(
                 (
                     By.XPATH,
@@ -726,15 +726,14 @@ class Client:
             EC.visibility_of_element_located(
                 (
                     By.XPATH,
-                    '//div[@class="toastr-text"]//p[normalize-space()="Error Client emailId already exits"]',
+                    '//div[@class="toastr-text"]//p[normalize-space()="Error Client emailId already exits"]'
                 )
             )
         )
-        if "Error Client emailId already exits" in self.msg.text:
+        if "Error Client emailId already exits" == self.msg.text:
             assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="create_client_with_existing_email",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("create_client_with_existing_email.png")
             assert False
-        self.driver.find_element(By.XPATH, '(//button[@aria-label="close"])[1]').click()
         
