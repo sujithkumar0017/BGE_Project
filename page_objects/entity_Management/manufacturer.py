@@ -125,14 +125,21 @@ class manufacturer():
     
     #----------------------------Edit Manufacturer---------------------------------------------#
     def edit_manufacturer_button(self):
-        element = WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable(
+        element = WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(
                 (
-                    By.XPATH,self.btn_edit_manufacturer_xpath,
+                    By.XPATH,'//div[@class="modal-body"]',
                 )
             )
         )
-        element.click()
+        edit_button = WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable(
+                (
+                    By.XPATH,'//div[@class="modal-body"]//button',
+                )
+            )
+        )
+        edit_button.click()
         # self.driver.find_element(By.XPATH,self.btn_edit_manufacturer_xpath).click()
         if WebDriverWait(self.driver, 50).until(
                     EC.title_contains('Brighter App | Manufacturer | Edit')):

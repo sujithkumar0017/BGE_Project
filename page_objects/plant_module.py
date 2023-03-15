@@ -281,7 +281,7 @@ class Plant:
     def validate_plant_name_in_create_corrective_ticket(self, plant_name):
         element = self.driver.find_element(
             By.XPATH,
-            "(//div[contains(@class,'react-select__control react-select__control--is-disabled css-1fhf3k1-control')])[4]",
+            "(//div[@class='react-select__control react-select__control--is-disabled css-1fhf3k1-control'])[4]",
         )
         #    value = element.get_attribute("value")
 
@@ -311,11 +311,12 @@ class Plant:
     def validate_plant_name_in_create_remedial_ticket(self, plant_name):
         element = self.driver.find_element(
             By.XPATH,
-            "(//div[contains(@class,'react-select__control react-select__control--is-disabled css-1fhf3k1-control')])[4]",
+            "(//div[@class='react-select__control react-select__control--is-disabled css-1fhf3k1-control'])[4]",
         )
-        actions = ActionChains(self.driver)
-        actions.double_click(element)
-        actions.key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).perform()
+        # actions = ActionChains(self.driver)
+        # actions.double_click(element)
+        # actions.key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).perform()
+        print(element.text)
         if element.text == plant_name:
             assert True
         else:
@@ -335,7 +336,7 @@ class Plant:
         )
         button.click()
         if WebDriverWait(self.driver, 50).until(
-            EC.title_contains("Brighter App | Pv-Plant ")
+            EC.title_contains("Brighter App | PV-Plant")
         ):
             assert True
         else:
@@ -425,9 +426,7 @@ class Plant:
     def unarchived_plant(self, plant_name):
         self.driver.find_element(
             By.XPATH,
-            '(//div[normalize-space()="'
-            + plant_name
-            + '"]/following::div[@class="dropdown"])[1]',
+            '(//div[normalize-space()="'+ plant_name +'"]/following::div[@class="dropdown"])[1]',
         ).click()
         element = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable(
@@ -455,7 +454,7 @@ class Plant:
         self.driver.find_element(By.XPATH, '//p[normalize-space()="PV-Plant UnArchived successfully"]/following::button[@aria-label="close"]').click()
 
     def unarchived_plant_listView(self, plant_name):
-        self.driver.find_element(By.ID, "client-filter-btn").click()
+        self.driver.find_element(By.ID, "pvplant-filter").click()
         reset_btn = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable(
                 (By.XPATH, "//button[normalize-space()='Reset Filter']")
@@ -498,7 +497,7 @@ class Plant:
         self.driver.find_element(By.XPATH, '//a[@href="#search"]').click()
         keyword = self.driver.find_element(
             By.XPATH,
-            '//input[@placeholder="Search by user, email and status.enter to search"]',
+            '//input[@placeholder="Search by name.enter to search "]',
         )
         keyword.send_keys(search_term)
         keyword.send_keys(Keys.ENTER)

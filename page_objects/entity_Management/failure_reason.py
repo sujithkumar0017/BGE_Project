@@ -33,7 +33,7 @@ class failure_reason:
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.failure_reason_option)))
         element.click()
         if WebDriverWait(self.driver, 50).until(
-                    EC.title_contains('Brighter App | Failure Reason')):
+                    EC.title_contains('Brighter App | FailureReason')):
             assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="Failure_reason_Page",attachment_type=AttachmentType.PNG)
@@ -66,7 +66,7 @@ class failure_reason:
         self.driver.find_element(By.ID,self.input_name_id).send_keys(name)
     def create_failure_reason(self):
         self.driver.find_element(By.XPATH,self.add_failure_reason_xpath).click()
-        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space()="Successfully Created"]')))
+        self.msg=WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space()="Successfully Created"]')))
         if "Successfully Created" in self.msg.text:
             assert True
         else:
@@ -106,7 +106,21 @@ class failure_reason:
     
     #---------------------------------Edit Failure reason ------------------------------------------------#
     def edit_failure_reason_button(self):
-        self.driver.find_element(By.XPATH,self.edit_failure_reason_button_xpath).click()
+        element = WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(
+                (
+                    By.XPATH,'//div[@class="modal-body"]',
+                )
+            )
+        )
+        edit_button = WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable(
+                (
+                    By.XPATH,'//div[@class="modal-body"]//button',
+                )
+            )
+        )
+        edit_button.click()
         if WebDriverWait(self.driver, 50).until(
                     EC.title_contains('Brighter App | Failure Reason | Edit')):
                 assert True
@@ -115,9 +129,12 @@ class failure_reason:
                 # self.driver.save_screenshot("Edit_Failure_reason_page.png")   
                 assert False
     def edit_failure_reason_mandatory_field(self):
-        element = self.driver.find_element(By.XPATH,'//input[@id="name-input"]')
+        element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//input[@id="name-input"]')))
+        # element = self.driver.find_element(By.XPATH,'//input[@id="name-input"]')
+        time.sleep(2)
+        element.click()
         actions = ActionChains(self.driver)
-        actions.click(element)
+        actions.move_to_element(element).click()
         actions.key_down(Keys.CONTROL).send_keys('a').key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
         element = WebDriverWait(self.driver, 10).until(
            EC.presence_of_element_located(
@@ -141,13 +158,14 @@ class failure_reason:
         self.driver.find_element(By.ID,self.edit_failure_reason_id).send_keys(name)
     def save_information_button(self):
         self.driver.find_element(By.ID,self.save_information_button_id).click()
-        self.msg=WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space()="Successfully Updated"]')))
+        self.msg=WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space()="Successfully Updated"]')))
         if "Successfully Updated" in self.msg.text:
             assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="edit_asset_category_toast",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("edit_asset_category_toast.png")
             assert False
+        self.driver.find_element(By.XPATH, '//p[normalize-space()="Successfully Updated"]/following::button[@aria-label="close"]').click()
     
     def list_view_edit_option(self,category):
         self.driver.find_element(By.XPATH,'(//div[normalize-space()="'+category+'"]/following::button[@id="edit-faliure"])[1]').click()

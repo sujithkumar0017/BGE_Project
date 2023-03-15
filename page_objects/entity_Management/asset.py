@@ -38,16 +38,17 @@ class asset:
         self.driver.find_element(By.XPATH,self.entity_management_xpath).click()
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,self.asset_option)))
         element.click()
-
-        if self.driver.title == "Brighter App | Asset":
-            assert True
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | Asset')):
+                    assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="asset_Page",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("asset_Page.png")   
             assert False
     def add_asset(self):
         self.driver.find_element(By.ID,self.add_asset_id).click()
-        if self.driver.title == "Brighter App | Asset | Create":
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains('Brighter App | Asset | Create')):
             assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(),name="create_Asset_webpage_title",attachment_type=AttachmentType.PNG)
@@ -127,22 +128,37 @@ class asset:
 
     #---------------------------------- Edit asset -----------------------------------------------------------#
     def edit_asset_button(self):
-        self.driver.find_element(By.XPATH,self.btn_edit_xpath).click()
-        if self.driver.title == "Brighter App | Asset | Edit":
+        element = WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(
+                (
+                    By.XPATH,'//div[@class="modal-body"]//button',
+                )
+            )
+        )
+        edit_button = WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable(
+                (
+                    By.XPATH,'//div[@class="modal-body"]//button',
+                )
+            )
+        )
+        edit_button.click()
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains("Brighter App | Asset | Edit")):
                 assert True
         else:
                 allure.attach(self.driver.get_screenshot_as_png(),name="Edit_asset_webpage_title",attachment_type=AttachmentType.PNG)
                 # self.driver.save_screenshot("Edit_asset_webpage_title.png")   
                 assert False
     def edit_asset_mandatory_field(self):
-           modal = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located((By.XPATH,self.input_modal_xpath)))
+           modal = WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.XPATH,self.input_modal_xpath)))
         #    modal = self.driver.find_element(By.XPATH,self.input_modal_xpath)
+           time.sleep(2)
            actions = ActionChains(self.driver)
-           actions.click(modal).key_down(Keys.CONTROL).send_keys('a').key_up(Keys.CONTROL).send_keys(Keys.DELETE)
+           actions.move_to_element(modal).click().key_down(Keys.CONTROL).send_keys('a').key_up(Keys.CONTROL).send_keys(Keys.DELETE)
            actions.perform()
            save_information_btn = WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH,self.btn_save_information_xpath)))
            self.driver.execute_script("arguments[0].scrollIntoView();",save_information_btn)
-           time.sleep(2)
            save_information_btn.click()
         #    self.driver.find_element(By.XPATH,self.btn_save_information_xpath).click()
            element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//span[normalize-space()="model is a required field"]')))
@@ -185,11 +201,12 @@ class asset:
             allure.attach(self.driver.get_screenshot_as_png(),name="edit_asset_toast",attachment_type=AttachmentType.PNG) 
             # self.driver.save_screenshot("edit_asset_toast.png")
             assert False
-        self.driver.find_element(By.XPATH,'//button[@aria-label="close"]').click()
+        self.driver.find_element(By.XPATH, '//p[normalize-space()="Successfully Updated"]/following::button[@aria-label="close"]').click()
 #---------------------------------------List View Edit and delete option----------------------------------------------#
     def list_view_edit_option(self,modal):
         self.driver.find_element(By.XPATH,'(//span[normalize-space()="'+modal+'"]/following::em[@class="icon ni ni-edit"])[1]').click()
-        if self.driver.title == "Brighter App | Asset | Edit":
+        if WebDriverWait(self.driver, 50).until(
+                    EC.title_contains("Brighter App | Asset | Edit")):
                 assert True
         else:
                 allure.attach(self.driver.get_screenshot_as_png(),name="Edit_Asset_page",attachment_type=AttachmentType.PNG)

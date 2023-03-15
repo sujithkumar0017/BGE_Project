@@ -108,16 +108,24 @@ class asset_category:
                 assert False 
     
     #---------------------------------Edit Category ------------------------------------------------#
+    # def modal(self):
+    #      modal_container_body = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space()="Successfully Created"]')))
     def edit_category_button(self):
-        element = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located(
+        element = WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(
                 (
-                    By.XPATH,self.edit_category_button_xpath,
+                    By.XPATH,'//div[@class="modal-body"]',
                 )
             )
         )
-        time.sleep(2)
-        element.click()
+        edit_button = WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable(
+                (
+                    By.XPATH,'//div[@class="modal-body"]//button',
+                )
+            )
+        )
+        edit_button.click()
         if WebDriverWait(self.driver, 50).until(
                     EC.title_contains('Brighter App | Asset Category | Edit')):
             assert True

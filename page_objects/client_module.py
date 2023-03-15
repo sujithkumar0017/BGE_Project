@@ -386,7 +386,16 @@ class Client:
     
 
     def createClient(self):
-        self.driver.find_element(By.XPATH, self.btn_createClient_Xpath).click()
+        create_client_btn = WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable(
+                (
+                    By.XPATH,
+                    self.btn_createClient_Xpath,
+                )
+            )
+        )
+        create_client_btn.click()
+        # self.driver.find_element(By.XPATH, self.btn_createClient_Xpath).click()
         self.msg = WebDriverWait(self.driver, 20).until(
             EC.visibility_of_element_located(
                 (
@@ -736,4 +745,4 @@ class Client:
             allure.attach(self.driver.get_screenshot_as_png(),name="create_client_with_existing_email",attachment_type=AttachmentType.PNG)
             # self.driver.save_screenshot("create_client_with_existing_email.png")
             assert False
-        
+        self.msg.click()

@@ -7,6 +7,7 @@ import pytest
 from page_objects.login_Module import login_Module
 from utilities.readProperties import ReadConfig
 import allure
+from faker import Faker
 
 @pytest.mark.usefixtures("init_driver")
 class Test_plant(unittest.TestCase):
@@ -23,6 +24,7 @@ class Test_plant(unittest.TestCase):
     #     self.login.email(self.useremail)
     #     self.login.password(self.password)
     #     self.login.login()
+    
     @allure.description("Should navigate to PV-Plant Page")
     @allure.severity(severity_level="CRITICAL")
     @pytest.mark.order(2_01)
@@ -48,10 +50,11 @@ class Test_plant(unittest.TestCase):
     @allure.severity(severity_level="CRITICAL")
     @pytest.mark.order(2_04)
     def test_create_plant(self):
+        fake = Faker()
         self.plant = Plant(self.driver)
         self.plant.plant_name("Plant_Diamond_015")
         self.plant.size("9")
-        self.plant.acronym("XWERTY556")
+        self.plant.acronym(fake.bothify(text='????-########', letters='ABCDE'))
         self.plant.on_boarding_date()
         self.plant.client_name("client_user_03")
         self.plant.status("Active")
@@ -114,7 +117,7 @@ class Test_plant(unittest.TestCase):
     @pytest.mark.order(2_12)
     def test_create_corrective_ticket_plant_name_were_displayed(self):
         self.plant = Plant(self.driver)
-        self.plant.validate_plant_name_in_create_corrective_ticket("Plant_Diamond")
+        self.plant.validate_plant_name_in_create_corrective_ticket("Plant_Diamond_015")
 
     @allure.description("Should able to add the Corrective ticket successfully")
     @allure.severity(severity_level="CRITICAL")
