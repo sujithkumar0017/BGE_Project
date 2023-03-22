@@ -1,23 +1,5 @@
-# import unittest
-# # from TestCases.Package_Plant.TC_plant import Test_plant
-# # from TestCases.Package_entity_management.TC_asset_category import Test_Asset_Category
-# # from TestCases.Package_Login_01.TC_Login import Test_login 
-# # from TestCases.Package_Client_02.TC_Client import Test_client
-# from TestCases.Package_Client_02.TC_Client import Test_client 
-# # from TestCases.Package_maintenance.TC_corrective_maintenance import Test_Corrective
-# # from TestCases.Package_Client_02.TC_Client import Test_client
-# # from TestCases.Package_Plant.TC_plant import Test_plant
 
-# # from TestCases.Package_entity_management.TC_SLA import Test_SLA
-# # from TestCases.Package_entity_management.TC_asset import Test_Asset
-# # from TestCases.Package_entity_management.TC_medical_centre import Test_Medical_Centre
-# # from TestCases.Package_maintenance.TC_remedial_maintenance import Test_Remedial
-# # from TestCases.Package_entity_management.TC_manufacturer import Test_Manufacturer
 
-# # from TestCases.Package_entity_management.TC_asset_category import Test_Asset_Category
-# # from TestCases.Package_entity_management.TC_failure_reason import Test_Failure_Reason
-# # from TestCases.Package_Login_01.TC_Login_DDT import Test_002_DDT_login
-# # from html_test_runner import HTMLTestRunner
 
 
 # # To get all the test cases
@@ -120,37 +102,6 @@
 # from TestCases.Package_Client_02.TC_Client import Test_client 
 # import unittest
 
-# status = False
-# if status == True:
-#     from TestCases.Package_maintenance.TC_corrective_maintenance import Test_Corrective
-
-# def test_client_suite():
-#     suite = unittest.TestSuite()
-#     suite.addTest(unittest.makeSuite(Test_client))
-#     runner = unittest.TextTestRunner(verbosity=2)
-#     runner.run(suite)
-#     status = True
-#     print(status)
-
-#     # status = True
-#     return True
-
-# test_client_suite()
-
-# if __name__ == '__main__':
-#     if status == True:
-#         print("SSSSSSSSSSSSSSSSSS")
-    #  suite = unittest.TestSuite()
-    #  suite.addTest(unittest.makeSuite(Test_Corrective))
-    #  runner = unittest.TextTestRunner(verbosity=2)
-    #  runner.run(suite)
-
-    # Create a test suite with both TestFile1 and TestFile2 test cases
-    # suite = unittest.TestSuite()
-    # suite.addTest(unittest.makeSuite(Test_client))
-
-
-
 # import pytest
 
 # def run_test_cases_from_file(filename):
@@ -196,16 +147,17 @@
 #     run_all_test_cases()
 import unittest
 from TestCases.Package_Login_01.TC_Login import Test_login
-# from TestCases.Package_Client_02.test_client import Test_client 
-# from TestCases.Package_Plant.TC_plant import Test_plant
-# from TestCases.Package_maintenance.test_corrective_maintenance import Test_Corrective
-# from TestCases.Package_maintenance.TC_remedial_maintenance import Test_Remedial
+from TestCases.Package_Client_02.test_client import Test_client 
+from TestCases.Package_Plant.TC_plant import Test_plant
+from TestCases.Package_maintenance.test_corrective_maintenance import Test_Corrective
+from TestCases.Package_maintenance.TC_remedial_maintenance import Test_Remedial
 from TestCases.Package_entity_management.TC_asset import Test_Asset
 from TestCases.Package_entity_management.TC_asset_category import Test_Asset_Category
 from TestCases.Package_entity_management.TC_failure_reason import Test_Failure_Reason
-# from TestCases.Package_entity_management.TC_DNO import Test_DNO
+from TestCases.Package_entity_management.TC_medical_centre import Test_Medical_Centre
+from TestCases.Package_entity_management.TC_DNO import Test_DNO
 from TestCases.Package_entity_management.TC_manufacturer import Test_Manufacturer
-# from TestCases.Package_entity_management.TC_SLA import Test_SLA
+from TestCases.Package_entity_management.TC_SLA import Test_SLA
 
 # if __name__ == '__main__':
 #     suite = unittest.TestSuite()

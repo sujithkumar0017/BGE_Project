@@ -58,7 +58,15 @@ class Plant:
             assert False
 
     def add_plant(self):
-        self.driver.find_element(By.XPATH, self.add_plant_xpath).click()
+        add_plant = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located(
+                (
+                    By.XPATH,
+                    self.add_plant_xpath,
+                )
+            )
+        )
+        add_plant.click()
         if WebDriverWait(self.driver, 50).until(
                     EC.title_contains("Brighter App | Pv-Plant | Create")):
             assert True
@@ -432,7 +440,7 @@ class Plant:
             EC.element_to_be_clickable(
                 (
                     By.XPATH,
-                    '//ul[@class="link-list-opt no-bdr"]//a[@id="unarchive-pvplant-btn"]',
+                    '(//ul[@class="link-list-opt no-bdr"]//a[@id="unarchive-pvplant-btn"])[1]',
                 )
             )
         )

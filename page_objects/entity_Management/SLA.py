@@ -114,14 +114,21 @@ class sla:
     
     #-------------------------------------------Edit asset----------------------------------------------------#
     def edit_sla_button(self):
-        element = WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable(
+        element = WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(
                 (
-                    By.XPATH,self.btn_edit_xpath,
+                    By.XPATH,'//div[@class="modal-body"]//button//em',
                 )
             )
         )
-        element.click()
+        edit_button = WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable(
+                (
+                    By.XPATH,'//div[@class="modal-body"]//button//em',
+                )
+            )
+        )
+        edit_button.click()
         # self.driver.find_element(By.XPATH,self.btn_edit_xpath).click()
         if WebDriverWait(self.driver, 50).until(
                     EC.title_contains('Brighter App | SLA | Edit')):

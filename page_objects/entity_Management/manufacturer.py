@@ -128,14 +128,14 @@ class manufacturer():
         element = WebDriverWait(self.driver, 20).until(
             EC.visibility_of_element_located(
                 (
-                    By.XPATH,'//div[@class="modal-body"]',
+                    By.XPATH,'//div[@class="modal-body"]//button//em',
                 )
             )
         )
         edit_button = WebDriverWait(self.driver, 20).until(
             EC.element_to_be_clickable(
                 (
-                    By.XPATH,'//div[@class="modal-body"]//button',
+                    By.XPATH,'//div[@class="modal-body"]//button//em',
                 )
             )
         )

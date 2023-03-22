@@ -55,7 +55,7 @@ class Test_Asset(unittest.TestCase):
        self.asset.rating("9.0")
        self.asset.factory_barcode("OXPWR")
        self.asset.category("Asset Category 512")
-       self.asset.Manufacturer("TestName1")
+       self.asset.Manufacturer("TestName2")
        self.asset.create_asset()
     
     @allure.description("Should display created asset in list view")

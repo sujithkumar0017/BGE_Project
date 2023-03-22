@@ -46,7 +46,15 @@ class asset:
             # self.driver.save_screenshot("asset_Page.png")   
             assert False
     def add_asset(self):
-        self.driver.find_element(By.ID,self.add_asset_id).click()
+        button = WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable(
+                (
+                    By.ID,self.add_asset_id,
+                )
+            )
+        )
+        button.click()
+        # self.driver.find_element(By.ID,self.add_asset_id).click()
         if WebDriverWait(self.driver, 50).until(
                     EC.title_contains('Brighter App | Asset | Create')):
             assert True
@@ -89,7 +97,15 @@ class asset:
         actions.send_keys(manufacturer)
         actions.send_keys(Keys.ENTER).perform()
     def create_asset(self):
-        self.driver.find_element(By.XPATH,self.create_asset_xpath).click()
+        # self.driver.find_element(By.XPATH,self.create_asset_xpath).click()
+        button = WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable(
+                (
+                    By.XPATH,self.create_asset_xpath,
+                )
+            )
+        )
+        button.click()
         self.msg=WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space()="Successfully Created"]')))
         if "Successfully Created" in self.msg.text:
             assert True
@@ -131,14 +147,14 @@ class asset:
         element = WebDriverWait(self.driver, 20).until(
             EC.visibility_of_element_located(
                 (
-                    By.XPATH,'//div[@class="modal-body"]//button',
+                    By.XPATH,'//div[@class="modal-body"]//button//em',
                 )
             )
         )
         edit_button = WebDriverWait(self.driver, 20).until(
             EC.element_to_be_clickable(
                 (
-                    By.XPATH,'//div[@class="modal-body"]//button',
+                    By.XPATH,'//div[@class="modal-body"]//button//em',
                 )
             )
         )
@@ -192,6 +208,7 @@ class asset:
             allure.attach(self.driver.get_screenshot_as_png(),name="add_followup_task",attachment_type=AttachmentType.PNG)   
             # self.driver.save_screenshot("add_followup_task.png")
             assert False
+        self.driver.find_element(By.XPATH, '//p[normalize-space()="File uploaded successfully"]/following::button[@aria-label="close"]').click()
     def save_information(self):
         self.driver.find_element(By.XPATH,self.btn_save_information_xpath).click()
         self.msg=WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//div[@class="toastr-text"]//p[normalize-space()="Successfully Updated"]')))
@@ -222,4 +239,4 @@ class asset:
         keyword = self.driver.find_element(By.XPATH,'//input[@placeholder="Search by model"]')
         keyword.send_keys(search_term)
         keyword.send_keys(Keys.ENTER)
-        self.asset_in_listView(search_term)    
+        self.asset_in_listView(search_term)

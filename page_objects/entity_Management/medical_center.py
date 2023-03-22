@@ -131,7 +131,21 @@ class medical_centre:
                 assert False
     #----------------------------Edit Medical Reason---------------------------------------------#
     def edit_medical_center_button(self):  
-        self.driver.find_element(By.XPATH,self.edit_medical_centre_button_xpath).click()
+        element = WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(
+                (
+                    By.XPATH,'//div[@class="modal-body"]//button//em',
+                )
+            )
+        )
+        edit_button = WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable(
+                (
+                    By.XPATH,'//div[@class="modal-body"]//button//em',
+                )
+            )
+        )
+        edit_button.click()
         if WebDriverWait(self.driver, 50).until(
                     EC.title_contains('Brighter App | Medical Centre | Edit')):
                     assert True

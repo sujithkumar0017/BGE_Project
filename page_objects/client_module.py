@@ -656,7 +656,7 @@ class Client:
             EC.element_to_be_clickable(
                 (
                     By.XPATH,
-                    '//ul[@class="link-list-opt no-bdr"]//a[@id="client-unarchive-btn"]',
+                    '(//ul[@class="link-list-opt no-bdr"]//a[@id="client-unarchive-btn"])[1]',
                 )
             )
         )
@@ -678,7 +678,12 @@ class Client:
         self.driver.find_element(By.XPATH, '//p[normalize-space()="Client Unarchived successfully"]/following::button[@aria-label="close"]').click()
 
     def unarchived_client_listView(self, client_name):
-        self.driver.find_element(By.ID, "client-filter-btn").click()
+        filter = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(
+                (By.ID,"client-filter-btn")
+            )
+        )
+        filter.click()
         reset_btn = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable(
                 (By.XPATH, "//button[normalize-space()='Reset Filter']")
